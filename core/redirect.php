@@ -3,10 +3,11 @@
 /**
  * Force HTTPS - Redirect class
  *
- * @package 404 To Homepage
- * @subpackage 404 To Homepage Core
+ * @package Force HTTPS
+ * @subpackage Force HTTPS
  */
 final class FHTTPS_Core_Redirect {
+
 
 
 	// Properties
