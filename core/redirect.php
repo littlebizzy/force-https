@@ -67,13 +67,13 @@ final class FHTTPS_Core_Redirect {
 		// The REQUEST URI var contains the current URL
 		if (0 === strpos($_SERVER['REQUEST_URI'], 'http')) {
 
-			// Change URL scheme
+			// Redirect by changing the URL scheme
 			wp_redirect(set_url_scheme($_SERVER['REQUEST_URI'], 'https' ), 301);
 
 		// HOST/URI
 		} else {
 
-			// Compose target URL
+			// Redirect composing the target URL
 			wp_redirect('https://'. $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], 301);
 		}
 	}
