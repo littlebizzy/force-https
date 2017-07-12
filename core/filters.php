@@ -54,7 +54,8 @@ final class FHTTPS_Core_Filters {
 
 
 	/**
-	 * Filters the content
+	 * Filters the content URLs
+	 * Strongly inspired in: https://es.wordpress.org/plugins/ssl-insecure-content-fixer/
 	 */
 	public function content($content) {
 
@@ -66,9 +67,19 @@ final class FHTTPS_Core_Filters {
 			'#<script\s+[^>]*?src=[\'"]\Khttp://[^\'"]+#i',		// script elements
 			'#url\([\'"]?\Khttp://[^)]+#i',						// inline CSS e.g. background images
 		);
-
-		// Perform the searches
+// fix https also!!!!
+		// Test the searches
 		$content = preg_replace_callback($searches, array(&$this, 'contentURL'), $content);
+
+		// Object embeds
+		static $embeds = array(
+			'#<object\s+.*?</object>#is',				// object elements, including contained embed elements
+			'#<embed\s+.*?(?:/>|</embed>)#is',			// embed elements, not contained in object elements
+			'#<img\s+[^>]+srcset=["\']\K[^"\']+#is',	// responsive image srcset links (both internal and external images)
+		);
+
+		// Test the embeds
+		$content = preg_replace_callback($embeds, array(&$this, 'embedURL'), $content);
 
 		// Done
 		return $content;
@@ -89,7 +100,12 @@ final class FHTTPS_Core_Filters {
 	 * Callback for object/embed elements
 	 */
 	public function embedURL($matches) {
-		return preg_replace_callback('#http://[^\'"&\? ]+#i', array(&$this, 'contentURL'), $matches[0]);
+
+		// Fix WP HTTPS behaviour handling local images
+		$urls = str_ireplace('https://', 'http://', $matches[0]);
+
+		// Do the replacements for multiple URLs
+		return preg_replace_callback('#http://[^\'"&\? ]+#i', array(&$this, 'contentURL'), $urls);
 	}
 
 
