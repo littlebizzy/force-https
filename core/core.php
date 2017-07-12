@@ -59,6 +59,11 @@ final class FHTTPS_Core {
 
 
 
+	// WP Hooks
+	// ---------------------------------------------------------------------------------------------------
+
+
+
 	/**
 	 * Filter content URLs
 	 */
@@ -71,6 +76,11 @@ final class FHTTPS_Core {
 		// Filter content
 		return $filters->content($content;)
 	}
+
+
+
+	// Internal checks
+	// ---------------------------------------------------------------------------------------------------
 
 
 
