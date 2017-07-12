@@ -22,6 +22,7 @@ define('FHTTPS_FILE', __FILE__);
 define('FHTTPS_PATH', dirname(FHTTPS_FILE));
 define('FHTTPS_VERSION', '1.0.0');
 
+// Early check
 if (defined('FORCE_SSL') && !FORCE_SSL)
 	return;
 
