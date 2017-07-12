@@ -43,9 +43,23 @@ final class FHTTPS_Core_Redirect {
 
 
 	/**
-	 * Do the redirect in a header-clean way
+	 * Start the redirection process
 	 */
 	private function __construct() {
+		add_action('plugins_loaded', array(&$this, 'start'));
+	}
+
+
+
+	// The Redirection
+	// ---------------------------------------------------------------------------------------------------
+
+
+
+	/**
+	 * Do the redirect in a header-clean way
+	 */
+	public function start() {
 
 		// Remove existing headers
 		$this->removeHeaders();
