@@ -10,9 +10,6 @@ License: GPL3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 */
 
-
-/* Initialization */
-
 // Avoid script calls via plugin URL
 if (!function_exists('add_action'))
 	die;
