@@ -50,11 +50,12 @@ final class FHTTPS_Core {
 		// SSL status
 		$this->checkSSL();
 
-		// Content filter
-		add_filter('the_content', array(&$this, 'filterContent'));
+		// Content filters
+		add_filter('the_content', array(&$this, 'filterContent'), 999999);
+		add_filter('widget_text', array(&$this, 'filterContent'), 999999);
 
-		// Uploads dir filter
-		// ..
+		// Gravity Forms confirmation content
+		add_filter('gform_confirmation', array($this, 'filterContent'), 999999);
 	}
 
 
@@ -74,7 +75,7 @@ final class FHTTPS_Core {
 		$filters = FHTTPS_Core_Filters::instance();
 
 		// Filter content
-		return $filters->content($content;)
+		return $filters->content($content);
 	}
 
 
@@ -90,11 +91,11 @@ final class FHTTPS_Core {
 	private function checkSSL() {
 
 		// Custom check
-		if ($this->isHTTPS()) {
+		if (!$this->isHTTPS()) {
 
 			// Load redirects class
-			require_once(FHTTPS_PATH.'/core/redirects.php');
-			FHTTPS_Core_Redirects::instance();
+			require_once(FHTTPS_PATH.'/core/redirect.php');
+			FHTTPS_Core_Redirect::instance();
 		}
 	}
 
@@ -114,7 +115,19 @@ final class FHTTPS_Core {
 			return true;
 
 		// Check header
-		if (isset($_SERVER['HTTP_X_FORWARDED_SSL']) && 'on' == strtolower($_SERVER['HTTP_X_FORWARDED_SSL']))
+		if (isset($_SERVER['HTTP_X_FORWARDED_SSL']) && ('on' == strtolower($_SERVER['HTTP_X_FORWARDED_SSL']) || '1' == $_SERVER['HTTP_X_FORWARDED_SSL']))
+			return true;
+
+		// Check header
+		if (isset($_SERVER['HTTP_CLOUDFRONT_FORWARDED_PROTO']) && 'https' == strtolower($_SERVER['HTTP_CLOUDFRONT_FORWARDED_PROTO']))
+			return true;
+
+		// Check header
+		if (isset($_SERVER['HTTP_CF_VISITOR']) && false !== strpos($_SERVER['HTTP_CF_VISITOR'], 'https'))
+			return true;
+
+		// Check header
+		if (!empty($_SERVER['HTTP_X_ARR_SSL']))
 			return true;
 
 		// No SSL
