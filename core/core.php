@@ -47,15 +47,15 @@ final class FHTTPS_Core {
 	*/
 	private function __construct() {
 
-		// SSL status
-		$this->checkSSL();
+		// Check SSL status
+		$this->checkSSLRedirect();
 
 		// Content filters
 		add_filter('the_content', array(&$this, 'filterContent'), 999999);
 		add_filter('widget_text', array(&$this, 'filterContent'), 999999);
 
 		// Gravity Forms confirmation content
-		add_filter('gform_confirmation', array($this, 'filterContent'), 999999);
+		add_filter('gform_confirmation', array(&$this, 'filterContent'), 999999);
 	}
 
 
@@ -88,7 +88,7 @@ final class FHTTPS_Core {
 	/**
 	 * And is_ssl custom wrapper
 	 */
-	private function checkSSL() {
+	private function checkSSLRedirect() {
 
 		// Custom check
 		if (!$this->isHTTPS()) {
@@ -110,23 +110,23 @@ final class FHTTPS_Core {
 		if (is_ssl())
 			return true;
 
-		// Check header
+		// Check X-Forwarded-Proto header
 		if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && 'https' == strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']))
 			return true;
 
-		// Check header
+		// Check X-Forwarded-SSL header
 		if (isset($_SERVER['HTTP_X_FORWARDED_SSL']) && ('on' == strtolower($_SERVER['HTTP_X_FORWARDED_SSL']) || '1' == $_SERVER['HTTP_X_FORWARDED_SSL']))
 			return true;
 
-		// Check header
+		// Check CloudFront-Forwarded-Proto header
 		if (isset($_SERVER['HTTP_CLOUDFRONT_FORWARDED_PROTO']) && 'https' == strtolower($_SERVER['HTTP_CLOUDFRONT_FORWARDED_PROTO']))
 			return true;
 
-		// Check header
+		// Check the Cloudflare CF-Vistor header
 		if (isset($_SERVER['HTTP_CF_VISITOR']) && false !== strpos($_SERVER['HTTP_CF_VISITOR'], 'https'))
 			return true;
 
-		// Check header
+		// Check X-ARR-SSL header
 		if (!empty($_SERVER['HTTP_X_ARR_SSL']))
 			return true;
 

@@ -43,7 +43,7 @@ final class FHTTPS_Core_Redirect {
 
 
 	/**
-	 * Start the redirection process
+	 * Initialize the redirection process
 	 */
 	private function __construct() {
 		add_action('plugins_loaded', array(&$this, 'start'));
