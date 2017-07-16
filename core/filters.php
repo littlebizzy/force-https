@@ -61,13 +61,13 @@ final class FHTTPS_Core_Filters {
 
 		// Prepare patterns
 		static $searches = array(
-			'#<(?:img|iframe) .*?src=[\'"]\Khttp://[^\'"]+#i',	// image and iframe elements
-			'#<a\s+[^>]+href=[\'"]\Khttp://[^\'"]+#i',			// anchor elements
-			'#<link\s+[^>]+href=[\'"]\Khttp://[^\'"]+#i',		// link elements
-			'#<script\s+[^>]*?src=[\'"]\Khttp://[^\'"]+#i',		// script elements
-			'#url\([\'"]?\Khttp://[^)]+#i',						// inline CSS e.g. background images
+			'#<(?:img|iframe)[\s|\t].*?src=[\'"]\K(http|https)://[^\'"]+#i',	// image and iframe elements
+			'#<a[\s|\t][^>]*href=[\'"]\K(http|https)://[^\'"]+#i',				// anchor elements
+			'#<link[\s|\t][^>]*href=[\'"]\K(http|https)://[^\'"]+#i',			// link elements
+			'#<script[\s|\t][^>]*?src=[\'"]\K(http|https)://[^\'"]+#i',			// script elements
+			'#url\([\'"]?\K(http|https)://[^)]+#i',								// inline CSS e.g. background images
 		);
-// fix https also!!!!
+
 		// Test the searches
 		$content = preg_replace_callback($searches, array(&$this, 'contentURL'), $content);
 
@@ -88,10 +88,10 @@ final class FHTTPS_Core_Filters {
 
 
 	/**
-	 * Callback for URLs
+	 * Replace HTTP or HTTPS for protocol relative
 	 */
 	public function contentURL($matches) {
-		return substr($matches[0], 5);
+		return substr($matches[0], (empty($matches[1]) || 'http' == $matches[1])? 5 : 6);
 	}
 
 
@@ -101,11 +101,8 @@ final class FHTTPS_Core_Filters {
 	 */
 	public function embedURL($matches) {
 
-		// Fix WP HTTPS behaviour handling local images
-		$urls = str_ireplace('https://', 'http://', $matches[0]);
-
 		// Do the replacements for multiple URLs
-		return preg_replace_callback('#http://[^\'"&\? ]+#i', array(&$this, 'contentURL'), $urls);
+		return preg_replace_callback('#(http|https)://[^\'"&\? ]+#i', array(&$this, 'contentURL'), $matches[0]);
 	}
 
 
