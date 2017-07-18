@@ -44,7 +44,7 @@ final class FHTTPS_Core {
 
 	/**
 	 * Constructor
-	*/
+	 */
 	private function __construct() {
 
 		// Check SSL status
