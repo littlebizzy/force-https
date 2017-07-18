@@ -22,6 +22,13 @@ final class FHTTPS_Core {
 
 
 
+	/**
+	 * Filters object
+	 */
+	private $filters;
+
+
+
 	// Initialization
 	// ---------------------------------------------------------------------------------------------------
 
@@ -50,12 +57,26 @@ final class FHTTPS_Core {
 		// Check SSL status
 		$this->checkSSLRedirect();
 
+		// Scripts and stylesheet links
+		add_filter('script_loader_src', array(&$this, 'filterURL'), 999999);
+		add_filter('style_loader_src', array(&$this, 'filterURL'), 999999);
+
+		// Attachments URL in frontend or AJAX context
+		if (!is_admin() || (defined('DOING_AJAX') && DOING_AJAX))
+			add_filter('wp_get_attachment_url', array(&$this, 'filterURL'), 999999);
+
 		// Content filters
 		add_filter('the_content', array(&$this, 'filterContent'), 999999);
 		add_filter('widget_text', array(&$this, 'filterContent'), 999999);
 
 		// Gravity Forms confirmation content
 		add_filter('gform_confirmation', array(&$this, 'filterContent'), 999999);
+
+		// Upload URLs
+		add_filter('upload_dir', array(&$this, 'uploadDir'), 999999);
+
+		// Image Widget plugin
+		add_filter('image_widget_image_url', array(&$this, 'filterURL'), 999999);
 	}
 
 
@@ -69,13 +90,28 @@ final class FHTTPS_Core {
 	 * Filter content URLs
 	 */
 	public function filterContent($content) {
+		$this->loadFilters();
+		return $this->filters->content($content);
+	}
 
-		// Load filters object
-		require_once(FHTTPS_PATH.'/core/filters.php');
-		$filters = FHTTPS_Core_Filters::instance();
 
-		// Filter content
-		return $filters->content($content);
+
+	/**
+	 * Filter Upload directory array
+	 */
+	public function uploadDir($uploads) {
+		$this->loadFilters();
+		return $this->filters->uploadDir($uploads);
+	}
+
+
+
+	/**
+	 * Filter a single URL
+	 */
+	public function filterURL($url) {
+		$this->loadFilters();
+		return $this->filters->securizeURL($url);
 	}
 
 
@@ -132,6 +168,18 @@ final class FHTTPS_Core {
 
 		// No SSL
 		return false;
+	}
+
+
+
+	/**
+	 * Load filters object
+	 */
+	private function loadFilters() {
+		if (!isset($this->filters)) {
+			require_once(FHTTPS_PATH.'/core/filters.php');
+			$this->filters = FHTTPS_Core_Filters::instance();
+		}
 	}
 
 

@@ -9,6 +9,7 @@
 final class FHTTPS_Core_Filters {
 
 
+
 	// Properties
 	// ---------------------------------------------------------------------------------------------------
 
@@ -102,6 +103,26 @@ final class FHTTPS_Core_Filters {
 	 */
 	public function embedURL($matches) {
 		return preg_replace_callback('#(http|https)://[^\'"&\? ]+#i', array(&$this, 'contentURL'), $matches[0]);
+	}
+
+
+
+	/**
+	 * Filter for the uploads dir array
+	 */
+	public function uploadDir($uploads) {
+		$uploads['url']	= $this->securizeURL($uploads['url']);
+		$uploads['baseurl']	= $this->securizeURL($uploads['baseurl']);
+		return $uploads;
+	}
+
+
+
+	/**
+	 * Check and securize an URL
+	 */
+	public function securizeURL($url) {
+		return (0 === stripos($url, 'https://'))? substr($url, 6) : ((0 === stripos($url, 'http://'))? substr($url, 5) : $url);
 	}
 
 
