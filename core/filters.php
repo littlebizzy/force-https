@@ -98,10 +98,9 @@ final class FHTTPS_Core_Filters {
 
 	/**
 	 * Callback for object/embed elements
+	 * Do the replacements for multiple URLs
 	 */
 	public function embedURL($matches) {
-
-		// Do the replacements for multiple URLs
 		return preg_replace_callback('#(http|https)://[^\'"&\? ]+#i', array(&$this, 'contentURL'), $matches[0]);
 	}
 
