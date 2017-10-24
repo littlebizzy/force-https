@@ -10,6 +10,14 @@ License: GPL3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 */
 
+// Admin Notices module
+require_once dirname(__FILE__).'/admin-notices.php';
+FHTTPS_Admin_Notices::instance(__FILE__);
+
+/**
+ * Plugin code
+ */
+
 // Avoid script calls via plugin URL
 if (!function_exists('add_action'))
 	die;
@@ -26,9 +34,3 @@ if (defined('FORCE_SSL') && !FORCE_SSL)
 // Load main class
 require_once(FHTTPS_PATH.'/core/core.php');
 FHTTPS_Core::instance();
-
-if ( is_admin() ) {
-	// Admin Suggestions
-	require_once(FHTTPS_PATH.'/core/admin-notices.php');
-	FHTTPS_Admin_Suggestions::instance();
-}
