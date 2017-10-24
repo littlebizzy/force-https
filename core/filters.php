@@ -22,6 +22,13 @@ final class FHTTPS_Core_Filters {
 
 
 
+	/**
+	 * Current site host
+	 */
+	public $host;
+
+
+
 	// Initialization
 	// ---------------------------------------------------------------------------------------------------
 
@@ -45,7 +52,9 @@ final class FHTTPS_Core_Filters {
 	/**
 	 * Constructor
 	 */
-	private function __construct() {}
+	private function __construct() {
+		$this->host = $this->getHostFromURL(home_url());
+	}
 
 
 
@@ -62,11 +71,11 @@ final class FHTTPS_Core_Filters {
 
 		// Prepare patterns
 		static $searches = array(
-			'#<(?:img|iframe)[\s|\t].*?src=[\'"]\K(http|https)://[^\'"]+#i',	// image and iframe elements
-			'#<a[\s|\t][^>]*href=[\'"]\K(http|https)://[^\'"]+#i',				// anchor elements
-			'#<link[\s|\t][^>]*href=[\'"]\K(http|https)://[^\'"]+#i',			// link elements
-			'#<script[\s|\t][^>]*?src=[\'"]\K(http|https)://[^\'"]+#i',			// script elements
-			'#url\([\'"]?\K(http|https)://[^)]+#i',								// inline CSS e.g. background images
+			'#<(?:img|iframe)[\s|\t].*?src=[\'"]\K(http://|//)[^\'"]+#i',	// image and iframe elements
+			'#<a[\s|\t][^>]*href=[\'"]\K(http://|//)[^\'"]+#i',				// anchor elements
+			'#<link[\s|\t][^>]*href=[\'"]\K(http://|//)[^\'"]+#i',			// link elements
+			'#<script[\s|\t][^>]*?src=[\'"]\K(http://|//)[^\'"]+#i',		// script elements
+			'#url\([\'"]?\K(http://|//)[^)]+#i',							// inline CSS e.g. background images
 		);
 
 		// Test the searches
@@ -89,10 +98,10 @@ final class FHTTPS_Core_Filters {
 
 
 	/**
-	 * Replace HTTP or HTTPS for protocol relative
+	 * Replace HTTP by HTTPS only for internal links
 	 */
 	public function contentURL($matches) {
-		return substr($matches[0], (empty($matches[1]) || 'http' == $matches[1])? 5 : 6);
+		return $this->isInternalLink($matches[0])? 'https://'.substr($matches[0], strlen($matches[1])) : $matches[0];
 	}
 
 
@@ -102,7 +111,11 @@ final class FHTTPS_Core_Filters {
 	 * Do the replacements for multiple URLs
 	 */
 	public function embedURL($matches) {
-		return preg_replace_callback('#(http|https)://[^\'"&\? ]+#i', array(&$this, 'contentURL'), $matches[0]);
+		$result = array();
+		$srcset = explode(',', str_replace(', ', ',', $matches[0]));
+		foreach ($srcset as $url)
+			$result[] = preg_replace_callback('#^(http://|//)[^\'"&\? ]+#i', array(&$this, 'contentURL'), trim($url));
+		return implode(', ', $result);
 	}
 
 
@@ -122,7 +135,41 @@ final class FHTTPS_Core_Filters {
 	 * Check and securize an URL
 	 */
 	public function securizeURL($url) {
-		return (0 === stripos($url, 'https://'))? substr($url, 6) : ((0 === stripos($url, 'http://'))? substr($url, 5) : $url);
+		return (0 === stripos($url, 'http://'))? 'https'.substr($url, 4) : ((0 === strpos($url, '//'))? 'https:'.$url : $url);
+	}
+
+
+
+	/**
+	 * Determines if an URL is an internal link
+	 */
+	public function isInternalLink($url) {
+
+		// URL host
+		if (false === ($host = $this->getHostFromURL($url)))
+			return false;
+
+		// Compare hosts
+		return ($this->host == $host);
+	}
+
+
+
+	/**
+	 * Extract host or domain name from URL
+	 */
+	public function getHostFromURL($url, $remove_www = true) {
+
+		// Extract the host part
+		if (false === ($host = @parse_url($url, PHP_URL_HOST)))
+			return false;
+
+		// Check if remove the www prefix
+		if ($remove_www && 0 === stripos($host, 'www.'))
+			$host = substr($host, 4);
+
+		// Done
+		return $host;
 	}
 
 
