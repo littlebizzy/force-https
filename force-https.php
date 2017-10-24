@@ -3,7 +3,7 @@
 Plugin Name: Force HTTPS
 Plugin URI: https://www.littlebizzy.com/plugins/force-https
 Description: Redirects all HTTP requests to the HTTPS version and fixes all insecure static resources by implementing relative URLs without altering the database.
-Version: 1.0.1
+Version: 1.0.2
 Author: LittleBizzy
 Author URI: https://www.littlebizzy.com
 License: GPL3
@@ -17,7 +17,7 @@ if (!function_exists('add_action'))
 // This plugin constants
 define('FHTTPS_FILE', __FILE__);
 define('FHTTPS_PATH', dirname(FHTTPS_FILE));
-define('FHTTPS_VERSION', '1.0.1');
+define('FHTTPS_VERSION', '1.0.2');
 
 // Early check
 if (defined('FORCE_SSL') && !FORCE_SSL)
