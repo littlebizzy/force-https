@@ -1,46 +1,83 @@
 === Force HTTPS ===
 
 Contributors: littlebizzy
-Tags: force, https, ssl, 301, redirect, http, certificate, tls
+Tags: force, https, ssl, tls, 301, redirect
 Requires at least: 4.4
 Tested up to: 4.8
-Stable tag: 1.0.1
-License: GPL3
+Requires PHP: 7.0
+Stable tag: 1.0.2
+License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
+Prefix: FHTTPS
 
-Redirects all HTTP requests to the HTTPS version and fixes all insecure static resources by implementing relative URLs without altering the database.
+Redirects all HTTP requests to the HTTPS version and fixes all insecure static resources by implementing secure URLs without altering the database.
 
 == Description ==
 
-> Redirects all HTTP requests to the HTTPS version and fixes all insecure static resources by implementing relative URLs without altering the database.
+Redirects all HTTP requests to the HTTPS version and fixes all insecure static resources by implementing secure URLs without altering the database.
 
-Currently does not support fixing insecure resources although we may add that in the next version.
+* redirects all HTTP request to HTTPS (301 redirects)
+* filters all non-secure internal static resource to become secure (e.g. src="https://...")
+* filters all internal hyperlinks to be become secure (e.g. href="https://...")
+* skips any external links
+* works with image srcsets too (Version 1.0.2+)
+* no need for additional plugins to fix insecure resources
+* zero database queries or settings pages
+* huge SEO benefits
 
-Compatibility:
+#### Compatibility ####
 
-* Meant for Linux servers
-* Minimum PHP version: 5.5
-* Designed for: PHP 7+ and MySQL 5.7+
-* Can be used as a "Must Use" plugin (mu-plugins)
+This plugin has been designed for use on LEMP (Nginx) web servers with PHP 7.0 and MySQL 5.7 to achieve best performance. All of our plugins are meant for single site WordPress installations only; for both performance and security reasons, we highly recommend against using WordPress Multisite for the vast majority of projects.
 
-Future plugin goals:
+#### Plugin Features ####
 
-* Localization (translation support)
-* Transient experimentation
-* More features (based on user suggestions)
-* Code maintenance/improvements
+* Settings Page: No
+* PRO Version Available: No
+* Includes Media: No
+* Includes CSS: No
+* Database Storage: Yes
+  * Transients: No
+  * Options: Yes
+* Database Queries: Backend only
+* Must-Use Support: Yes
+* Multisite Support: No
+* Uninstalls Data: Yes
 
-Code inspiration:
+#### Code Inspiration ####
 
-* n/a
+This plugin was partially inspired either in "code or concept" by the open-source software and discussions mentioned below:
 
-*NOTE: We released this plugin in response to our managed hosting clients asking for better access to their server environment, and our primary goal will likely remain supporting that purpose. Although we are 100% open to fielding requests from the WordPress community, we kindly ask that you consider all of the above mentioned goals before leaving reviews of this plugin, thanks!*
+* (n/a)
+
+#### Recommended Plugins ####
+
+We invite you to check out a few other related free plugins that our team has also produced that you may find especially useful:
+
+* [Force Strong Hashing](https://wordpress.org/plugins/force-strong-hashing-littlebizzy/)
+* [Disable XML-RPC](https://wordpress.org/plugins/diable-xml-rpc-littlebizzy/)
+* [Server Status](https://wordpress.org/plugins/server-status-littlebizzy/)
+* [Remove Category Base](https://wordpress.org/plugins/remove-category-base-littlebizzy/)
+* [404 To Homepage](https://wordpress.org/plugins/404-to-homepage-littlebizzy/)
+
+#### Special Thanks ####
+
+We thank the following groups for their generous contributions to the WordPress community which have particularly benefited us in developing our own free plugins and paid services:
+
+* [Automattic](https://automattic.com)
+* [Delicious Brains](https://deliciousbrains.com)
+* [Roots](https://roots.io)
+* [rtCamp](https://rtcamp.com)
+* [WP Tavern](https://wptavern.com)
+
+#### Disclaimer ####
+
+We released this plugin in response to our managed hosting clients asking for better access to their server, and our primary goal will remain supporting that purpose. Although we are 100% open to fielding requests from the WordPress community, we kindly ask that you keep the above mentioned goals in mind, thanks!
 
 == Installation ==
 
-1. Upload the plugin files to `/wp-content/plugins/`
-2. Activate the plugin within the WP Admin
-3. Visit http version of any page, and it should 301 redirect to https version
+1. Upload to `/wp-content/plugins/force-https-littlebizzy`
+2. Activate via WP Admin > Plugins
+3. Test plugin is working by loading a non-HTTPS version of any page
 
 == FAQ ==
 
@@ -62,8 +99,15 @@ Please avoid leaving negative reviews in order to get a feature implemented. Ins
 
 == Changelog ==
 
+= 1.0.2 =
+* filter to "skip" external hyperlinks
+* improved HTTPS filters for internal links, internal sources, and image srcsets
+* optimized plugin code
+* updated recommended plugins
+* added rating request
+
 = 1.0.1 =
-* recommended plugins
+* added recommended plugins
 
 = 1.0.0 =
 * initial release
