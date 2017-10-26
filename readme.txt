@@ -1,4 +1,4 @@
-=== Force HTTPS ===
+=== Force HTTPS (Enable SSL Redirect & Fix Insecure Mixed Content) ===
 
 Contributors: littlebizzy
 Tags: force, https, ssl, tls, 301, redirect
@@ -72,6 +72,10 @@ We thank the following groups for their generous contributions to the WordPress 
 #### Disclaimer ####
 
 We released this plugin in response to our managed hosting clients asking for better access to their server, and our primary goal will remain supporting that purpose. Although we are 100% open to fielding requests from the WordPress community, we kindly ask that you keep the above mentioned goals in mind, thanks!
+
+### Keywords ####
+
+force https, force ssl, enable ssl, enable tls, ssl certificate, ssl redirect, https redirect, fix mixed content, fix insecure content, mixed content errors, ssl on all pages, https on all pages, really simple ssl, ssl htaccess, https htaccess, media library https
 
 == Installation ==
 
