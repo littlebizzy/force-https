@@ -73,7 +73,7 @@ We thank the following groups for their generous contributions to the WordPress 
 
 We released this plugin in response to our managed hosting clients asking for better access to their server, and our primary goal will remain supporting that purpose. Although we are 100% open to fielding requests from the WordPress community, we kindly ask that you keep the above mentioned goals in mind, thanks!
 
-### Keywords ####
+#### Keywords ####
 
 * Terms: ssl, https, hsts, enable, generate, force, setup, configure, enforce, 301, redirect, headers, secure, insecure, incoming, requests, browser, htaccess, apache, nginx, server, replace, filter, scan, auto, automatic, dynamic, dynamically, images, files, resources, css, js, files, static, always, encrypt, free, seo, remove, relative, internal, external, sources, sitewide, site-wide
 
