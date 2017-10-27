@@ -1,7 +1,7 @@
 === Force HTTPS (Enable SSL Redirect & Fix Insecure Mixed Content) ===
 
 Contributors: littlebizzy
-Tags: force, https, ssl, tls, 301, redirect
+Tags: force, https, ssl, insecure, mixed, content
 Requires at least: 4.4
 Tested up to: 4.8
 Requires PHP: 7.0
