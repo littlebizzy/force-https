@@ -10,11 +10,11 @@ License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Prefix: FHTTPS
 
-Redirects all HTTP requests to the HTTPS version and fixes all insecure static resources by implementing secure URLs without altering the database.
+Redirects all HTTP requests to the HTTPS version and fixes all insecure static resources without altering the database (also works with CloudFlare).
 
 == Description ==
 
-Redirects all HTTP requests to the HTTPS version and fixes all insecure static resources by implementing secure URLs without altering the database.
+Redirects all HTTP requests to the HTTPS version and fixes all insecure static resources without altering the database (also works with CloudFlare).
 
 * redirects all HTTP request to HTTPS (301 redirects)
 * filters all non-secure internal static resource to become secure (e.g. src="https://...")
