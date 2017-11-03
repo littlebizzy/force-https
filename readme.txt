@@ -22,6 +22,7 @@ Redirects all HTTP requests to the HTTPS version and fixes all insecure static r
 * skips any external links
 * works with image srcsets too (Version 1.0.2+)
 * no need for additional plugins to fix insecure resources
+* avoids "protocol relative" URLs as recommended by top security experts
 * zero database queries or settings pages
 * huge SEO benefits
 
@@ -47,7 +48,8 @@ This plugin has been designed for use on LEMP (Nginx) web servers with PHP 7.0 a
 
 This plugin was partially inspired either in "code or concept" by the open-source software and discussions mentioned below:
 
-* (n/a)
+* [Paul Irish](https://www.paulirish.com/2010/the-protocol-relative-url/)
+* [Jeremy Wagner](https://jeremywagner.me/blog/stop-using-the-protocol-relative-url)
 
 #### Recommended Plugins ####
 
