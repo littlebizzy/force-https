@@ -226,6 +226,10 @@ final class FHTTPS_Admin_Notices {
 				// Admin area (except install or activate plugins page)
 				} elseif (!in_array(basename($_SERVER['PHP_SELF']), array('plugins.php', 'plugin-install.php', 'update.php'))) {
 
+					// Check the disable nag constant
+					if ($this->disable_nag_notices())
+						return;
+
 					// Admin hooks
 					add_action('admin_footer',  array(&$this, 'admin_footer_rate_us'));
 					add_action('admin_notices', array(&$this, 'admin_notices_rate_us'));
@@ -313,6 +317,10 @@ final class FHTTPS_Admin_Notices {
 	 * Check current active plugins
 	 */
 	public function plugins_loaded() {
+
+		// Check the disable nag constant
+		if ($this->disable_nag_notices())
+			return;
 
 		// Collect missing plugins
 		$this->missing = $this->get_missing_plugins();
@@ -444,6 +452,15 @@ final class FHTTPS_Admin_Notices {
 			// New plugin
 			return admin_url('update.php?action=install-plugin&plugin='.$plugin.'&_wpnonce='.wp_create_nonce('install-plugin_'.$plugin));
 		}
+	}
+
+
+
+	/**
+	 * Determines the admin notices display
+	 */
+	private function disable_nag_notices() {
+		return (defined('DISABLE_NAG_NOTICES') && DISABLE_NAG_NOTICES);
 	}
 
 
