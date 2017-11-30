@@ -199,7 +199,7 @@ final class FHTTPS_Admin_Notices {
 
 			// Admin area (except install or activate plugins page)
 			} elseif (!in_array(basename($_SERVER['PHP_SELF']), array('plugins.php', 'plugin-install.php', 'update.php'))) {
-				add_action('plugins_loaded', array(&$this, 'plugins_loaded'));
+				add_action('wp_loaded', array(&$this, 'load_notices_suggestions'), PHP_INT_MAX);
 			}
 		}
 	}
@@ -225,17 +225,50 @@ final class FHTTPS_Admin_Notices {
 
 				// Admin area (except install or activate plugins page)
 				} elseif (!in_array(basename($_SERVER['PHP_SELF']), array('plugins.php', 'plugin-install.php', 'update.php'))) {
-
-					// Check the disable nag constant
-					if ($this->disable_nag_notices())
-						return;
-
-					// Admin hooks
-					add_action('admin_footer',  array(&$this, 'admin_footer_rate_us'));
-					add_action('admin_notices', array(&$this, 'admin_notices_rate_us'));
+					add_action('wp_loaded', array(&$this, 'load_notices_rate_us'), PHP_INT_MAX);
 				}
 			}
 		}
+	}
+
+
+
+	// Loaders
+	// ---------------------------------------------------------------------------------------------------
+
+
+
+	/**
+	 * Check and load the sugestions notices
+	 */
+	public function load_notices_suggestions() {
+
+		// Check the disable nag constant
+		if ($this->disable_nag_notices())
+			return;
+
+		// Collect missing plugins
+		$this->missing = $this->get_missing_plugins();
+		if (!empty($this->missing) && is_array($this->missing)) {
+			add_action('admin_footer', array(&$this, 'admin_footer_suggestions'));
+			add_action('admin_notices', array(&$this, 'admin_notices_suggestions'));
+		}
+	}
+
+
+
+	/**
+	 * Check and load the rate us notices
+	 */
+	public function load_notices_rate_us() {
+
+		// Check the disable nag constant
+		if ($this->disable_nag_notices())
+			return;
+
+		// Admin hooks
+		add_action('admin_footer',  array(&$this, 'admin_footer_rate_us'));
+		add_action('admin_notices', array(&$this, 'admin_notices_rate_us'));
 	}
 
 
@@ -310,25 +343,6 @@ final class FHTTPS_Admin_Notices {
 
 	// Plugins information retrieval
 	// ---------------------------------------------------------------------------------------------------
-
-
-
-	/**
-	 * Check current active plugins
-	 */
-	public function plugins_loaded() {
-
-		// Check the disable nag constant
-		if ($this->disable_nag_notices())
-			return;
-
-		// Collect missing plugins
-		$this->missing = $this->get_missing_plugins();
-		if (!empty($this->missing) && is_array($this->missing)) {
-			add_action('admin_footer', array(&$this, 'admin_footer_suggestions'));
-			add_action('admin_notices', array(&$this, 'admin_notices_suggestions'));
-		}
-	}
 
 
 
