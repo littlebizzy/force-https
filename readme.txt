@@ -49,7 +49,7 @@ This plugin has been designed for use on LEMP (Nginx) web servers with PHP 7.0 a
   * Transients: No
   * Options: Yes
   * Creates New Tables: No
-* Database Queries: Backend Only (Options API Cache)
+* Database Queries: Backend Only (Options API)
 * Must-Use Support: Yes (Use With [Autoloader](https://github.com/littlebizzy/autoloader))
 * Multisite Support: No
 * Uninstalls Data: Yes
@@ -116,6 +116,18 @@ We invite you to check out a few premium plugins that our team has also produced
 * [Speed Demon](https://www.littlebizzy.com/plugins/speed-demon)
 * [SEO Genius](https://www.littlebizzy.com/plugins/seo-genius)
 * [Great Migration](https://www.littlebizzy.com/plugins/great-migration)
+* [Security Guard](https://www.littlebizzy.com/plugins/security-guard)
+* [Genghis Khan](https://www.littlebizzy.com/plugins/genghis-khan)
+
+#### Related Services ####
+
+The following paid services are available on a case-by-case basis to upstanding, courteous members of the WordPress community:
+
+* [SSL Setup](https://www.littlebizzy.com/services/ssl)
+* [DNSSEC Setup](https://www.littlebizzy.com/services/dnssec)
+* [G Suite Setup](https://www.littlebizzy.com/services/google-apps)
+* [SendGrid Setup](https://www.littlebizzy.com/services/sendgrid)
+* [MailGun Setup](https://www.littlebizzy.com/services/mailgun)
 
 #### Special Thanks ####
 
