@@ -121,7 +121,7 @@ We invite you to check out a few premium plugins that our team has also produced
 
 #### Related Services ####
 
-The following paid services are available on a case-by-case basis to upstanding, courteous members of the WordPress community:
+The following paid services are available on a case-by-case basis to upstanding members of the WordPress community:
 
 * [SSL Setup](https://www.littlebizzy.com/services/ssl)
 * [DNSSEC Setup](https://www.littlebizzy.com/services/dnssec)
@@ -191,9 +191,12 @@ Please avoid leaving negative reviews in order to get a feature implemented. Ins
 
 == Changelog ==
 
+= 1.0.5 =
+* added support for `define('DISABLE_NAG_NOTICES', true);` to allow implementation anywhere (such as functions.php)
+
 = 1.0.4 =
 * updated plugin meta
-* added support for `define('DISABLE_NAG_NOTICES', true);`
+* added partial support for `define('DISABLE_NAG_NOTICES', true);` in wp-config.php
 
 = 1.0.3 =
 * tested with WP 4.9
