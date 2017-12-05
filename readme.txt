@@ -192,11 +192,11 @@ Please avoid leaving negative reviews in order to get a feature implemented. Ins
 == Changelog ==
 
 = 1.0.5 =
-* added support for `define('DISABLE_NAG_NOTICES', true);` to allow implementation anywhere (such as functions.php)
+* better support for `define('DISABLE_NAG_NOTICES', true);`
 
 = 1.0.4 =
 * updated plugin meta
-* added partial support for `define('DISABLE_NAG_NOTICES', true);` in wp-config.php
+* partial support for `define('DISABLE_NAG_NOTICES', true);`
 
 = 1.0.3 =
 * tested with WP 4.9
@@ -205,7 +205,7 @@ Please avoid leaving negative reviews in order to get a feature implemented. Ins
 
 = 1.0.2 =
 * filter to "skip" external hyperlinks
-* improved HTTPS filters for internal links, internal sources, and image srcsets
+* better HTTPS filters for internal links, internal sources, and image srcsets
 * optimized plugin code
 * updated recommended plugins
 * added rating request
