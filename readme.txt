@@ -1,6 +1,7 @@
 === Force HTTPS (SSL Redirect & Fix Insecure Content) ===
 
 Contributors: littlebizzy
+Donate link: https://www.patreon.com/littlebizzy
 Tags: force, https, ssl, insecure, mixed, content
 Requires at least: 4.4
 Tested up to: 4.9
