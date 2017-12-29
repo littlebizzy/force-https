@@ -18,9 +18,11 @@ Redirects all HTTP requests to the HTTPS version and fixes all insecure static r
 
 Redirects all HTTP requests to the HTTPS version and fixes all insecure static resources without altering the database (also works with CloudFlare).
 
+* [Patreon](https://www.patreon.com/littlebizzy)
 * [Plugin Homepage](https://www.littlebizzy.com/plugins/force-https)
 * [Plugin GitHub](https://github.com/littlebizzy/force-https)
 * [SlickStack](https://slickstack.io)
+* [Starter Theme](https://starter.littlebizzy.com)
 
 #### The Long Version ####
 
@@ -119,16 +121,6 @@ We invite you to check out a few premium plugins that our team has also produced
 * [Great Migration](https://www.littlebizzy.com/plugins/great-migration)
 * [Security Guard](https://www.littlebizzy.com/plugins/security-guard)
 * [Genghis Khan](https://www.littlebizzy.com/plugins/genghis-khan)
-
-#### Related Services ####
-
-The following paid services are available on a case-by-case basis to upstanding members of the WordPress community:
-
-* [SSL Setup](https://www.littlebizzy.com/services/ssl)
-* [DNSSEC Setup](https://www.littlebizzy.com/services/dnssec)
-* [G Suite Setup](https://www.littlebizzy.com/services/google-apps)
-* [SendGrid Setup](https://www.littlebizzy.com/services/sendgrid)
-* [MailGun Setup](https://www.littlebizzy.com/services/mailgun)
 
 #### Special Thanks ####
 
