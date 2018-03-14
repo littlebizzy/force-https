@@ -18,7 +18,7 @@ Redirects all HTTP requests to the HTTPS version and fixes all insecure static r
 
 Redirects all HTTP requests to the HTTPS version and fixes all insecure static resources without altering the database (also works with CloudFlare).
 
-* [**Patreon (support us with $1/mo)**](https://www.patreon.com/littlebizzy)
+* [**Join our FREE Facebook group!**](https://www.facebook.com/groups/littlebizzy/)
 * [Plugin Homepage](https://www.littlebizzy.com/plugins/force-https)
 * [Plugin GitHub](https://github.com/littlebizzy/force-https)
 * [SlickStack](https://slickstack.io)
@@ -83,15 +83,17 @@ We invite you to check out some of our other free plugins hosted on WP.org that 
 
 * [404 To Homepage](https://wordpress.org/plugins/404-to-homepage-littlebizzy/)
 * [CloudFlare](https://wordpress.org/plugins/cf-littlebizzy/)
+* [Delete Expired Transients](https://wordpress.org/plugins/delete-expired-transients-littlebizzy/)
 * [Disable Author Pages](https://wordpress.org/plugins/disable-author-pages-littlebizzy/)
 * [Disable Cart Fragments](https://wordpress.org/plugins/disable-cart-fragments-littlebizzy/)
 * [Disable Embeds](https://wordpress.org/plugins/disable-embeds-littlebizzy/)
 * [Disable Emojis](https://wordpress.org/plugins/disable-emojis-littlebizzy/)
 * [Disable Empty Trash](https://wordpress.org/plugins/disable-empty-trash-littlebizzy/)
 * [Disable Image Compression](https://wordpress.org/plugins/disable-image-compression-littlebizzy/)
+* [Disable jQuery Migrate](https://wordpress.org/plugins/disable-jq-migrate-littlebizzy/)
 * [Disable Search](https://wordpress.org/plugins/disable-search-littlebizzy/)
 * [Disable WooCommerce Status](https://wordpress.org/plugins/disable-wc-status-littlebizzy/)
-* [Disable WooCommerce Styles](https://wordpress.org/plugins/diable-wc-styles-littlebizzy/)
+* [Disable WooCommerce Styles](https://wordpress.org/plugins/disable-wc-styles-littlebizzy/)
 * [Disable XML-RPC](https://wordpress.org/plugins/disable-xml-rpc-littlebizzy/)
 * [Download Media](https://wordpress.org/plugins/download-media-littlebizzy/)
 * [Download Plugin](https://wordpress.org/plugins/download-plugin-littlebizzy/)
@@ -101,6 +103,7 @@ We invite you to check out some of our other free plugins hosted on WP.org that 
 * [Force HTTPS](https://wordpress.org/plugins/force-https-littlebizzy/)
 * [Force Strong Hashing](https://wordpress.org/plugins/force-strong-hashing-littlebizzy/)
 * [Google Analytics](https://wordpress.org/plugins/ga-littlebizzy/)
+* [Header Cleanup](https://wordpress.org/plugins/header-cleanup-littlebizzy/)
 * [Index Autoload](https://wordpress.org/plugins/index-autoload-littlebizzy/)
 * [Maintenance Mode](https://wordpress.org/plugins/maintenance-mode-littlebizzy/)
 * [Profile Change Alerts](https://wordpress.org/plugins/profile-change-alerts-littlebizzy/)
@@ -115,7 +118,6 @@ We invite you to check out some of our other free plugins hosted on WP.org that 
 
 We invite you to check out a few premium plugins that our team has also produced that you may find particularly valuable:
 
-* [Purge Them All](https://www.littlebizzy.com/plugins/purge-them-all)
 * [Speed Demon](https://www.littlebizzy.com/plugins/speed-demon)
 * [SEO Genius](https://www.littlebizzy.com/plugins/seo-genius)
 * [Great Migration](https://www.littlebizzy.com/plugins/great-migration)
@@ -127,6 +129,7 @@ We invite you to check out a few premium plugins that our team has also produced
 We thank the following groups for their generous contributions to the WordPress community which have particularly benefited us in developing our own plugins and services:
 
 * [Automattic](https://automattic.com)
+* [Brad Touesnard](https://bradt.ca)
 * [Daniel Auener](http://www.danielauener.com)
 * [Delicious Brains](https://deliciousbrains.com)
 * [Greg Rickaby](https://gregrickaby.com)
@@ -143,6 +146,7 @@ We thank the following groups for their generous contributions to the WordPress 
 * [Rahul Bansal](https://profiles.wordpress.org/rahul286)
 * [Roots](https://roots.io)
 * [rtCamp](https://rtcamp.com)
+* [Ryan Hellyer](https://geek.hellyer.kiwi)
 * [WP Chat](https://wpchat.com)
 * [WP Tavern](https://wptavern.com)
 
@@ -166,21 +170,43 @@ We released this plugin in response to our managed hosting clients asking for be
 
 == FAQ ==
 
-= What HTTP header codes does this plugin send? =
+= Does this plugin install SSL for my site? =
+
+No. You will first need to order/setup SSL on your server (web host) before activating this plugin.
+
+= After installing this plugin, my site is inaccessible? =
+
+You probably do not have SSL installed yet on your server (web host) which is a prerequisite.
+
+= Are there any potential drawbacks/errors with this plugin? =
+
+The only potential error is a 404 error for external resources that do not already support HTTPS.
+
+= Does this plugin affect my website's speed or performance? =
+
+No, it should not. It's very lightweight and should be cached in PHP Opcache and DNS/browser (301s).
+
+= My developer installed this for me, is he taking shortcuts? =
+
+Mostly likely your developer wants you to be extra protected from insecure resources. This plugin can be (should be) installed as an additional layer of protection/stability even if you already redirect to HTTPS elsewhere (server, CloudFlare, etc). It does not hurt anything to force SSL in multiple places, and in fact provides better redundancy for your security. That said, installing this plugin is not a cure-all and your server (etc) should still be re-configured for SSL too when possible.
+
+= What HTTP header codes does this plugin send to browsers? =
 
 It generates 301 codes for any http version of any page and redirects to https version of that page.
 
 = Does this plugin work with CloudFlare SSL? =
 
-Yes, it can be used with either CloudFlare's "flexible" or "full" SSL setting to avoid any spinning or errors.
+Yes, it can be used with CloudFlare's "flexible" or "full" SSL to avoid "too many redirects" errors.
 
 = How can I change this plugin's settings? =
 
 Currenly no settings page exists, but we may add one in future versions.
 
-= I have a suggestion, how can I let you know? =
+= I have a question or comment, how can I let you know? =
 
-Please avoid leaving negative reviews in order to get a feature implemented. Instead, we kindly ask that you post your feedback on the wordpress.org support forums by tagging this plugin in your post. If needed, you may also contact our homepage.
+Please avoid leaving negative reviews in order to get a feature implemented. Stalking or harassing our team members is also not okay; we will expose those who attempt to extort or threaten us. Instead, you may post on the public WordPress.org forums if you like and other members may be able to help you. Since this is a free plugin, we do not offer support for it; we are also no longer involved at the WordPress.org forums. We recommend joining our Facebook group instead:
+
+[https://www.facebook.com/groups/littlebizzy/](https://www.facebook.com/groups/littlebizzy/)
 
 == Changelog ==
 
