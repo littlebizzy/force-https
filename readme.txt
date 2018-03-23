@@ -18,7 +18,7 @@ Redirects all HTTP requests to the HTTPS version and fixes all insecure static r
 
 Redirects all HTTP requests to the HTTPS version and fixes all insecure static resources without altering the database (also works with CloudFlare).
 
-* [**Join our FREE Facebook group!**](https://www.facebook.com/groups/littlebizzy/)
+* [**Join our FREE Facebook group for support!**](https://www.facebook.com/groups/littlebizzy/)
 * [Plugin Homepage](https://www.littlebizzy.com/plugins/force-https)
 * [Plugin GitHub](https://github.com/littlebizzy/force-https)
 * [SlickStack](https://slickstack.io)
@@ -28,15 +28,18 @@ Redirects all HTTP requests to the HTTPS version and fixes all insecure static r
 
 The only Force SSL (HTTPS) plugin that correctly follows Google Chrome team's advice to avoid protocol-relative hyperlinks and resources. Here are more of the current features:
 
-* redirects all HTTP request to HTTPS (301 redirects)
-* filters all non-secure internal static resource to become secure (e.g. src="https://...")
+* redirects all HTTP requests to HTTPS (domain/protocol 301 redirects)
+* filters all internal resources to become secure (e.g. src="https://...")
 * filters all internal hyperlinks to be become secure (e.g. href="https://...")
-* skips any external links
+* filters all external resources to become secure (src, srcset, embeds, and objects)
+* skips any external hyperlinks
 * works with image srcsets too (Version 1.0.2+)
 * no need for additional plugins to fix insecure resources
 * avoids "protocol relative" URLs as recommended by top security experts
 * zero database queries or settings pages
-* huge SEO benefits
+* huge SEO and security benefits
+
+WARNING: You must have an SSL certificate installed on your server before activating this plugin. If you website becomes inaccessible after activation, login via SFTP and delete this plugin from `/wp-content/plugins/` and clear your browser cache.
 
 #### Compatibility ####
 
@@ -84,6 +87,7 @@ We invite you to check out some of our other free plugins hosted on WP.org that 
 * [404 To Homepage](https://wordpress.org/plugins/404-to-homepage-littlebizzy/)
 * [CloudFlare](https://wordpress.org/plugins/cf-littlebizzy/)
 * [Delete Expired Transients](https://wordpress.org/plugins/delete-expired-transients-littlebizzy/)
+* [Disable Admin-AJAX](https://wordpress.org/plugins/disable-admin-ajax-littlebizzy/)
 * [Disable Author Pages](https://wordpress.org/plugins/disable-author-pages-littlebizzy/)
 * [Disable Cart Fragments](https://wordpress.org/plugins/disable-cart-fragments-littlebizzy/)
 * [Disable Embeds](https://wordpress.org/plugins/disable-embeds-littlebizzy/)
@@ -135,6 +139,7 @@ We thank the following groups for their generous contributions to the WordPress 
 * [Greg Rickaby](https://gregrickaby.com)
 * [Matt Mullenweg](https://ma.tt)
 * [Mika Epstein](https://halfelf.org)
+* [Mike Garrett](https://mikengarrett.com)
 * [Samuel Wood](http://ottopress.com)
 * [Scott Reilly](http://coffee2code.com)
 * [Jan Dembowski](https://profiles.wordpress.org/jdembowski)
@@ -196,7 +201,7 @@ It generates 301 codes for any http version of any page and redirects to https v
 
 = Does this plugin work with CloudFlare SSL? =
 
-Yes, it can be used with CloudFlare's "flexible" or "full" SSL to avoid "too many redirects" errors.
+Yes, it can be used with CloudFlare's "flexible" or "full" SSL to avoid "too many redirects" spinning errors.
 
 = How can I change this plugin's settings? =
 
@@ -211,11 +216,12 @@ Please avoid leaving negative reviews in order to get a feature implemented. Sta
 == Changelog ==
 
 = 1.0.6 =
-* added filter to force HTTPS for external `src` resources (but not external hyperlinks)
-* (if external `src` does not exist in HTTPS version, it may generate a 404 error)
-* (philosophy = "green padlock" more important than a `src` 404 error)
+* changed filters to force HTTPS for external resources (but not external hyperlinks) including `src`, `srcset`, `embed`, and `object`
+* (if an external resource does not exist in HTTPS version, it may generate a 404 error)
+* (philosophy = "green padlock" more important than a resource 404 error)
 * added warning for Multisite installations
 * updated recommended plugins
+* updated plugin meta
 
 = 1.0.5 =
 * better support for `define('DISABLE_NAG_NOTICES', true);`
