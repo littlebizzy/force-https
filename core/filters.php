@@ -71,11 +71,11 @@ final class FHTTPS_Core_Filters {
 
 		// Prepare patterns
 		static $searches = array(
-			'#<(?:img|iframe)[\s|\t].*?src=[\'"]\K(http://|//)[^\'"]+#i',	// image and iframe elements
-			'#<a[\s|\t][^>]*href=[\'"]\K(http://|//)[^\'"]+#i',				// anchor elements
-			'#<link[\s|\t][^>]*href=[\'"]\K(http://|//)[^\'"]+#i',			// link elements
-			'#<script[\s|\t][^>]*?src=[\'"]\K(http://|//)[^\'"]+#i',		// script elements
-			'#url\([\'"]?\K(http://|//)[^)]+#i',							// inline CSS e.g. background images
+			'#<((?:img|iframe))[\s|\t].*?src=[\'"]\K(http://|//)[^\'"]+#i',	// image and iframe elements
+			'#<(a)[\s|\t][^>]*href=[\'"]\K(http://|//)[^\'"]+#i',			// anchor elements
+			'#<(link)[\s|\t][^>]*href=[\'"]\K(http://|//)[^\'"]+#i',		// link elements
+			'#<(script)[\s|\t][^>]*?src=[\'"]\K(http://|//)[^\'"]+#i',		// script elements
+			'#(url)\([\'"]?\K(http://|//)[^)]+#i',							// inline CSS e.g. background images
 		);
 
 		// Test the searches
@@ -101,7 +101,7 @@ final class FHTTPS_Core_Filters {
 	 * Replace HTTP by HTTPS only for internal links
 	 */
 	public function contentURL($matches) {
-		return $this->isInternalLink($matches[0])? 'https://'.substr($matches[0], strlen($matches[1])) : $matches[0];
+		return (in_array($matches[1], ['img', 'url']) || $this->isInternalLink($matches[0]))? 'https://'.substr($matches[0], strlen($matches[2])) : $matches[0];
 	}
 
 
