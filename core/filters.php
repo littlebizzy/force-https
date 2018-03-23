@@ -98,10 +98,13 @@ final class FHTTPS_Core_Filters {
 
 
 	/**
-	 * Replace HTTP by HTTPS only for internal links
+	 * Replace HTTP by HTTPS for images,
+	 * URLs in object and embed tags, and internal links.
 	 */
 	public function contentURL($matches) {
-		return (in_array($matches[1], ['img', 'url']) || $this->isInternalLink($matches[0]))? 'https://'.substr($matches[0], strlen($matches[2])) : $matches[0];
+		$tag = (3 == count($matches))?  $matches[1] : null;
+		$protocol = isset($matches[2])? $matches[2] : $matches[1];
+		return (!isset($tag) || in_array($tag, ['img', 'url']) || $this->isInternalLink($matches[0]))? 'https://'.substr($matches[0], strlen($protocol)) : $matches[0];
 	}
 
 
