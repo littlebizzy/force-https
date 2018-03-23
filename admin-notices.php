@@ -21,7 +21,8 @@ final class FHTTPS_Admin_Notices {
 	private $days_before_display_rate_us = 3; // 3 days delay
 	private $days_dismissing_rate_us = 270; // 9 months reappear
 	private $rate_us_url = 'https://wordpress.org/support/plugin/force-https-littlebizzy/reviews/#new-post';
-	private $rate_us_message = 'Thanks for using <strong>%plugin%</strong>. Please support our free work by rating this plugin with 5 stars on WordPress.org. <a href="%url%" target="_blank">Click here to rate us.</a>';
+	private $rate_us_url2 = 'https://www.facebook.com/groups/littlebizzy/';
+	private $rate_us_message = 'Thanks for using <strong>%plugin%</strong>. Please support our free work by rating this plugin with 5 stars on WordPress.org. <a href="%url%" target="_blank">Click here to rate us.</a><br><br>You may also join our free <a href="%url2%" target="_blank">Facebook group</a> to post any questions or comments!';
 
 
 
