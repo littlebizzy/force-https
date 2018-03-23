@@ -3,7 +3,7 @@
 Plugin Name: Force HTTPS
 Plugin URI: https://www.littlebizzy.com/plugins/force-https
 Description: Redirects all HTTP requests to the HTTPS version and fixes all insecure static resources without altering the database (also works with CloudFlare).
-Version: 1.0.5
+Version: 1.0.6
 Author: LittleBizzy
 Author URI: https://www.littlebizzy.com
 License: GPLv3
