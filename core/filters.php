@@ -104,7 +104,7 @@ final class FHTTPS_Core_Filters {
 	public function contentURL($matches) {
 		$tag = (3 == count($matches))?  $matches[1] : null;
 		$protocol = isset($matches[2])? $matches[2] : $matches[1];
-		return (!isset($tag) || in_array($tag, ['img', 'url']) || $this->isInternalLink($matches[0]))? 'https://'.substr($matches[0], strlen($protocol)) : $matches[0];
+		return (!isset($tag) || in_array($tag, array('img', 'url')) || $this->isInternalLink($matches[0]))? 'https://'.substr($matches[0], strlen($protocol)) : $matches[0];
 	}
 
 
