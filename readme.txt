@@ -7,7 +7,7 @@ Requires at least: 4.4
 Tested up to: 4.9
 Requires PHP: 7.0
 Multisite support: No
-Stable tag: 1.0.6
+Stable tag: 1.1.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Prefix: FHTTPS
@@ -214,6 +214,10 @@ Please avoid leaving negative reviews in order to get a feature implemented. Sta
 [https://www.facebook.com/groups/littlebizzy/](https://www.facebook.com/groups/littlebizzy/)
 
 == Changelog ==
+
+= 1.1.0 =
+* versioning correction (major changes in 1.0.6)
+* (no other code changes made)
 
 = 1.0.6 =
 * changed filters to force HTTPS for external resources (but not external hyperlinks) including `src`, `srcset`, `embed`, and `object`
