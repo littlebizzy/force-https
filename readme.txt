@@ -7,7 +7,7 @@ Requires at least: 4.4
 Tested up to: 4.9
 Requires PHP: 7.0
 Multisite support: No
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Prefix: FHTTPS
@@ -220,13 +220,16 @@ Please avoid leaving negative reviews in order to get a feature implemented. Sta
 
 == Changelog ==
 
-= 1.1.1 =
-* updated recommended plugins
+= 1.1.2 =
 * updated plugin meta
+
+= 1.1.1 =
+* updated plugin meta
+* updated recommended plugins
 
 = 1.1.0 =
 * versioning correction (major changes in 1.0.6)
-* (no other code changes made)
+* (no code changes)
 
 = 1.0.6 =
 * changed filters to force HTTPS for external resources (but not external hyperlinks) including `src`, `srcset`, `embed`, and `object`
@@ -252,7 +255,7 @@ Please avoid leaving negative reviews in order to get a feature implemented. Sta
 * filter to "skip" external hyperlinks
 * better HTTPS filters for internal links, internal sources, and image srcsets
 * optimized plugin code
-* added WP.org rating request notice
+* added rating request notice
 * updated recommended plugins
 
 = 1.0.1 =
