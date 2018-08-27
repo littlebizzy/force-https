@@ -18,11 +18,13 @@ final class FHTTPS_Admin_Notices {
 	/**
 	 * Rate Us
 	 */
-	private $days_before_display_rate_us = 1; // 1 day delay
-	private $days_dismissing_rate_us = 270; // 9 months reappear
+	private $days_before_display_rate_us = 2; // 2 days delay
+	private $days_dismissing_rate_us = 180; // 6 months reappear
 	private $rate_us_url = 'https://wordpress.org/support/plugin/force-https-littlebizzy/reviews/?rate=5#new-post';
 	private $rate_us_url2 = 'https://www.facebook.com/groups/littlebizzy/';
-	private $rate_us_message = 'Thanks for using <strong>%plugin%</strong>. Please support our free work by rating this plugin with 5 stars on WordPress.org. <a href="%url%" target="_blank">Click here to rate us.</a><br><br>You may also join our free <a href="%url2%" target="_blank">Facebook group</a> to post any questions or comments!';
+	private $rate_us_url3 = 'https://www.littlebizzy.com/services/speed-boost?utm_source=wpnotice';
+	private $rate_us_url4 = 'https://codex.wordpress.org/Plugin_API/Action_Reference/admin_notices#Disable_Nag_Notices';
+	private $rate_us_message = 'Howdy, friend :)<br><br>Thanks for using <strong>%plugin%</strong>. Please support our free work by rating this plugin with 5 stars on <a href="%url%" target="_blank">WordPress.org</a>.<br><br>You may also join our free <a href="%url2%" target="_blank">Facebook group</a> to post any questions or comments!<br><br>Cheers, Jesse<br><br>P.S. Use coupon code <code>SPEED20</code> to get $20 off our popular <a href="%url3%" target="_blank">Speed Boost</a> service at LittleBizzy.com.<br><br><small><em><a href="%url4%" target="_blank">Hide these notices</a></em></small>';
 
 
 
