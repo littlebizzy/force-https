@@ -7,7 +7,7 @@ Requires at least: 4.4
 Tested up to: 4.9
 Requires PHP: 7.0
 Multisite support: No
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Prefix: FHTTPS
@@ -219,6 +219,9 @@ Please avoid leaving negative reviews in order to get a feature implemented. Sta
 [https://www.facebook.com/groups/littlebizzy/](https://www.facebook.com/groups/littlebizzy/)
 
 == Changelog ==
+
+= 1.1.3 =
+* updated recommended plugins
 
 = 1.1.2 =
 * updated plugin meta
