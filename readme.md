@@ -2,7 +2,7 @@
 
 Redirects all HTTP requests to the HTTPS version and fixes insecure links and resources without altering the database (also works with CloudFlare).
 
-* [Plugin homepage](https://github.com/littlebizzy/plugin-boilerplate)
+* [Plugin homepage](https://www.littlebizzy.com/plugins/force-https)
 * [Download (WordPress.org)](https://wordpress.org/plugins/force-https-littlebizzy)
 * [Free Facebook group](https://www.facebook.com/groups/littlebizzy/)
 
