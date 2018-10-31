@@ -2,8 +2,8 @@
 /*
 Plugin Name: Force HTTPS
 Plugin URI: https://www.littlebizzy.com/plugins/force-https
-Description: Redirects all HTTP requests to the HTTPS version and fixes all insecure static resources without altering the database (also works with CloudFlare).
-Version: 1.1.3
+Description: Redirects all HTTP requests to the HTTPS version and fixes insecure links and resources without altering the database (also works with CloudFlare).
+Version: 1.1.4
 Author: LittleBizzy
 Author URI: https://www.littlebizzy.com
 License: GPLv3
@@ -31,7 +31,7 @@ if (!function_exists('add_action'))
 // Plugin constants
 define('FHTTPS_FILE', __FILE__);
 define('FHTTPS_PATH', dirname(FHTTPS_FILE));
-define('FHTTPS_VERSION', '1.1.3');
+define('FHTTPS_VERSION', '1.1.4');
 
 // Early check
 if (defined('FORCE_SSL') && !FORCE_SSL)
