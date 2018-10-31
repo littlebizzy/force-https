@@ -54,7 +54,7 @@ Any of our WordPress plugins may also be loaded as "Must-Use" by using our free 
 #### Plugin Features ####
 
 * Parent Plugin: N/A
-* Disable Nag Notices: Yes [[?](https://codex.wordpress.org/Plugin_API/Action_Reference/admin_notices#Disable_Nag_Notices)]
+* Disable Nag Notices: [Yes](https://codex.wordpress.org/Plugin_API/Action_Reference/admin_notices#Disable_Nag_Notices)
 * Settings Page: No
 * PHP Namespaces: No
 * Object-Oriented Code: No
@@ -65,8 +65,8 @@ Any of our WordPress plugins may also be loaded as "Must-Use" by using our free 
   * WP Options Table: Yes
   * Other Tables: No
   * Creates New Tables: No
-* Database Queries: Backend Only 
-  * Query Types: Options API
+* Database Queries: Backend Only (Options API)
+* Must-Use Support: [Yes](https://github.com/littlebizzy/autoloader)
 * Multisite Support: No
 * Uninstalls Data: Yes
 
