@@ -43,7 +43,9 @@ The only Force SSL (HTTPS) plugin that correctly follows Google Chrome team's ad
 
 #### Compatibility ####
 
-This plugin has been designed for use on LEMP (Nginx) web servers with PHP 7.2 and MySQL 5.7 to achieve best performance. All of our plugins are meant for single site WordPress installations only; for both performance and security reasons, we highly recommend against using WordPress Multisite for the vast majority of projects.
+This plugin has been designed for use on LEMP (Nginx) web servers with PHP 7.2 and MySQL 5.7 to achieve best performance. All of our plugins are meant for single site WordPress installations only; for both performance and usability reasons, we highly recommend against using WordPress Multisite for the vast majority of projects.
+
+Any of our WordPress plugins may also be loaded as "Must-Use" by using our [Autoloader](https://github.com/littlebizzy/autoloader) script within the `mu-plugins` directory.
 
 #### Defined Constants ####
 
