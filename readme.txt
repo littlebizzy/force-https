@@ -26,18 +26,18 @@ Redirects all HTTP requests to the HTTPS version and fixes insecure links and re
 
 #### The Long Version ####
 
-*WARNING: You must have an SSL certificate installed on your server before activating this plugin. If you website becomes inaccessible after activation, login via SFTP and delete this plugin from `/wp-content/plugins/` and clear your browser cache, then refresh the page.*
+*WARNING: You must have an SSL certificate installed on your server before activating this plugin. If you website becomes inaccessible after activation, simply login via SFTP and delete this plugin from `/wp-content/plugins/` and clear your browser cache, then refresh the page.*
 
 The only Force SSL (HTTPS) plugin that correctly follows Google Chrome team's advice to avoid protocol-relative hyperlinks and resources. Here are more of the current features:
 
-* redirects all HTTP requests to HTTPS (domain/protocol 301 redirects)
+* 301 redirects all HTTP requests to the HTTPS version
 * filters all internal resources to become secure (e.g. src="https://...")
 * filters all internal hyperlinks to be become secure (e.g. href="https://...")
 * filters all external resources to become secure (src, srcset, embeds, and objects)
 * skips any external hyperlinks
 * works with image srcsets too (Version 1.0.2+)
 * no need for additional plugins to fix insecure resources
-* avoids "protocol relative" URLs as recommended by top security experts
+* avoids "protocol relative" URLs as recommended by top security experts [1](https://jeremywagner.me/blog/stop-using-the-protocol-relative-url), [2](https://www.paulirish.com/2010/the-protocol-relative-url/)
 * zero database queries or settings pages
 * huge SEO and security benefits
 
@@ -69,10 +69,6 @@ Any of our WordPress plugins may also be loaded as "Must-Use" plugins by using o
 * Must-Use Support: [Yes](https://github.com/littlebizzy/autoloader)
 * Multisite Support: No
 * Uninstalls Data: Yes
-
-#### Inspiration ####
-
-[Jeremy Wagner](https://jeremywagner.me/blog/stop-using-the-protocol-relative-url), [Paul Irish](https://www.paulirish.com/2010/the-protocol-relative-url/), [Really Simple SSL](https://wordpress.org/plugins/really-simple-ssl/), [SSL Insecure Content Fixer](https://wordpress.org/plugins/ssl-insecure-content-fixer/), [WP Force SSL](https://wordpress.org/plugins/wp-force-ssl/)
 
 #### Special Thanks ####
 
