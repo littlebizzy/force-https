@@ -28,7 +28,9 @@ Redirects all HTTP requests to the HTTPS version and fixes insecure links and re
 
 *WARNING: You must have an SSL certificate installed on your server before activating this plugin. If you website becomes inaccessible after activation, simply login via SFTP and delete this plugin from `/wp-content/plugins/` and clear your browser cache, then refresh the page.*
 
-The only Force SSL (HTTPS) plugin that correctly follows Google Chrome team's advice to avoid protocol-relative hyperlinks and resources. Here are more of the current features:
+The only Force SSL (HTTPS) plugin that correctly avoids protocol-relative hyperlinks and resources as recommended by Google Chrome and top internet security experts!
+
+Current features:
 
 * 301 redirects all HTTP requests to the HTTPS version
 * filters all internal resources to become secure (e.g. src="https://...")
