@@ -80,7 +80,7 @@ Any of our WordPress plugins may also be loaded as "Must-Use" plugins by using o
 
 #### Disclaimer ####
 
-We released this plugin in response to our managed hosting clients asking for better access to their server, and our primary goal will remain supporting that purpose. Although we are 100% open to fielding requests from the WordPress community, we kindly ask that you keep the above-mentioned goals in mind, and refrain from slandering, threatening, or harassing our team  thanks!
+We released this plugin in response to our managed hosting clients asking for better access to their server, and our primary goal will remain supporting that purpose. Although we are 100% open to fielding requests from the WordPress community, we kindly ask that you keep the above-mentioned goals in mind, and refrain from slandering, threatening, or harassing our team members... thanks you!
 
 #### Keywords ####
 
