@@ -22,7 +22,7 @@ final class Admin_Notices_MS {
 	 * Custom message
 	 * Mark %plugin% reflects the plugin name
 	 */
-	private $message = 'Sorry! For performance reasons, WordPress Multisite is not supported by <strong>%plugin%</strong>. Achieve top speed and security with a <a href="https://www.littlebizzy.com/hosting?utm_source=multisite" target="_blank">dedicated Nginx VPS</a> for every site.';
+	private $message = 'For performance reasons, <strong>%plugin%</strong> does not support Multisite. For best results, always place your WordPress website on a <a href="https://www.littlebizzy.com/hosting?utm_source=multisite" target="_blank">dedicated Nginx server</a>.';
 
 
 
