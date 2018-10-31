@@ -43,20 +43,28 @@ The only Force SSL (HTTPS) plugin that correctly follows Google Chrome team's ad
 
 #### Compatibility ####
 
-This plugin has been designed for use on LEMP (Nginx) web servers with PHP 7.0 and MySQL 5.7 to achieve best performance. All of our plugins are meant for single site WordPress installations only; for both performance and security reasons, we highly recommend against using WordPress Multisite for the vast majority of projects.
+This plugin has been designed for use on LEMP (Nginx) web servers with PHP 7.2 and MySQL 5.7 to achieve best performance. All of our plugins are meant for single site WordPress installations only; for both performance and security reasons, we highly recommend against using WordPress Multisite for the vast majority of projects.
+
+#### Defined Constants ####
+
+    `define('DISABLE_NAG_NOTICES', true);`
 
 #### Plugin Features ####
 
+* Parent Plugin: N/A
+* Disable Nag Notices: Yes [[?](https://codex.wordpress.org/Plugin_API/Action_Reference/admin_notices#Disable_Nag_Notices)]
 * Settings Page: No
-* Premium Version Available: Yes ([SEO Genius](https://www.littlebizzy.com/plugins/seo-genius))
-* Includes Media (Images, Icons, Etc): No
+* PHP Namespaces: No
+* Object-Oriented Code: No
+* Includes Media (images, icons, etc): No
 * Includes CSS: No
 * Database Storage: Yes
   * Transients: No
-  * Options: Yes
+  * WP Options Table: Yes
+  * Other Tables: No
   * Creates New Tables: No
-* Database Queries: Backend Only (Options API)
-* Must-Use Support: Yes (Use With [Autoloader](https://github.com/littlebizzy/autoloader))
+* Database Queries: Backend Only 
+  * Query Types: Options API
 * Multisite Support: No
 * Uninstalls Data: Yes
 
