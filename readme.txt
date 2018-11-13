@@ -89,10 +89,6 @@ We released this plugin in response to our managed hosting clients asking for be
 
 > "The innovation that this industry talks about so much is bullshit. Anybody can innovate... 99% of it is 'Get the work done.' The real work is in the details." -- Linus Torvalds
 
-#### Search Keywords ####
-
-ssl, https, hsts, enable, generate, force, setup, configure, enforce, 301, redirect, headers, secure, insecure, incoming, requests, browser, htaccess, apache, nginx, server, replace, filter, scan, auto, automatic, dynamic, dynamically, images, files, resources, css, js, files, static, always, encrypt, free, seo, remove, relative, internal, external, sources, sitewide, site-wide, 301 redirect, strict transport security, force https, force ssl, enable ssl, enable tls, http to https, fix ssl, fix https, ssl certificate, ssl redirect, http redirect, https redirect, redirect http, redirect https, automatic redirect, auto redirect, fix mixed content, fix insecure content, secure resources, mixed content errors, mixed content warnings, insecure content warnings, mixed content fixer, ssl on all pages, https on all pages, ssl htaccess, https htaccess, media library https, redirect loop, infinite loop, infinite redirect loops, static files, static resources, flexible ssl, one click, single click, http headers, browser warnings, browser errors, htaccess rules, htaccess redirect, site url, home url, lets encrypt, free ssl, duplicate content, relative urls, relative protocol, protocol relative, remove protocol, sitewide ssl, site-wide ssl, really simple ssl, easy https redirection, ssl insecure content fixer, one click ssl, cloudflare ssl, cloudflare flexible ssl, wp force ssl, wordpress force https, wp force https, wp ssl redirect, wp encrypt, wp ssl https enforcer, force ssl, https domain alias, remove http, http https remover, force ssl everywhere
-
 == Installation ==
 
 1. Upload to `/wp-content/plugins/force-https-littlebizzy`
