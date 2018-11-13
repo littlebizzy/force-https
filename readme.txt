@@ -4,10 +4,10 @@ Contributors: littlebizzy
 Donate link: https://www.patreon.com/littlebizzy
 Tags: force, https, ssl, insecure, content
 Requires at least: 4.4
-Tested up to: 4.9
+Tested up to: 5.0
 Requires PHP: 7.0
 Multisite support: No
-Stable tag: 1.1.4
+Stable tag: 1.2.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Prefix: FHTTPS
@@ -22,16 +22,12 @@ Redirects all HTTP requests to the HTTPS version and fixes insecure links and re
 * [**Worth a 5-star review? Thank you!**](https://wordpress.org/support/plugin/force-https-littlebizzy/reviews/?rate=5#new-post)
 * [Plugin Homepage](https://www.littlebizzy.com/plugins/force-https)
 * [Plugin GitHub](https://github.com/littlebizzy/force-https)
-* [SlickStack](https://slickstack.io)
 
-#### The Long Version ####
+#### Current Features ####
 
 *WARNING: You must have an SSL certificate installed on your server before activating this plugin. If you website becomes inaccessible after activation, simply login via SFTP and delete this plugin from `/wp-content/plugins/` and clear your browser cache, then refresh the page.*
 
-The only Force SSL (HTTPS) plugin that correctly avoids protocol-relative hyperlinks and resources as recommended by Google Chrome and top internet security experts!
-
-Current features:
-
+* the only Force SSL (HTTPS) plugin that correctly avoids protocol-relative hyperlinks and resources as recommended by the Google Chrome team and top internet security experts!
 * 301 redirects all HTTP requests to the HTTPS version
 * filters all internal resources to become secure (e.g. src="https://...")
 * filters all internal hyperlinks to be become secure (e.g. href="https://...")
@@ -45,16 +41,18 @@ Current features:
 
 #### Compatibility ####
 
-This plugin has been designed for use on LEMP (Nginx) web servers with PHP 7.2 and MySQL 5.7 to achieve best performance. All of our plugins are meant for single site WordPress installations only; for both performance and usability reasons, we highly recommend avoiding WordPress Multisite for the vast majority of projects.
+This plugin has been designed for use on [SlickStack](https://slickstack.io) web servers with PHP 7.2 and MySQL 5.7 to achieve best performance. All of our plugins are meant for single site WordPress installations only; for both performance and usability reasons, we highly recommend avoiding WordPress Multisite for the vast majority of projects.
 
 Any of our WordPress plugins may also be loaded as "Must-Use" plugins by using our free [Autoloader](https://github.com/littlebizzy/autoloader) script in the `mu-plugins` directory.
 
 #### Defined Constants ####
 
-    `define('DISABLE_NAG_NOTICES', true);`
+    /* Plugin Meta */
+    define('DISABLE_NAG_NOTICES', true);
 
-#### Plugin Features ####
+#### Technical Details ####
 
+* Prefix: FHTTPS
 * Parent Plugin: N/A
 * Disable Nag Notices: [Yes](https://codex.wordpress.org/Plugin_API/Action_Reference/admin_notices#Disable_Nag_Notices)
 * Settings Page: No
@@ -67,6 +65,7 @@ Any of our WordPress plugins may also be loaded as "Must-Use" plugins by using o
   * WP Options Table: Yes
   * Other Tables: No
   * Creates New Tables: No
+  * Creates New WP Cron Jobs: No
 * Database Queries: Backend Only (Options API)
 * Must-Use Support: [Yes](https://github.com/littlebizzy/autoloader)
 * Multisite Support: No
@@ -78,7 +77,17 @@ Any of our WordPress plugins may also be loaded as "Must-Use" plugins by using o
 
 #### Disclaimer ####
 
-We released this plugin in response to our managed hosting clients asking for better access to their server, and our primary goal will remain supporting that purpose. Although we are 100% open to fielding requests from the WordPress community, we kindly ask that you keep the above-mentioned goals in mind, and refrain from slandering, threatening, or harassing our team members... thank you!
+We released this plugin in response to our managed hosting clients asking for better access to their server, and our primary goal will remain supporting that purpose. Although we are 100% open to fielding requests from the WordPress community, we kindly ask that you keep these conditions in mind, and refrain from slandering, threatening, or harassing our team members in order to get a feature added, or to otherwise get "free" support. The only place you should be contacting us is in our free [**Facebook group**](https://www.facebook.com/groups/littlebizzy/) which has been setup for this purpose, or via GitHub if you are an experienced developer. Thank you!
+
+#### Our Philosophy ####
+
+> "Decisions, not options." -- WordPress.org
+
+> "Everything should be made as simple as possible, but not simpler." -- Albert Einstein, et al
+
+> "Write programs that do one thing and do it well... write programs to work together." -- Doug McIlroy
+
+> "The innovation that this industry talks about so much is bullshit. Anybody can innovate... 99% of it is 'Get the work done.' The real work is in the details." -- Linus Torvalds
 
 #### Search Keywords ####
 
@@ -92,7 +101,7 @@ ssl, https, hsts, enable, generate, force, setup, configure, enforce, 301, redir
 
 Load a non-HTTPS version of any page, and it should be automatically redirected to the HTTPS version. In addition, most if not all insecure links and resources should now be loaded over HTTPS, regardless of original code.
 
-== FAQ ==
+== Frequently Asked Questions ==
 
 = Does this plugin install SSL for my site? =
 
@@ -133,6 +142,9 @@ Please avoid leaving negative reviews in order to get a feature implemented. Sta
 [https://www.facebook.com/groups/littlebizzy/](https://www.facebook.com/groups/littlebizzy/)
 
 == Changelog ==
+
+= 1.2.0 =
+* tested with WP 5.0
 
 = 1.1.4 =
 * updated plugin meta
@@ -183,4 +195,3 @@ Please avoid leaving negative reviews in order to get a feature implemented. Sta
 
 = 1.0.0 =
 * initial release
-* tested with PHP 7.0
