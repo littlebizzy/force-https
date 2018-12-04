@@ -11,6 +11,11 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Prefix: FHTTPS
 */
 
+// Block direct calls
+if (!function_exists('add_action')) {
+	die;
+}
+
 // Admin Notices module
 require_once dirname(__FILE__).'/admin-notices.php';
 FHTTPS_Admin_Notices::instance(__FILE__);
@@ -23,10 +28,6 @@ require_once dirname(__FILE__).'/admin-notices-ms.php';
 if (false !== \LittleBizzy\ForceHTTPS\Admin_Notices_MS::instance(__FILE__)) {
 	//return;
 }
-
-// Block direct calls
-if (!function_exists('add_action'))
-	die;
 
 // Plugin constants
 define('FHTTPS_FILE', __FILE__);
