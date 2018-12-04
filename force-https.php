@@ -39,6 +39,11 @@ if (defined('FORCE_SSL') && !FORCE_SSL) {
 	return;
 }
 
+// Exit on WP-CLI context
+if (defined('WP_CLI') && WP_CLI) {
+	return;
+}
+
 // Load main class
 require_once(FHTTPS_PATH.'/core/core.php');
 FHTTPS_Core::instance();
