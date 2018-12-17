@@ -2,11 +2,10 @@
 
 Redirects all HTTP requests to the HTTPS version and fixes insecure links and resources without altering the database (also works with CloudFlare).
 
-* [Plugin homepage](https://www.littlebizzy.com/plugins/force-https)
-* [Download (WordPress.org)](https://wordpress.org/plugins/force-https-littlebizzy)
-* [Free Facebook group](https://www.facebook.com/groups/littlebizzy/)
+* [Plugin Homepage (LittleBizzy.com)](https://www.littlebizzy.com/plugins/force-https)
+* [Free Facebook Group](https://www.facebook.com/groups/littlebizzy/)
 
-### Support issues
+### Support Issues
 
 *Please do not submit Pull Requests. Instead, kindly create a new Issue with relevant information if you are an experienced developer, otherwise post your comments in our free Facebook group.*
 
