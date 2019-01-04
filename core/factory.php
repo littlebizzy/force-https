@@ -18,19 +18,19 @@ class Factory extends Helpers\Factory {
 
 
 	/**
-	 * Filters object
+	 * Redirect object
 	 */
-	protected function createFilters() {
-		return Force\Filters::instance();
+	protected function createRedirect() {
+		return Force\Redirect::instance();
 	}
 
 
 
 	/**
-	 * Redirect object
+	 * Filters object
 	 */
-	protected function createRedirect() {
-		return Force\Redirect::instance();
+	protected function createFilters() {
+		return Force\Filters::instance();
 	}
 
 
