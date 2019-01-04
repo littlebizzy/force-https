@@ -7,10 +7,10 @@
  */
 
 // Subpackage namespace
-namespace LittleBizzy\PluginNamespace\Notices;
+namespace LittleBizzy\ForceHTTPS\Notices;
 
 // Aliased namespaces
-use LittleBizzy\PluginNamespace as PluginRoot;
+use LittleBizzy\ForceHTTPS as PluginRoot;
 
 /**
  * Admin Notices class

@@ -1,7 +1,7 @@
 <?php
 
 // Subpackage namespace
-namespace LittleBizzy\PluginNamespace\Helpers;
+namespace LittleBizzy\ForceHTTPS\Helpers;
 
 /**
  * Runner class

@@ -1,10 +1,10 @@
 <?php
 
 // Subpackage namespace
-namespace LittleBizzy\PluginNamespace\Helpers;
+namespace LittleBizzy\ForceHTTPS\Helpers;
 
 // Aliased namespaces
-use LittleBizzy\PluginNamespace\Notices;
+use LittleBizzy\ForceHTTPS\Notices;
 
 // Block direct calls
 if (!function_exists('add_action')) {
