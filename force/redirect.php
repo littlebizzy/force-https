@@ -1,65 +1,39 @@
 <?php
 
+// Subpackage namespace
+namespace LittleBizzy\ForceHTTPS\Force;
+
+// Aliased namespaces
+use \LittleBizzy\ForceHTTPS\Helpers;
+
 /**
- * Force HTTPS - Redirect class
+ * Redirect class
  *
  * @package Force HTTPS
- * @subpackage Force HTTPS
+ * @subpackage Force
  */
-final class FHTTPS_Core_Redirect {
-
-
-
-	// Properties
-	// ---------------------------------------------------------------------------------------------------
-
-
-
-	/**
-	 * Single class instance
-	 */
-	private static $instance;
-
-
-
-	// Initialization
-	// ---------------------------------------------------------------------------------------------------
-
-
-
-	/**
-	 * Create or retrieve instance
-	 */
-	public static function instance() {
-
-		// Check instance
-		if (!isset(self::$instance))
-			self::$instance = new self;
-
-		// Done
-		return self::$instance;
-	}
+final class Redirect extends Helpers\Singleton {
 
 
 
 	/**
 	 * Initialize the redirection process
 	 */
-	private function __construct() {
-		add_action('plugins_loaded', array(&$this, 'start'));
+	protected function onConstruct() {
+		add_action('init', [$this, 'start'], PHP_INT_MAX);
 	}
 
 
 
-	// The Redirection
-	// ---------------------------------------------------------------------------------------------------
-
-
-
 	/**
-	 * Do the redirect in a header-clean way
+	 * After WP init, do the redirect in a header-clean way
 	 */
 	public function start() {
+
+		// Check if intentionally disabled
+		if (defined('FORCE_SSL') && !FORCE_SSL) {
+			return;
+		}
 
 		// Remove existing headers
 		$this->removeHeaders();
