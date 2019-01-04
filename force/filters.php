@@ -1,65 +1,34 @@
 <?php
 
+// Subpackage namespace
+namespace LittleBizzy\ForceHTTPS\Force;
+
+// Aliased namespaces
+use \LittleBizzy\ForceHTTPS\Helpers;
+
 /**
- * Force HTTPS - Filters class
+ * Filters class
  *
  * @package Force HTTPS
- * @subpackage Force HTTPS Core
+ * @subpackage Force
  */
-final class FHTTPS_Core_Filters {
-
-
-
-	// Properties
-	// ---------------------------------------------------------------------------------------------------
-
-
-
-	/**
-	 * Single class instance
-	 */
-	private static $instance;
+final class Filters extends Helpers\Singleton {
 
 
 
 	/**
 	 * Current site host
 	 */
-	public $host;
-
-
-
-	// Initialization
-	// ---------------------------------------------------------------------------------------------------
+	private $host;
 
 
 
 	/**
-	 * Create or retrieve instance
+	 * Pseudo-constructor
 	 */
-	public static function instance() {
-
-		// Check instance
-		if (!isset(self::$instance))
-			self::$instance = new self;
-
-		// Done
-		return self::$instance;
-	}
-
-
-
-	/**
-	 * Constructor
-	 */
-	private function __construct() {
+	protected function onConstruct() {
 		$this->host = $this->getHostFromURL(home_url());
 	}
-
-
-
-	// Methods
-	// ---------------------------------------------------------------------------------------------------
 
 
 
@@ -69,27 +38,32 @@ final class FHTTPS_Core_Filters {
 	 */
 	public function content($content) {
 
+		// Checks for intentional disabling
+		if (defined('FORCE_SSL') && !FORCE_SSL) {
+			return $content;
+		}
+
 		// Prepare patterns
-		static $searches = array(
+		static $searches = [
 			'#<((?:img|iframe))[\s|\t].*?src=[\'"]\K(http://|//)[^\'"]+#i',	// image and iframe elements
 			'#<(a)[\s|\t][^>]*href=[\'"]\K(http://|//)[^\'"]+#i',			// anchor elements
 			'#<(link)[\s|\t][^>]*href=[\'"]\K(http://|//)[^\'"]+#i',		// link elements
 			'#<(script)[\s|\t][^>]*?src=[\'"]\K(http://|//)[^\'"]+#i',		// script elements
 			'#(url)\([\'"]?\K(http://|//)[^)]+#i',							// inline CSS e.g. background images
-		);
+		];
 
 		// Test the searches
-		$content = preg_replace_callback($searches, array(&$this, 'contentURL'), $content);
+		$content = preg_replace_callback($searches, [$this, 'contentURL'], $content);
 
 		// Object embeds
-		static $embeds = array(
+		static $embeds = [
 			'#<object\s+.*?</object>#is',				// object elements, including contained embed elements
 			'#<embed\s+.*?(?:/>|</embed>)#is',			// embed elements, not contained in object elements
 			'#<img\s+[^>]+srcset=["\']\K[^"\']+#is',	// responsive image srcset links (both internal and external images)
-		);
+		];
 
 		// Test the embeds
-		$content = preg_replace_callback($embeds, array(&$this, 'embedURL'), $content);
+		$content = preg_replace_callback($embeds, [$this, 'embedURL'], $content);
 
 		// Done
 		return $content;
@@ -114,21 +88,49 @@ final class FHTTPS_Core_Filters {
 	 * Do the replacements for multiple URLs
 	 */
 	public function embedURL($matches) {
-		$result = array();
-		$srcset = explode(',', str_replace(', ', ',', $matches[0]));
-		foreach ($srcset as $url)
-			$result[] = preg_replace_callback('#^(http://|//)[^\'"&\? ]+#i', array(&$this, 'contentURL'), trim($url));
-		return implode(', ', $result);
+
+		// Initialize
+		$result = [];
+
+		// Split URLs
+		$srcset = array_map('trim', explode(',', str_replace(', ', ',', $matches[0])));
+
+		// Process URLs
+		foreach ($srcset as $url) {
+
+			// Check URL
+			if ('' === $url) {
+				continue;
+			}
+
+			// Replace protocol
+			$result[] = preg_replace_callback('#^(http://|//)[^\'"&\? ]+#i', [$this, 'contentURL'], $url);
+		}
+
+		// Join replaced URLs
+		$srcset = implode(', ', $result);
+
+		// Done
+		return $srcset;
 	}
 
 
 
 	/**
-	 * Filter for the uploads dir array
+	 * Filter the uploads dir array
 	 */
 	public function uploadDir($uploads) {
-		$uploads['url']	= $this->securizeURL($uploads['url']);
-		$uploads['baseurl']	= $this->securizeURL($uploads['baseurl']);
+
+		// Checks for intentional disabling
+		if (defined('FORCE_SSL') && !FORCE_SSL) {
+			return $uploads;
+		}
+
+		// Securize uploads URLs
+		$uploads['url'] = $this->securizeURL($uploads['url']);
+		$uploads['baseurl'] = $this->securizeURL($uploads['baseurl']);
+
+		// Done
 		return $uploads;
 	}
 
@@ -138,6 +140,13 @@ final class FHTTPS_Core_Filters {
 	 * Check and securize an URL
 	 */
 	public function securizeURL($url) {
+
+		// Checks for intentional disabling
+		if (defined('FORCE_SSL') && !FORCE_SSL) {
+			return $url;
+		}
+
+		// Replace HTTP or Protocol relative by HTTPs
 		return (0 === stripos($url, 'http://'))? 'https'.substr($url, 4) : ((0 === strpos($url, '//'))? 'https:'.$url : $url);
 	}
 
@@ -146,11 +155,12 @@ final class FHTTPS_Core_Filters {
 	/**
 	 * Determines if an URL is an internal link
 	 */
-	public function isInternalLink($url) {
+	private function isInternalLink($url) {
 
 		// URL host
-		if (false === ($host = $this->getHostFromURL($url)))
+		if (false === ($host = $this->getHostFromURL($url))) {
 			return false;
+		}
 
 		// Compare hosts
 		return ($this->host == $host);
@@ -161,15 +171,17 @@ final class FHTTPS_Core_Filters {
 	/**
 	 * Extract host or domain name from URL
 	 */
-	public function getHostFromURL($url, $remove_www = true) {
+	private function getHostFromURL($url, $wwwRemove = true) {
 
 		// Extract the host part
-		if (false === ($host = @parse_url($url, PHP_URL_HOST)))
+		if (false === ($host = @parse_url($url, PHP_URL_HOST))) {
 			return false;
+		}
 
 		// Check if remove the www prefix
-		if ($remove_www && 0 === stripos($host, 'www.'))
+		if ($wwwRemove && 0 === stripos($host, 'www.')) {
 			$host = substr($host, 4);
+		}
 
 		// Done
 		return $host;

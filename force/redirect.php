@@ -20,7 +20,7 @@ final class Redirect extends Helpers\Singleton {
 	 * Initialize the redirection process
 	 */
 	protected function onConstruct() {
-		add_action('init', [$this, 'start'], PHP_INT_MAX);
+		add_action('init', [$this, 'init'], PHP_INT_MAX);
 	}
 
 
@@ -28,9 +28,9 @@ final class Redirect extends Helpers\Singleton {
 	/**
 	 * After WP init, do the redirect in a header-clean way
 	 */
-	public function start() {
+	public function init() {
 
-		// Check if intentionally disabled
+		// Checks for intentional disabling
 		if (defined('FORCE_SSL') && !FORCE_SSL) {
 			return;
 		}
