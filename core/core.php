@@ -1,58 +1,37 @@
 <?php
 
+// Subpackage namespace
+namespace LittleBizzy\ForceHTTPS\Core;
+
+// Aliased namespaces
+use \LittleBizzy\ForceHTTPS\Helpers;
+
 /**
- * Force HTTPS - Core class
+ * Core class
  *
  * @package Force HTTPS
- * @subpackage Force HTTPS Core
+ * @subpackage Core
  */
-final class FHTTPS_Core {
-
-
-
-	// Properties
-	// ---------------------------------------------------------------------------------------------------
+final class Core extends Helpers\Singleton {
 
 
 
 	/**
-	 * Single class instance
-	 */
-	private static $instance;
-
-
-
-	/**
-	 * Filters object
+	 * Filters objects
 	 */
 	private $filters;
 
 
 
-	// Initialization
-	// ---------------------------------------------------------------------------------------------------
-
-
-
 	/**
-	 * Create or retrieve instance
+	 * Pseudo-constructor
 	 */
-	public static function instance() {
+	protected function onConstruct() {
 
-		// Check instance
-		if (!isset(self::$instance))
-			self::$instance = new self;
-
-		// Done
-		return self::$instance;
-	}
-
-
-
-	/**
-	 * Constructor
-	 */
-	private function __construct() {
+		// Exit on WP-CLI context
+		if (defined('WP_CLI') && WP_CLI) {
+			return;
+		}
 
 		// Check SSL status
 		$this->checkSSLRedirect();
