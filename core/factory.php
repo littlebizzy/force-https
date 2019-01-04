@@ -18,6 +18,15 @@ class Factory extends Helpers\Factory {
 
 
 	/**
+	 * Checker object
+	 */
+	protected function createChecker() {
+		return new Force\Checker;
+	}
+
+
+
+	/**
 	 * Redirect object
 	 */
 	protected function createRedirect() {
