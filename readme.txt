@@ -139,6 +139,16 @@ Please avoid leaving negative reviews in order to get a feature implemented. Sta
 
 == Changelog ==
 
+= 1.3.0 =
+* PBP v1.1.0
+* tested with PHP 7.0
+* tested with PHP 7.1
+* tested with PHP 7.2
+* tested with PHP 5.6 (no fatal errors only, tweaked code style and several corrections)
+* better support for WP-CLI (fixes GitHub Issue #6/#2)
+* simplified plugin class organization
+* late support for FORCE_SSL constant aborting the plugin functionality in the last minute if false
+
 = 1.2.0 =
 * tested with WP 5.0
 
