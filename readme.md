@@ -9,6 +9,13 @@ Redirects all HTTP requests to the HTTPS version and fixes insecure links and re
 
     /* Plugin Meta */
     define('DISABLE_NAG_NOTICES', true);
+    
+    /* Force HTTPS Functions */
+    define('FORCE_HTTPS', true);
+    define('FORCE_HTTPS_EXTERNAL_LINKS', false);
+    define('FORCE_HTTPS_EXTERNAL_RESOURCES', true);
+    define('FORCE_HTTPS_INTERNAL_LINKS', true);
+    define('FORCE_HTTPS_INTERNAL_RESOURCES', true);
 
 ### Support Issues
 
