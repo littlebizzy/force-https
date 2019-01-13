@@ -31,7 +31,6 @@ Redirects all HTTP requests to the HTTPS version and fixes insecure links and re
 
 > "The innovation that this industry talks about so much is bullshit. Anybody can innovate... 99% of it is 'get the work done.' The real work is in the details." — Linus Torvalds
 
-
 ### Support Issues
 
 *Please do not submit Pull Requests. Instead, kindly create a new Issue with relevant information if you are an experienced developer, otherwise post your comments in our free Facebook group.*
