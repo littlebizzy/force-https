@@ -20,6 +20,10 @@ final class Redirect extends Helpers\Singleton {
 	 * Initialize the redirection process
 	 */
 	protected function onConstruct() {
+        if (php_sapi_name() == "cli") {
+            // do nothing when we are in CLI mode
+            return;
+        }
 		add_action('init', [$this, 'init'], PHP_INT_MAX);
 	}
 
