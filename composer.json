@@ -1,0 +1,16 @@
+{
+    "name": "littlebizzy/force-https",
+    "type": "wordpress-plugin",
+    "license": "GPLv3",
+    "homepage": "https://www.littlebizzy.com/plugins/force-https",
+    "description": "Redirects all HTTP requests to the HTTPS version and fixes insecure links and resources without altering the database (also works with CloudFlare).",
+    "keywords": ["wordpress","plugin","force","https","ssl","fix","insecure","mixed","content","resources"],
+    "support": {
+        "issues": "https://github.com/littlebizzy/force-https/issues",
+        "forum": "https://www.littlebizzy.com/members"
+    }
+    "require": {
+        "php": "^7.2",
+        "composer/installers": "~1.0"
+    }
+}
