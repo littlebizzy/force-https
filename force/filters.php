@@ -39,7 +39,7 @@ final class Filters extends Helpers\Singleton {
 	public function content($content) {
 
 		// Checks for intentional disabling
-		if (defined('FORCE_SSL') && !FORCE_SSL) {
+		if (!$this->plugin->enabled('FORCE_HTTPS')) {
 			return $content;
 		}
 
@@ -122,7 +122,7 @@ final class Filters extends Helpers\Singleton {
 	public function uploadDir($uploads) {
 
 		// Checks for intentional disabling
-		if (defined('FORCE_SSL') && !FORCE_SSL) {
+		if (!$this->plugin->enabled('FORCE_HTTPS')) {
 			return $uploads;
 		}
 
