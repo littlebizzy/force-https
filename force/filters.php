@@ -72,13 +72,34 @@ final class Filters extends Helpers\Singleton {
 
 
 	/**
-	 * Replace HTTP by HTTPS for images,
-	 * URLs in object and embed tags, and internal links.
+	 * Replace URL HTTP protocol by HTTPS
 	 */
 	public function contentURL($matches) {
-		$tag = (3 == count($matches))?  $matches[1] : null;
+
+		// Extract tag from matches
+		$tag = (3 == count($matches))? $matches[1] : null;
+
+		// Check internal link
+		$internal = $this->isInternalLink($matches[0]);
+
+		// Exceptions by tag and internal/external URL's
+		if ((isset($tag) && 'a' == $tag && $internal && !$this->plugin->enabled('FORCE_HTTPS_INTERNAL_LINKS')) || 			// Prevent internal links to be altered
+			((!isset($tag) || 'a' != $tag) && $internal && !$this->plugin->enabled('FORCE_HTTPS_INTERNAL_RESOURCES')) || 	// Prevent internal resources to be altered
+			(isset($tag) && 'a' == $tag && !$internal && !$this->plugin->enabled('FORCE_HTTPS_EXTERNAL_LINKS', false)) || 	// Prevent external links to be altered
+			((!isset($tag) || 'a' != $tag) && !$internal && !$this->plugin->enabled('FORCE_HTTPS_EXTERNAL_RESOURCES'))) { 	// Prevent external resources to be altered
+
+			// Original URL
+			return $matches[0];
+		}
+
+		// Prepare protocol
 		$protocol = isset($matches[2])? $matches[2] : $matches[1];
-		return (!isset($tag) || in_array($tag, ['img', 'url']) || $this->isInternalLink($matches[0]))? 'https://'.substr($matches[0], strlen($protocol)) : $matches[0];
+
+		// Compose new URL
+		$url = 'https://'.substr($matches[0], strlen($protocol));
+
+		// Done
+		return $url;
 	}
 
 
