@@ -65,7 +65,7 @@ final class Core extends Helpers\Singleton {
 		add_filter('style_loader_src',  [$filters, 'securizeURL'], PHP_INT_MAX);
 
 		// Attachments URL in frontend or AJAX context
-		if (!is_admin() || (defined('DOING_AJAX') && DOING_AJAX)) {
+		if ($this->plugin->context()->front() || $this->plugin->context()->ajax()) {
 			add_filter('wp_get_attachment_url', [$filters, 'securizeURL'], PHP_INT_MAX);
 		}
 
