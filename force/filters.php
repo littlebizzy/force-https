@@ -142,7 +142,7 @@ final class Filters extends Helpers\Singleton {
 	public function securizeURL($url) {
 
 		// Checks for intentional disabling
-		if (defined('FORCE_SSL') && !FORCE_SSL) {
+		if (!$this->plugin->enabled('FORCE_HTTPS')) {
 			return $url;
 		}
 
