@@ -49,6 +49,7 @@ final class Filters extends Helpers\Singleton {
 			'#<(a)[\s|\t][^>]*href=[\'"]\K(http://|//)[^\'"]+#i',			// anchor elements
 			'#<(link)[\s|\t][^>]*href=[\'"]\K(http://|//)[^\'"]+#i',		// link elements
 			'#<(script)[\s|\t][^>]*?src=[\'"]\K(http://|//)[^\'"]+#i',		// script elements
+			'#<(source)[\s|\t][^>]*?src=[\'"]\K(http://|//)[^\'"]+#i',		// source elements
 			'#(url)\([\'"]?\K(http://|//)[^)]+#i',							// inline CSS e.g. background images
 		];
 
