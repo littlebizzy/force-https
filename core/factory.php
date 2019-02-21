@@ -30,7 +30,7 @@ class Factory extends Helpers\Factory {
 	 * Redirect object
 	 */
 	protected function createRedirect() {
-		return Force\Redirect::instance();
+		return Force\Redirect::instance($this->plugin);
 	}
 
 
@@ -39,7 +39,7 @@ class Factory extends Helpers\Factory {
 	 * Filters object
 	 */
 	protected function createFilters() {
-		return Force\Filters::instance();
+		return Force\Filters::instance($this->plugin);
 	}
 
 
