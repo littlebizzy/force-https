@@ -32,6 +32,24 @@ class Context {
 	 * Constructor
 	 */
 	public function __construct() {
+		$this->settings();
+	}
+
+
+
+	/**
+	 * Reload settings
+	 */
+	public function reload() {
+		$this->settings();
+	}
+
+
+
+	/**
+	 * Context settings
+	 */
+	private function settings() {
 
 		// CLI mode
 		$this->cli = defined('WP_CLI') && WP_CLI;

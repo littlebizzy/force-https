@@ -25,6 +25,7 @@ class Plugin {
 	private $root;
 	private $prefix;
 	private $version;
+	private $repo;
 	private $packageNamespace;
 
 
@@ -48,6 +49,7 @@ class Plugin {
 		$this->root 	= dirname($this->file);
 		$this->prefix 	= constant($this->packageNamespace.'PREFIX');
 		$this->version 	= constant($this->packageNamespace.'VERSION');
+		$this->repo 	= defined($this->packageNamespace.'REPO')? constant($this->packageNamespace.'REPO') : false;
 	}
 
 
@@ -62,6 +64,28 @@ class Plugin {
 	 */
 	public function __get($name) {
 		return $this->$name;
+	}
+
+
+
+	/**
+	 * Check functionality enabled based on custom constant
+	 */
+	public function enabled($name, $default = true, $enabled = true) {
+		return defined($name)? (constant($name) === $enabled) : $default;
+	}
+
+
+
+	/**
+	 * Access to the context object
+	 */
+	public function context() {
+		static $context;
+		if (!isset($context)) {
+			$context = new Context;
+		}
+		return $context;
 	}
 
 

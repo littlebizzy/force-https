@@ -21,6 +21,9 @@ class Runner {
 		// Plugin object
 		$plugin = new Plugin;
 
+		// Updater object
+		$plugin->updater = new Updater($plugin->file, $plugin->prefix, $plugin->version, $plugin->repo);
+
 		// Function call
 		if (!isset($method)) {
 			call_user_func_array($plugin->packageNamespace.$who, [$plugin]);
