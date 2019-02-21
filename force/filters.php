@@ -84,10 +84,10 @@ final class Filters extends Helpers\Singleton {
 		$internal = $this->isInternalLink($matches[0]);
 
 		// Exceptions by tag and internal/external URL's
-		if ((isset($tag) && 'a' == $tag && $internal && !$this->plugin->enabled('FORCE_HTTPS_INTERNAL_LINKS')) || 			// Prevent internal links to be altered
-			((!isset($tag) || 'a' != $tag) && $internal && !$this->plugin->enabled('FORCE_HTTPS_INTERNAL_RESOURCES')) || 	// Prevent internal resources to be altered
-			(isset($tag) && 'a' == $tag && !$internal && !$this->plugin->enabled('FORCE_HTTPS_EXTERNAL_LINKS', false)) || 	// Prevent external links to be altered
-			((!isset($tag) || 'a' != $tag) && !$internal && !$this->plugin->enabled('FORCE_HTTPS_EXTERNAL_RESOURCES'))) { 	// Prevent external resources to be altered
+		if ((isset($tag) && 'a' == $tag && $internal && !$this->plugin->enabled('FORCE_HTTPS_INTERNAL_LINKS')) || 			// prevent internal links to be altered
+			((!isset($tag) || 'a' != $tag) && $internal && !$this->plugin->enabled('FORCE_HTTPS_INTERNAL_RESOURCES')) || 	// prevent internal resources to be altered
+			(isset($tag) && 'a' == $tag && !$internal && !$this->plugin->enabled('FORCE_HTTPS_EXTERNAL_LINKS', false)) || 	// prevent external links to be altered
+			((!isset($tag) || 'a' != $tag) && !$internal && !$this->plugin->enabled('FORCE_HTTPS_EXTERNAL_RESOURCES'))) { 	// prevent external resources to be altered
 
 			// Original URL
 			return $matches[0];
