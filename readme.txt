@@ -74,6 +74,17 @@ Please avoid leaving negative reviews in order to get a feature implemented. Sta
 
 == Changelog ==
 
+= 1.4.0 =
+* PBP v1.2.0
+* removed FORCE_SSL constant references
+* added support to force HTTPS on `source` elements (previously unsupported) ... this fixes GitHub Issue #7
+* late support for new FORCE_HTTPS defined constant
+* define('FORCE_HTTPS', true);
+* define('FORCE_HTTPS_EXTERNAL_LINKS', false);
+* define('FORCE_HTTPS_EXTERNAL_RESOURCES', true);
+* define('FORCE_HTTPS_INTERNAL_LINKS', true);
+* define('FORCE_HTTPS_INTERNAL_RESOURCES', true);
+
 = 1.3.0 =
 * PBP v1.1.0
 * tested with PHP 7.0
@@ -105,7 +116,7 @@ Please avoid leaving negative reviews in order to get a feature implemented. Sta
 * (no code changes)
 
 = 1.0.6 =
-* changed filters to force HTTPS for external resources (but not external hyperlinks) including `src`, `srcset`, `embed`, and `object`
+* changed filters to force HTTPS for external resources (but not hyperlinks) including `src`, `srcset`, `embed`, and `object`
 * (if an external resource does not exist in HTTPS version, it may generate a 404 error)
 * (philosophy = "green padlock" more important than a resource 404 error)
 * added warning for Multisite installations
