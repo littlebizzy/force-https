@@ -3,7 +3,7 @@
 Redirects all HTTP requests to the HTTPS version and fixes insecure links and resources without altering the database (also works with CloudFlare).
 
 * [Plugin Homepage](https://www.littlebizzy.com/plugins/force-https)
-* [**Download Latest Version (ZIP)**](https://github.com/littlebizzy/force-https/archive/1.4.0.zip)
+* [Download Latest Version (ZIP)](https://github.com/littlebizzy/force-https/archive/1.4.0.zip)
 * [**Become A LittleBizzy.com Member Today!**](https://www.littlebizzy.com/members)
 
 ### Defined Constants
