@@ -21,7 +21,7 @@ Redirects all HTTP requests to the HTTPS version and fixes insecure links and re
 
 ### Our Philosophy
 
-> "Decisions, not options." — WordPress.org (originally)
+> "Decisions, not options." — WordPress.org
 
 > "Everything should be made as simple as possible, but not simpler." — Albert Einstein, et al
 
