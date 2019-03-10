@@ -8,7 +8,8 @@ Redirects all HTTP requests to the HTTPS version and fixes insecure links and re
 ### Defined Constants
 
     /* Plugin Meta */
-    define('DISABLE_NAG_NOTICES', true);
+    define('AUTOMATIC_UPDATE_PLUGINS', false); // default = false
+    define('DISABLE_NAG_NOTICES', true); // default = true
     
     /* Force HTTPS Functions */
     define('FORCE_HTTPS', true);
