@@ -13,11 +13,11 @@ Redirects all HTTP requests to the HTTPS version and fixes insecure links and re
     define('DISABLE_NAG_NOTICES', true); // default = true
     
     /* Force HTTPS Functions */
-    define('FORCE_HTTPS', true);
-    define('FORCE_HTTPS_EXTERNAL_LINKS', false);
-    define('FORCE_HTTPS_EXTERNAL_RESOURCES', true);
-    define('FORCE_HTTPS_INTERNAL_LINKS', true);
-    define('FORCE_HTTPS_INTERNAL_RESOURCES', true);
+    define('FORCE_HTTPS', true); // default = true
+    define('FORCE_HTTPS_EXTERNAL_LINKS', false); // default = false
+    define('FORCE_HTTPS_EXTERNAL_RESOURCES', true); // default = true
+    define('FORCE_HTTPS_INTERNAL_LINKS', true); // default = true
+    define('FORCE_HTTPS_INTERNAL_RESOURCES', true); // default = true
 
 ### Compatibility
 
