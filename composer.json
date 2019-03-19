@@ -8,10 +8,9 @@
     "support": {
         "issues": "https://github.com/littlebizzy/force-https/issues",
         "forum": "https://www.littlebizzy.com/members"
-    }
+    },
     "require": {
         "php": "^7.2",
         "composer/installers": "~1.0"
     }
 }
-
