@@ -4,10 +4,10 @@ Contributors: littlebizzy
 Donate link: https://www.patreon.com/littlebizzy
 Tags: force, https, ssl, insecure, content
 Requires at least: 4.4
-Tested up to: 5.0
+Tested up to: 5.1
 Requires PHP: 7.2
 Multisite support: No
-Stable tag: 1.4.0
+Stable tag: 1.4.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Prefix: FHTTPS
@@ -15,10 +15,6 @@ Prefix: FHTTPS
 Redirects all HTTP requests to the HTTPS version and fixes insecure links and resources without altering the database (also works with CloudFlare).
 
 == Description ==
-
-Redirects all HTTP requests to the HTTPS version and fixes insecure links and resources without altering the database (also works with CloudFlare).
-
-#### Current Features ####
 
 *WARNING: You must have an SSL certificate installed on your server before activating this plugin. If you website becomes inaccessible after activation, simply login via SFTP and delete this plugin from `/wp-content/plugins/` and clear your browser cache, then refresh the page.*
 
@@ -73,6 +69,11 @@ Currenly no settings page exists, but we may add one in future versions.
 Please avoid leaving negative reviews in order to get a feature implemented. Stalking or harassing our team members is also not okay; we will expose those who attempt to extort or threaten us. Instead, you may post on the public WordPress.org forums if you like and other members may be able to help you. Since this is a free plugin, we do not offer support for it; we are also no longer involved at the WordPress.org forums. We recommend joining our Facebook group instead:
 
 == Changelog ==
+
+= 1.4.1 =
+* tested with WP 5.1
+* updated plugin meta
+* tweaked Composer meta
 
 = 1.4.0 =
 * PBP v1.2.0
