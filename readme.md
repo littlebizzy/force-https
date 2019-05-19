@@ -19,6 +19,10 @@ Redirects all HTTP requests to the HTTPS version and fixes insecure links and re
     define('FORCE_HTTPS_INTERNAL_LINKS', true); // default = true
     define('FORCE_HTTPS_INTERNAL_RESOURCES', true); // default = true
 
+### Included Modules
+
+* (n/a)
+
 ### Compatibility
 
 This plugin has been designed for use on [SlickStack](https://slickstack.io) web servers with PHP 7.2 and MySQL 5.7 to achieve best performance. All of our plugins are meant for single site WordPress installations only — for both performance and usability reasons, we strongly recommend avoiding WordPress Multisite for the vast majority of your projects.
