@@ -82,8 +82,8 @@ final class Admin_Notices_MS {
 		$this->plugin_file = isset($plugin_file)? $plugin_file : __FILE__;
 
 		// Admin notices both in admin and network admin
-		add_action('admin_notices', [&$this, 'adminNoticesMS']);
-		add_action('network_admin_notices', [&$this, 'adminNoticesMS']);
+		add_action('admin_notices', array(&$this, 'adminNoticesMS'));
+		add_action('network_admin_notices', array(&$this, 'adminNoticesMS'));
 	}
 
 
