@@ -37,4 +37,4 @@ Any of our WordPress plugins may also be loaded as "Must-Use" plugins (meaning t
 
 ### Support Issues
 
-We welcome experienced developers to submit Pull Requests to the Master branch, although opening a new Issue first is often helpful so that various users can discuss the topic. For all others, please become a [**LittleBizzy.com Member**](https://www.littlebizzy.com/members) if your company requires official support.
+We welcome experienced developers to submit Pull Requests to the Master branch, although opening a new Issue (instead) is often more helpful as various users can discuss the topic first. For all others, please become a [**LittleBizzy.com Member**](https://www.littlebizzy.com/members) if your company requires official support, and keep in mind that GitHub is not a support channel.
