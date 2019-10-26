@@ -19,15 +19,11 @@ Redirects all HTTP requests to the HTTPS version and fixes insecure links and re
     define('FORCE_HTTPS_INTERNAL_LINKS', true); // default = true
     define('FORCE_HTTPS_INTERNAL_RESOURCES', true); // default = true
 
-### Included Modules
-
-* (n/a)
-
 ### Compatibility
 
 This plugin has been designed for use on [SlickStack](https://slickstack.io) web servers with PHP 7.2 and MySQL 5.7 to achieve best performance. All of our plugins are meant primarily for single site WordPress installations — for both performance and usability reasons, we strongly recommend avoiding WordPress Multisite for the vast majority of your projects.
 
-Any of our WordPress plugins may also be loaded as "Must-Use" plugins (meaning that they load first, and cannot be deactivated) by using our free [Autoloader](https://github.com/littlebizzy/autoloader) script in the `mu-plugins` directory.
+Any of our WordPress plugins may also be loaded as "Must-Use" plugins (meaning that they load first, and cannot be deactivated) by using our free [Autoloader](https://www.littlebizzy.com/plugins/autoloader) script in the `mu-plugins` directory.
 
 ### Our Philosophy
 
@@ -41,4 +37,4 @@ Any of our WordPress plugins may also be loaded as "Must-Use" plugins (meaning t
 
 ### Support Issues
 
-Please do not submit Pull Requests. Instead, kindly create a new Issue with relevant information if you are an experienced developer, otherwise you may become a [**LittleBizzy.com Member**](https://www.littlebizzy.com/members) if your company requires official support.
+If you are an experienced developer, we welcome Pull Requests to the Master branch, although opening a new Issue first is often more helpful so that various users can discuss the topic. Otherwise, please become a [**LittleBizzy.com Member**](https://www.littlebizzy.com/members) if your company requires official support.
