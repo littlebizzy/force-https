@@ -46,5 +46,8 @@
 	},
 	"1.4.0": {
 		"package": "https://github.com/littlebizzy/force-https/archive/1.4.0.zip"
+	},
+	"1.4.1": {
+		"package": "https://github.com/littlebizzy/force-https/archive/1.4.1.zip"
 	}
 }

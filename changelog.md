@@ -1,9 +1,5 @@
 ## Changelog
 
-### 1.4.2
-* improved `composer.json`
-* updated metadata
-
 ### 1.4.1
 * tested with WP 5.1
 * updated metadata
