@@ -7,7 +7,7 @@ Requires at least: 4.4
 Tested up to: 5.1
 Requires PHP: 7.2
 Multisite support: No
-Stable tag: 1.4.1
+Stable tag: 1.4.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Prefix: FHTTPS
