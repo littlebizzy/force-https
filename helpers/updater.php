@@ -121,6 +121,7 @@ class Updater {
 		}
 
 		// Plugins list
+		$modified = false;
 		if (!empty($data['plugins']) && is_array($data['plugins']) && isset($data['plugins'][$this->key])) {
 			$modified = true;
 			unset($data['plugins'][$this->key]);
