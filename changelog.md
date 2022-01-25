@@ -1,5 +1,8 @@
 ## Changelog
 
+### 1.4.2
+* fixed undefined variable error (new default $modified = false)
+
 ### 1.4.1
 * tested with WP 5.1
 * updated metadata
