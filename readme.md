@@ -4,6 +4,13 @@ HTTPS enforcement for WordPress
 
 ## Changelog
 
+### 2.0.0
+- completely refactored code to WordPress standards
+- no more defined constants or options (hardcoded to enforce HTTPS on all internal/external links and resources)
+- much more extensive `add_filter` rules and HTML enforcement of HTTPS
+- supports PHP 7.0 to 8.3
+- supports Multisite
+
 ### 1.4.3
 * fixed undefined variable error (new default $modified = false)
 
