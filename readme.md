@@ -1,36 +1,89 @@
 # Force HTTPS
 
-Redirects all HTTP requests to the HTTPS version and fixes insecure links and resources without altering the database (also works with CloudFlare).
+HTTPS enforcement for WordPress
 
-* [Plugin Homepage](https://www.littlebizzy.com/plugins/force-https)
-* [Download Latest Version (ZIP)](https://github.com/littlebizzy/force-https/archive/v1.4.3.zip)
-* [**Become A LittleBizzy.com Member Today!**](https://www.littlebizzy.com/members)
+## Changelog
 
-### Defined Constants
+### 1.4.3
+* fixed undefined variable error (new default $modified = false)
 
-    /** Force HTTPS Functions */
-    define('FORCE_HTTPS', true); // default = true
-    define('FORCE_HTTPS_EXTERNAL_LINKS', false); // default = false
-    define('FORCE_HTTPS_EXTERNAL_RESOURCES', true); // default = true
-    define('FORCE_HTTPS_INTERNAL_LINKS', true); // default = true
-    define('FORCE_HTTPS_INTERNAL_RESOURCES', true); // default = true
+### 1.4.2
+* improved composer.json
+* updated metadata
 
-### Compatibility
+### 1.4.1
+* tested with WP 5.1
+* updated metadata
+* tweaked `composer.json`
 
-This plugin has been designed for use on [SlickStack](https://slickstack.io) web servers with PHP 7.2 and MySQL 5.7 to achieve best performance. All of our plugins are meant primarily for single site WordPress installations — for both performance and usability reasons, we strongly recommend avoiding WordPress Multisite for the vast majority of your projects.
+### 1.4.0
+* PBP v1.2.0
+* removed `FORCE_SSL` constant references
+* added support to force HTTPS on `source` elements (previously unsupported) ... this fixes GitHub Issue #7
+* late support for new FORCE_HTTPS defined constant
+* define('FORCE_HTTPS', true);
+* define('FORCE_HTTPS_EXTERNAL_LINKS', false);
+* define('FORCE_HTTPS_EXTERNAL_RESOURCES', true);
+* define('FORCE_HTTPS_INTERNAL_LINKS', true);
+* define('FORCE_HTTPS_INTERNAL_RESOURCES', true);
 
-Any of our WordPress plugins may also be loaded as "Must-Use" plugins (meaning that they load first, and cannot be deactivated) by using our free [Autoloader](https://www.littlebizzy.com/plugins/autoloader) script in the `mu-plugins` directory.
+### 1.3.0
+* PBP v1.1.0
+* tested with PHP 7.0, 7.1, 7.2
+* tested with PHP 5.6 (no fatal errors only, tweaked code style and several corrections)
+* better support for WP-CLI (fixes GitHub Issue #6/#2)
+* simplified plugin class organization
+* late support for FORCE_SSL constant aborting the plugin functionality in the last minute if false
 
-### Our Philosophy
+### 1.2.0
+* tested with WP 5.0
 
-> "Decisions, not options." — **WordPress.org**
+### 1.1.4
+* updated metadata
 
-> "Everything should be made as simple as possible, but not simpler." — **Albert Einstein** (et al)
+### 1.1.3
+* updated recommended plugins
 
-> "Write programs that do one thing and do it well... write programs to work together." — **Doug McIlroy**
+### 1.1.2
+* updated metadata
 
-> "The innovation that this industry talks about so much is bullshit. Anybody can innovate... 99% of it is 'get the work done.' The real work is in the details." — **Linus Torvalds**
+### 1.1.1
+* updated metadata
+* updated recommended plugins
 
-### Support Issues
+### 1.1.0
+* versioning correction (major changes in 1.0.6)
+* (no code changes)
 
-We welcome experienced developers to submit Pull Requests to the Master branch, although opening a new Issue (instead) is usually more helpful so that users can discuss the topic. Please become a [**LittleBizzy.com Member**](https://www.littlebizzy.com/members) if your company requires official support, and keep in mind that GitHub is for code development and not customer service.
+### 1.0.6
+* changed filters to force HTTPS for external resources (but not hyperlinks) including `src`, `srcset`, `embed`, and `object`
+* (if an external resource does not exist in HTTPS version, it may generate a 404 error)
+* (philosophy = "green padlock" more important than a resource 404 error)
+* added warning for Multisite installations
+* updated recommended plugins
+* updated metadata
+
+### 1.0.5
+* better support for `DISABLE_NAG_NOTICES`
+
+### 1.0.4
+* partial support for `DISABLE_NAG_NOTICES`
+* updated metadata
+
+### 1.0.3
+* tested with WP 4.9
+* updated recommended plugins
+* updated metadata
+
+### 1.0.2
+* filter to "skip" external hyperlinks
+* better HTTPS filters for internal links, internal sources, and image `srcset`
+* optimized plugin code
+* added rating request notice
+* updated recommended plugins
+
+### 1.0.1
+* added recommended plugins notice
+
+### 1.0.0
+* initial release
