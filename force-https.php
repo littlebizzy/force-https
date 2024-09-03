@@ -120,8 +120,14 @@ add_filter('do_shortcode_tag', function($output) {
 
 // Enforce HTTPS on wp_resource_hints
 add_filter('wp_resource_hints', function($urls) {
-    foreach ($urls as &$url) {
-        $url['href'] = str_replace('http://', 'https://', $url['href']);
+    if (is_array($urls)) {
+        foreach ($urls as &$url) {
+            if (is_array($url) && isset($url['href'])) {
+                $url['href'] = str_replace('http://', 'https://', $url['href']);
+            } elseif (is_string($url)) {
+                $url = str_replace('http://', 'https://', $url);
+            }
+        }
     }
     return $urls;
 }, 20);
