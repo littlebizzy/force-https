@@ -4,6 +4,9 @@ HTTPS enforcement for WordPress
 
 ## Changelog
 
+### 2.0.1
+- fixed `gu_override_dot_org` snippet
+
 ### 2.0.0
 - completely refactored code to WordPress standards
 - no more defined constants or options (hardcoded to enforce HTTPS on all internal/external links and resources)
