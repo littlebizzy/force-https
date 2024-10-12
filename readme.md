@@ -4,6 +4,9 @@ HTTPS enforcement for WordPress
 
 ## Changelog
 
+### 2.0.2
+- tweaked `gu_override_dot_org` snippet
+
 ### 2.0.1
 - fixed `gu_override_dot_org` snippet
 
