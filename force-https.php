@@ -3,26 +3,25 @@
 Plugin Name: Force HTTPS
 Plugin URI: https://www.littlebizzy.com/plugins/force-https
 Description: HTTPS enforcement for WordPress
-Version: 2.0.1
+Version: 2.0.2
 Author: LittleBizzy
 Author URI: https://www.littlebizzy.com
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 GitHub Plugin URI: littlebizzy/force-https
 Primary Branch: master
-Prefix: FHTTPS
 */
 
-// Exit if accessed directly
-if (!defined('ABSPATH')) {
+// prevent direct access
+if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-// Disable WordPress.org updates for this plugin
-add_filter('gu_override_dot_org', function ($overrides) {
+// disable wordpress.org updates for this plugin
+add_filter( 'gu_override_dot_org', function( $overrides ) {
     $overrides[] = 'force-https/force-https.php';
     return $overrides;
-});
+}, 999 );
 
 // Force HTTPS redirection for all non-HTTPS requests
 add_action('init', function () {
