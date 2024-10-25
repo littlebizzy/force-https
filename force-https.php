@@ -3,7 +3,8 @@
 Plugin Name: Force HTTPS
 Plugin URI: https://www.littlebizzy.com/plugins/force-https
 Description: HTTPS enforcement for WordPress
-Version: 2.0.2
+Version: 2.0.3
+Requires PHP: 7.0
 Author: LittleBizzy
 Author URI: https://www.littlebizzy.com
 License: GPLv3
