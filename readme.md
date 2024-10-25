@@ -4,6 +4,9 @@ HTTPS enforcement for WordPress
 
 ## Changelog
 
+### 2.0.3
+- added `Requires PHP` plugin header
+
 ### 2.0.2
 - improved `gu_override_dot_org` snippet
 
