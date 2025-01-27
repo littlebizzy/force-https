@@ -70,7 +70,7 @@ function force_https_fix_upload_dir( $uploads ) {
 add_filter( 'the_content', 'force_https_process_content', 20 );
 function force_https_process_content( $content ) {
     return preg_replace_callback(
-        '#(<(?:a|area|audio|button|canvas|embed|form|iframe|img|input|link|meta|object|picture|script|source|style|track|video|svg)[^>]+(?:action|background|content|data-src|data-href|data-\w+|href|manifest|poster|src|srcdoc|srcset|style|usemap|video|url|font-face|background-image|@font-face|srcset|srcdoc)=["\'])(http://|//)([^"\']+)#i',
+        '#(<(?:a|area|audio|button|canvas|embed|form|iframe|img|input|link|meta|object|picture|script|source|style|track|video|svg)[^>]+(?:action|background|background-image|content|data-src|data-href|data-\w+|fetch|font-face|href|manifest|poster|src|srcdoc|srcset|style|usemap|video|url|@font-face)=["\'])(http://|//)([^"\']+)#i',
         function( $matches ) {
             // convert protocol-relative urls like //example.com to https
             if ( strpos( $matches[2], '//' ) === 0 ) {
