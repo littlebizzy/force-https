@@ -69,26 +69,32 @@ add_filter( 'upload_dir', function( $uploads ) {
 
 // apply https to all elements and attributes that can contain urls
 add_filter( 'the_content', function( $content ) {
-    // convert all resources and hyperlinks to https
-    $content = preg_replace_callback(
+    $content = fhttps_convert_urls_to_https( $content );
+    $content = fhttps_convert_inline_styles_to_https( $content );
+    return $content;
+}, 20 );
+
+// helper function: convert all resource and hyperlink urls to https
+function fhttps_convert_urls_to_https( $content ) {
+    return preg_replace_callback(
         '#(<(?:img|iframe|embed|source|script|link|meta|video|audio|track|object|form|area|input|button|a)[^>]+(?:src|srcset|data-src|data-href|action|poster|content|style|href|manifest)=["\'])(http://)([^"\']+)#',
         function( $matches ) {
             return $matches[1] . 'https://' . $matches[3];
         },
         $content
     );
+}
 
-    // convert inline styles with url() to https
-    $content = preg_replace_callback(
+// helper function: convert inline styles with url() to https
+function fhttps_convert_inline_styles_to_https( $content ) {
+    return preg_replace_callback(
         '#(<[^>]+(?:style)=["\'][^>]*?url\((http://)([^"\']+)\))#',
         function( $matches ) {
             return str_replace( 'http://', 'https://', $matches[0] );
         },
         $content
     );
-
-    return $content;
-}, 20 );
+}
 
 // enforce https for text widget content
 add_filter( 'widget_text', function( $content ) {
