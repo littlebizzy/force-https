@@ -136,11 +136,14 @@ function force_https_fix_shortcode_urls( $output ) {
 add_filter( 'wp_resource_hints', 'force_https_fix_resource_hints', 20 );
 function force_https_fix_resource_hints( $urls ) {
     if ( is_array( $urls ) ) {
-        foreach ( $urls as &$url ) {
+        foreach ( $urls as $key => $url ) {
+            // check if $url is an array with an href key
             if ( is_array( $url ) && isset( $url['href'] ) ) {
-                $url['href'] = str_replace( 'http://', 'https://', $url['href'] );
-            } elseif ( is_string( $url ) ) {
-                $url = str_replace( 'http://', 'https://', $url );
+                $urls[ $key ]['href'] = str_replace( 'http://', 'https://', $url['href'] );
+            } 
+            // check if $url is a string and replace directly
+            elseif ( is_string( $url ) ) {
+                $urls[ $key ] = str_replace( 'http://', 'https://', $url );
             }
         }
     }
