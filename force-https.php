@@ -66,21 +66,19 @@ function force_https_fix_upload_dir( $uploads ) {
     return $uploads;
 }
 
-// apply https to all elements and attributes that can contain urls
+// force https on all elements and attributes with urls
 add_filter( 'the_content', 'force_https_process_content', 20 );
 function force_https_process_content( $content ) {
-    // single regex to handle both URL attributes and inline styles
     return preg_replace_callback(
-        '#(<(?:img|iframe|embed|source|script|link|meta|video|audio|track|object|form|area|input|button|a)[^>]+(?:src|srcset|data-src|data-href|action|poster|content|style|href|manifest)=["\'])(http://)([^"\']+)#i',
+        '#(<(?:a|area|audio|button|canvas|embed|form|iframe|img|input|link|meta|object|picture|script|source|track|video)[^>]+(?:action|background|content|data-src|data-href|data-\w+|href|manifest|poster|src|srcdoc|srcset|style|usemap|video|url|font-face)=["\'])(http://|//)([^"\']+)#i',
         function( $matches ) {
-            // convert http:// to https:// for both attributes and inline styles
-            $converted_url = set_url_scheme( 'http://' . $matches[3], 'https' );
-            // check if it's an inline style
-            if ( strpos( $matches[0], 'style=' ) !== false ) {
-                // also handle inline styles with url() if matched
-                return preg_replace( '#http://#', 'https://', $matches[0] );
+            // convert protocol-relative urls like //example.com to https
+            if ( strpos( $matches[2], '//' ) === 0 ) {
+                return $matches[1] . 'https://' . $matches[3];
             }
-            return $matches[1] . $converted_url;
+
+            // convert all http urls to https
+            return $matches[1] . 'https://' . $matches[3];
         },
         $content
     );
