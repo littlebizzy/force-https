@@ -29,7 +29,7 @@ add_action( 'init', 'force_https_redirect_non_https', 10 );
 function force_https_redirect_non_https() {
     if ( ! is_ssl() && ! is_admin() && PHP_SAPI !== 'cli' ) {
         if ( ! headers_sent() ) {
-            $redirect_url = home_url( add_query_arg( null, null ) );
+            $redirect_url = home_url( add_query_arg( array(), null ) );
             wp_safe_redirect( set_url_scheme( $redirect_url, 'https' ), 301 );
             exit;
         }
