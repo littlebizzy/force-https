@@ -38,10 +38,7 @@ function force_https_redirect_non_https() {
 
 // force https on all urls by replacing http:// with https://
 function force_https_securize_url( $url ) {
-    if ( strpos( $url, 'http://' ) === 0 ) {
-        return set_url_scheme( $url, 'https' );
-    }
-    return $url;
+    return set_url_scheme( $url, 'https' );
 }
 
 // apply https to all relevant wordpress filters
