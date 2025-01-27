@@ -99,13 +99,13 @@ function force_https_convert_inline_styles_to_https( $content ) {
     );
 }
 
-// enforce https for text widget content
+// enforce https for text widget content (for older wordpress versions)
 add_filter( 'widget_text', 'force_https_fix_widget_text', 20 );
 function force_https_fix_widget_text( $content ) {
     return str_replace( 'http://', 'https://', $content );
 }
 
-// enforce https for widget text content in newer wordpress versions
+// enforce https for text widget content (for newer wordpress versions)
 add_filter( 'widget_text_content', 'force_https_fix_widget_text_content', 20 );
 function force_https_fix_widget_text_content( $content ) {
     return str_replace( 'http://', 'https://', $content );
