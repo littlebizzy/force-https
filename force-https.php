@@ -66,18 +66,18 @@ function force_https_fix_upload_dir( $uploads ) {
     return $uploads;
 }
 
-// force https on all elements and attributes with urls
+// Force HTTPS on all elements and attributes with URLs.
 add_filter( 'the_content', 'force_https_process_content', 20 );
 function force_https_process_content( $content ) {
     return preg_replace_callback(
-        '#(<(?:a|area|audio|button|canvas|embed|form|iframe|img|input|link|meta|object|picture|script|source|style|track|video|svg)[^>]+(?:action|background|background-image|content|data-src|data-href|data-\w+|fetch|font-face|href|manifest|poster|src|srcdoc|srcset|style|usemap|video|url|@font-face)=["\'])(http://|//)([^"\']+)#i',
+        '#(<(?:a|area|audio|blockquote|button|canvas|del|embed|form|iframe|img|input|ins|link|meta|object|picture|q|script|source|style|svg|track|video)[^>]+(?:@font-face|action|background|background-image|cite|classid|codebase|content|data-[^\s=]+|fetch|font-face|formaction|href|longdesc|manifest|ping|poster|src|srcdoc|srcset|style|url|usemap|video|xlink:href)=["\'])(http://|//)([^"\']+)#i',
         function( $matches ) {
-            // convert protocol-relative urls like //example.com to https
+            // Convert protocol-relative URLs like //example.com to https.
             if ( strpos( $matches[2], '//' ) === 0 ) {
                 return $matches[1] . 'https://' . $matches[3];
             }
 
-            // convert all http urls to https
+            // Convert all http URLs to https.
             return $matches[1] . 'https://' . $matches[3];
         },
         $content
