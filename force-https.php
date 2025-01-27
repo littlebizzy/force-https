@@ -26,7 +26,7 @@ add_filter( 'gu_override_dot_org', function( $overrides ) {
 
 // force https redirection for all non-https requests
 add_action( 'init', function() {
-    if ( ! is_ssl() && ! is_admin() && php_sapi_name() !== 'cli' ) {
+    if ( ! is_ssl() && ! is_admin() && PHP_SAPI !== 'cli' ) {
         if ( ! headers_sent() ) {
             $redirect_url = home_url( add_query_arg( null, null ) );
             wp_safe_redirect( set_url_scheme( $redirect_url, 'https' ), 301 );
