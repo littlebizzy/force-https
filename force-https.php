@@ -82,7 +82,7 @@ function force_https_convert_urls_to_https( $content ) {
     return preg_replace_callback(
         '#(<(?:img|iframe|embed|source|script|link|meta|video|audio|track|object|form|area|input|button|a)[^>]+(?:src|srcset|data-src|data-href|action|poster|content|style|href|manifest)=["\'])(http://)([^"\']+)#',
         function( $matches ) {
-            return $matches[1] . 'https://' . $matches[3];
+            return $matches[1] . set_url_scheme( 'http://' . $matches[3], 'https' );
         },
         $content
     );
@@ -102,19 +102,19 @@ function force_https_convert_inline_styles_to_https( $content ) {
 // enforce https for text widget content (for older wordpress versions)
 add_filter( 'widget_text', 'force_https_fix_widget_text', 20 );
 function force_https_fix_widget_text( $content ) {
-    return str_replace( 'http://', 'https://', $content );
+    return set_url_scheme( $content, 'https' );
 }
 
 // enforce https for text widget content (for newer wordpress versions)
 add_filter( 'widget_text_content', 'force_https_fix_widget_text_content', 20 );
 function force_https_fix_widget_text_content( $content ) {
-    return str_replace( 'http://', 'https://', $content );
+    return set_url_scheme( $content, 'https' );
 }
 
 // apply https to all urls in custom menus
 add_filter( 'nav_menu_link_attributes', 'force_https_fix_menu_links', 20 );
 function force_https_fix_menu_links( $atts ) {
-    if ( isset( $atts['href'] ) && strpos( $atts['href'], 'http://' ) === 0 ) {
+    if ( isset( $atts['href'] ) ) {
         $atts['href'] = set_url_scheme( $atts['href'], 'https' );
     }
     return $atts;
@@ -123,13 +123,13 @@ function force_https_fix_menu_links( $atts ) {
 // enforce https for oembed urls
 add_filter( 'embed_oembed_html', 'force_https_fix_oembed_html', 20 );
 function force_https_fix_oembed_html( $html ) {
-    return str_replace( 'http://', 'https://', $html );
+    return set_url_scheme( $html, 'https' );
 }
 
 // enforce https for any urls used in shortcodes
 add_filter( 'do_shortcode_tag', 'force_https_fix_shortcode_urls', 20 );
 function force_https_fix_shortcode_urls( $output ) {
-    return str_replace( 'http://', 'https://', $output );
+    return set_url_scheme( $output, 'https' );
 }
 
 // enforce https on wp_resource_hints
@@ -137,13 +137,10 @@ add_filter( 'wp_resource_hints', 'force_https_fix_resource_hints', 20 );
 function force_https_fix_resource_hints( $urls ) {
     if ( is_array( $urls ) ) {
         foreach ( $urls as $key => $url ) {
-            // check if $url is an array with an href key
             if ( is_array( $url ) && isset( $url['href'] ) ) {
-                $urls[ $key ]['href'] = str_replace( 'http://', 'https://', $url['href'] );
-            } 
-            // check if $url is a string and replace directly
-            elseif ( is_string( $url ) ) {
-                $urls[ $key ] = str_replace( 'http://', 'https://', $url );
+                $urls[ $key ]['href'] = set_url_scheme( $url['href'], 'https' );
+            } elseif ( is_string( $url ) ) {
+                $urls[ $key ] = set_url_scheme( $url, 'https' );
             }
         }
     }
@@ -154,12 +151,12 @@ function force_https_fix_resource_hints( $urls ) {
 add_filter( 'wp_get_attachment_metadata', 'force_https_fix_attachment_metadata', 20 );
 function force_https_fix_attachment_metadata( $data ) {
     if ( isset( $data['file'] ) ) {
-        $data['file'] = str_replace( 'http://', 'https://', $data['file'] );
+        $data['file'] = set_url_scheme( $data['file'], 'https' );
     }
     if ( isset( $data['sizes'] ) && is_array( $data['sizes'] ) ) {
         foreach ( $data['sizes'] as &$size ) {
             if ( isset( $size['file'] ) ) {
-                $size['file'] = str_replace( 'http://', 'https://', $size['file'] );
+                $size['file'] = set_url_scheme( $size['file'], 'https' );
             }
         }
     }
@@ -171,7 +168,7 @@ add_filter( 'wp_calculate_image_srcset', 'force_https_fix_image_srcsets', 20 );
 function force_https_fix_image_srcsets( $sources ) {
     foreach ( $sources as &$source ) {
         if ( isset( $source['url'] ) ) {
-            $source['url'] = str_replace( 'http://', 'https://', $source['url'] );
+            $source['url'] = set_url_scheme( $source['url'], 'https' );
         }
     }
     return $sources;
@@ -180,7 +177,7 @@ function force_https_fix_image_srcsets( $sources ) {
 // enforce https on custom logo html
 add_filter( 'get_custom_logo', 'force_https_fix_custom_logo', 20 );
 function force_https_fix_custom_logo( $html ) {
-    return str_replace( 'http://', 'https://', $html );
+    return set_url_scheme( $html, 'https' );
 }
 
 // enforce https for login/logout redirect urls
