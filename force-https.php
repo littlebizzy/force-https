@@ -69,28 +69,18 @@ function force_https_fix_upload_dir( $uploads ) {
 // apply https to all elements and attributes that can contain urls
 add_filter( 'the_content', 'force_https_process_content', 20 );
 function force_https_process_content( $content ) {
-    $content = force_https_convert_urls_to_https( $content );
-    $content = force_https_convert_inline_styles_to_https( $content );
-    return $content;
-}
-
-// helper function: convert all resource and hyperlink urls to https
-function force_https_convert_urls_to_https( $content ) {
+    // single regex to handle both URL attributes and inline styles
     return preg_replace_callback(
-        '#(<(?:img|iframe|embed|source|script|link|meta|video|audio|track|object|form|area|input|button|a)[^>]+(?:src|srcset|data-src|data-href|action|poster|content|style|href|manifest)=["\'])(http://)([^"\']+)#',
+        '#(<(?:img|iframe|embed|source|script|link|meta|video|audio|track|object|form|area|input|button|a)[^>]+(?:src|srcset|data-src|data-href|action|poster|content|style|href|manifest)=["\'])(http://)([^"\']+)#i',
         function( $matches ) {
-            return $matches[1] . set_url_scheme( 'http://' . $matches[3], 'https' );
-        },
-        $content
-    );
-}
-
-// helper function: convert inline styles with url() to https
-function force_https_convert_inline_styles_to_https( $content ) {
-    return preg_replace_callback(
-        '#(<[^>]+(?:style)=["\'][^>]*?url\((http://)([^"\']+)\))#',
-        function( $matches ) {
-            return str_replace( 'http://', 'https://', $matches[0] );
+            // convert http:// to https:// for both attributes and inline styles
+            $converted_url = set_url_scheme( 'http://' . $matches[3], 'https' );
+            // check if it's an inline style
+            if ( strpos( $matches[0], 'style=' ) !== false ) {
+                // also handle inline styles with url() if matched
+                return preg_replace( '#http://#', 'https://', $matches[0] );
+            }
+            return $matches[1] . $converted_url;
         },
         $content
     );
