@@ -153,7 +153,7 @@ function force_https_fix_attachment_metadata( $data ) {
     if ( isset( $data['file'] ) ) {
         $data['file'] = str_replace( 'http://', 'https://', $data['file'] );
     }
-    if ( isset( $data['sizes'] ) ) {
+    if ( isset( $data['sizes'] ) && is_array( $data['sizes'] ) ) {
         foreach ( $data['sizes'] as &$size ) {
             if ( isset( $size['file'] ) ) {
                 $size['file'] = str_replace( 'http://', 'https://', $size['file'] );
