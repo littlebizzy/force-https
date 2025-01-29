@@ -39,7 +39,7 @@ function force_https_redirect_non_https() {
     }
 }
 
-// force https on all urls by replacing http:// with https://
+// enforce https on all urls by replacing http with https
 function force_https_securize_url( $url ) {
     return set_url_scheme( $url, 'https' );
 }
