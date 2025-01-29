@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-// disable wordpress.org updates for this plugin
+// override wordpress.org with git updater
 add_filter( 'gu_override_dot_org', function( $overrides ) {
     $overrides[] = 'force-https/force-https.php';
     return $overrides;
@@ -30,11 +30,27 @@ add_filter( 'gu_override_dot_org', function( $overrides ) {
 // force https on frontend requests
 add_action( 'init', 'force_https_redirect_non_https', 10 );
 function force_https_redirect_non_https() {
-    if ( ! is_ssl() && ! is_admin() && PHP_SAPI !== 'cli' ) {
-        if ( ! headers_sent() ) {
-            wp_safe_redirect( set_url_scheme( home_url( $_SERVER['REQUEST_URI'] ), 'https' ), 301 );
-            exit;
-        }
+    if ( ! is_ssl() && ! is_admin() && PHP_SAPI !== 'cli' && ! headers_sent() ) {
+        wp_safe_redirect( set_url_scheme( home_url( $_SERVER['REQUEST_URI'] ), 'https' ), 301 );
+        exit;
+    }
+}
+
+// force https on wp admin
+add_action( 'admin_init', 'force_https_redirect_admin', 10 );
+function force_https_redirect_admin() {
+    if ( ! is_ssl() && PHP_SAPI !== 'cli' && ! headers_sent() ) {
+        wp_safe_redirect( set_url_scheme( home_url( $_SERVER['REQUEST_URI'] ), 'https' ), 301 );
+        exit;
+    }
+}
+
+// force https on wp login
+add_action( 'login_init', 'force_https_redirect_login', 10 );
+function force_https_redirect_login() {
+    if ( ! is_ssl() && PHP_SAPI !== 'cli' && ! headers_sent() ) {
+        wp_safe_redirect( set_url_scheme( home_url( $_SERVER['REQUEST_URI'] ), 'https' ), 301 );
+        exit;
     }
 }
 
@@ -86,19 +102,11 @@ function force_https_process_content( $content ) {
     );
 }
 
-// enforce https for text widget content (for older wordpress versions)
-add_filter( 'widget_text', 'force_https_fix_widget_text', 20 );
-function force_https_fix_widget_text( $content ) {
-    return set_url_scheme( $content, 'https' );
-}
+// enforce https for text widget content
+add_filter( 'widget_text', 'force_https_securize_url', 20 );
+add_filter( 'widget_text_content', 'force_https_securize_url', 20 );
 
-// enforce https for text widget content (for newer wordpress versions)
-add_filter( 'widget_text_content', 'force_https_fix_widget_text_content', 20 );
-function force_https_fix_widget_text_content( $content ) {
-    return set_url_scheme( $content, 'https' );
-}
-
-// apply https to all urls in custom menus
+// enforce https for custom menus
 add_filter( 'nav_menu_link_attributes', 'force_https_fix_menu_links', 20 );
 function force_https_fix_menu_links( $atts ) {
     if ( isset( $atts['href'] ) ) {
@@ -108,18 +116,12 @@ function force_https_fix_menu_links( $atts ) {
 }
 
 // enforce https for oembed urls
-add_filter( 'embed_oembed_html', 'force_https_fix_oembed_html', 20 );
-function force_https_fix_oembed_html( $html ) {
-    return set_url_scheme( $html, 'https' );
-}
+add_filter( 'embed_oembed_html', 'force_https_securize_url', 20 );
 
-// enforce https for any urls used in shortcodes
-add_filter( 'do_shortcode_tag', 'force_https_fix_shortcode_urls', 20 );
-function force_https_fix_shortcode_urls( $output ) {
-    return set_url_scheme( $output, 'https' );
-}
+// enforce https for shortcodes
+add_filter( 'do_shortcode_tag', 'force_https_securize_url', 20 );
 
-// enforce https on wp_resource_hints
+// enforce https for wp resource hints
 add_filter( 'wp_resource_hints', 'force_https_fix_resource_hints', 20 );
 function force_https_fix_resource_hints( $urls ) {
     if ( is_array( $urls ) ) {
@@ -161,11 +163,8 @@ function force_https_fix_image_srcsets( $sources ) {
     return $sources;
 }
 
-// enforce https on custom logo html
-add_filter( 'get_custom_logo', 'force_https_fix_custom_logo', 20 );
-function force_https_fix_custom_logo( $html ) {
-    return set_url_scheme( $html, 'https' );
-}
+// enforce https on custom logo
+add_filter( 'get_custom_logo', 'force_https_securize_url', 20 );
 
 // enforce https for login/logout redirect urls
 add_filter( 'login_redirect', 'force_https_securize_url', 20 );
