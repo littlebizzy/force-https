@@ -99,41 +99,24 @@ function force_https_fix_menu_links( $atts ) {
 // enforce https for wp resource hints
 add_filter( 'wp_resource_hints', 'force_https_fix_resource_hints', 20 );
 function force_https_fix_resource_hints( $urls ) {
-    if ( is_array( $urls ) ) {
-        foreach ( $urls as $key => $url ) {
-            if ( is_array( $url ) && isset( $url['href'] ) ) {
-                $urls[ $key ]['href'] = set_url_scheme( $url['href'], 'https' );
-            } elseif ( is_string( $url ) ) {
-                $urls[ $key ] = set_url_scheme( $url, 'https' );
-            }
+    if ( ! is_array( $urls ) ) {
+        return $urls;
+    }
+    foreach ( $urls as &$url ) {
+        if ( is_string( $url ) ) {
+            $url = set_url_scheme( $url, 'https' );
+        } elseif ( is_array( $url ) && isset( $url['href'] ) ) {
+            $url['href'] = set_url_scheme( $url['href'], 'https' );
         }
     }
     return $urls;
-}
-
-// enforce https on attachment metadata  
-add_filter( 'wp_get_attachment_metadata', 'force_https_fix_attachment_metadata', 20, 2 );
-function force_https_fix_attachment_metadata( $data, $attachment_id ) {
-    if ( isset( $data['file'] ) ) {
-        $data['file'] = set_url_scheme( wp_get_attachment_url( $attachment_id ), 'https' );
-    }
-    if ( isset( $data['sizes'] ) && is_array( $data['sizes'] ) ) {
-        foreach ( $data['sizes'] as &$size ) {
-            if ( isset( $size['file'] ) ) {
-                $size['file'] = set_url_scheme( wp_get_attachment_url( $attachment_id ), 'https' );
-            }
-        }
-    }
-    return $data;
 }
 
 // enforce https on image srcsets
 add_filter( 'wp_calculate_image_srcset', 'force_https_fix_image_srcsets', 20 );
 function force_https_fix_image_srcsets( $sources ) {
     foreach ( $sources as &$source ) {
-        if ( isset( $source['url'] ) ) {
-            $source['url'] = set_url_scheme( $source['url'], 'https' );
-        }
+        $source['url'] = set_url_scheme( $source['url'], 'https' );
     }
     return $sources;
 }
