@@ -111,16 +111,16 @@ function force_https_fix_resource_hints( $urls ) {
     return $urls;
 }
 
-// enforce https on attachment metadata
-add_filter( 'wp_get_attachment_metadata', 'force_https_fix_attachment_metadata', 20 );
-function force_https_fix_attachment_metadata( $data ) {
+// enforce https on attachment metadata  
+add_filter( 'wp_get_attachment_metadata', 'force_https_fix_attachment_metadata', 20, 2 );
+function force_https_fix_attachment_metadata( $data, $attachment_id ) {
     if ( isset( $data['file'] ) ) {
-        $data['file'] = set_url_scheme( $data['file'], 'https' );
+        $data['file'] = set_url_scheme( wp_get_attachment_url( $attachment_id ), 'https' );
     }
     if ( isset( $data['sizes'] ) && is_array( $data['sizes'] ) ) {
         foreach ( $data['sizes'] as &$size ) {
             if ( isset( $size['file'] ) ) {
-                $size['file'] = set_url_scheme( $size['file'], 'https' );
+                $size['file'] = set_url_scheme( wp_get_attachment_url( $attachment_id ), 'https' );
             }
         }
     }
