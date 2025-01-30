@@ -37,7 +37,7 @@ add_filter( 'pre_option_siteurl', 'force_https_filter_home' );
 // force https redirect on frontend, admin, and login
 function force_https_redirect() {
     if ( ! is_ssl() && ! defined( 'WP_CLI' ) && ! headers_sent() ) {
-        wp_safe_redirect( set_url_scheme( home_url( $_SERVER['REQUEST_URI'] ), 'https' ), 301 );
+        wp_safe_redirect( set_url_scheme( home_url( isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : '' ), 'https' ), 301 );
         exit;
     }
 }
@@ -48,33 +48,42 @@ foreach ( array( 'init', 'admin_init', 'login_init' ) as $hook ) {
 }
 
 // enforce https on all urls by replacing http with https
-function force_https_securize_url( $url ) {
-    return set_url_scheme( $url, 'https' );
+function force_https_securize_url( $value ) {
+    // return original if not string
+    if ( ! is_string( $value ) ) {
+        return $value;
+    }
+    // if valid url, force https
+    if ( filter_var( $value, FILTER_VALIDATE_URL ) !== false ) {
+        return set_url_scheme( $value, 'https' );
+    }
+    // replace http with https in text or html
+    return str_ireplace( 'http://', 'https://', $value );
 }
 
 // apply https to all relevant wordpress filters  
-add_filter( 'home_url', 'force_https_securize_url', 20 );
-add_filter( 'site_url', 'force_https_securize_url', 20 );
-add_filter( 'network_site_url', 'force_https_securize_url', 20 );
-add_filter( 'network_home_url', 'force_https_securize_url', 20 );
-add_filter( 'post_link', 'force_https_securize_url', 20 );
-add_filter( 'page_link', 'force_https_securize_url', 20 );
-add_filter( 'term_link', 'force_https_securize_url', 20 );
-add_filter( 'template_directory_uri', 'force_https_securize_url', 20 );
-add_filter( 'stylesheet_directory_uri', 'force_https_securize_url', 20 );
-add_filter( 'script_loader_src', 'force_https_securize_url', 20 );
-add_filter( 'style_loader_src', 'force_https_securize_url', 20 );
-add_filter( 'wp_get_attachment_url', 'force_https_securize_url', 20 );
-add_filter( 'get_avatar_url', 'force_https_securize_url', 20 );
-add_filter( 'rest_url', 'force_https_securize_url', 20 );
-add_filter( 'wp_redirect', 'force_https_securize_url', 20 );
-add_filter( 'login_redirect', 'force_https_securize_url', 20 );
-add_filter( 'logout_redirect', 'force_https_securize_url', 20 );
-add_filter( 'embed_oembed_html', 'force_https_securize_url', 20 );
-add_filter( 'do_shortcode_tag', 'force_https_securize_url', 20 );
-add_filter( 'widget_text', 'force_https_securize_url', 20 );
-add_filter( 'widget_text_content', 'force_https_securize_url', 20 );
-add_filter( 'get_custom_logo', 'force_https_securize_url', 20 );
+add_filter( 'home_url', 'force_https_securize_url', 999 );
+add_filter( 'site_url', 'force_https_securize_url', 999 );
+add_filter( 'network_site_url', 'force_https_securize_url', 999 );
+add_filter( 'network_home_url', 'force_https_securize_url', 999 );
+add_filter( 'post_link', 'force_https_securize_url', 999 );
+add_filter( 'page_link', 'force_https_securize_url', 999 );
+add_filter( 'term_link', 'force_https_securize_url', 999 );
+add_filter( 'template_directory_uri', 'force_https_securize_url', 999 );
+add_filter( 'stylesheet_directory_uri', 'force_https_securize_url', 999 );
+add_filter( 'script_loader_src', 'force_https_securize_url', 999 );
+add_filter( 'style_loader_src', 'force_https_securize_url', 999 );
+add_filter( 'wp_get_attachment_url', 'force_https_securize_url', 999 );
+add_filter( 'get_avatar_url', 'force_https_securize_url', 999 );
+add_filter( 'rest_url', 'force_https_securize_url', 999 );
+add_filter( 'wp_redirect', 'force_https_securize_url', 999 );
+add_filter( 'login_redirect', 'force_https_securize_url', 999 );
+add_filter( 'logout_redirect', 'force_https_securize_url', 999 );
+add_filter( 'embed_oembed_html', 'force_https_securize_url', 999 );
+add_filter( 'do_shortcode_tag', 'force_https_securize_url', 999 );
+add_filter( 'widget_text', 'force_https_securize_url', 999 );
+add_filter( 'widget_text_content', 'force_https_securize_url', 999 );
+add_filter( 'get_custom_logo', 'force_https_securize_url', 999 );
 
 // force https on all elements and attributes with urls
 add_filter( 'the_content', 'force_https_process_content', 20 );
