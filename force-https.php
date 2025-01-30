@@ -37,7 +37,7 @@ add_filter( 'pre_option_siteurl', 'force_https_filter_home' );
 // force https redirect on frontend, admin, and login
 function force_https_redirect() {
     if ( ! is_ssl() && ! defined( 'WP_CLI' ) && ! headers_sent() ) {
-        wp_safe_redirect( set_url_scheme( home_url( isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : '' ), 'https' ), 301 );
+        wp_redirect( set_url_scheme( home_url( $_SERVER['REQUEST_URI'] ), 'https' ), 301 );
         exit;
     }
 }
@@ -53,12 +53,8 @@ function force_https_securize_url( $value ) {
     if ( ! is_string( $value ) ) {
         return $value;
     }
-    // if valid url, force https
-    if ( filter_var( $value, FILTER_VALIDATE_URL ) !== false ) {
-        return set_url_scheme( $value, 'https' );
-    }
-    // replace http with https in text or html
-    return str_ireplace( 'http://', 'https://', $value );
+    // force https on valid urls, replace in text/html
+    return ( strpos( $value, 'http://' ) === 0 ) ? set_url_scheme( $value, 'https' ) : str_replace( 'http://', 'https://', $value );
 }
 
 // apply https to all relevant wordpress filters  
