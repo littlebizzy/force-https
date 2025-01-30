@@ -85,13 +85,8 @@ add_filter( 'get_custom_logo', 'force_https_securize_url', 999 );
 add_filter( 'the_content', 'force_https_process_content', 20 );
 function force_https_process_content( $content ) {
     return preg_replace_callback(
-        '#(<(?:a|area|audio|blockquote|button|canvas|del|embed|form|iframe|img|input|ins|link|meta|object|picture|q|script|source|style|svg|track|video)[^>]+(?:@font-face|action|background|background-image|cite|classid|codebase|content|data-[^\s=]+|fetch|font-face|formaction|href|longdesc|manifest|ping|poster|src|srcdoc|srcset|style|url|usemap|video|xlink:href)=["\'])(http://|//)([^"\']+)#i',
+        '#(<(?:a|area|audio|blockquote|button|canvas|del|embed|form|iframe|img|input|ins|link|meta|object|picture|q|script|source|style|svg|track|video)[^>]+\s(?:action|background|cite|classid|codebase|content|data-[^\s=]+|formaction|href|longdesc|manifest|ping|poster|src|srcdoc|srcset|style|usemap|xlink:href)=["\'])(http://|//)([^"\']+)#i',
         function( $matches ) {
-            // Convert protocol-relative URLs like //example.com to https.
-            if ( strpos( $matches[2], '//' ) === 0 ) {
-                return $matches[1] . 'https://' . $matches[3];
-            }
-            // Convert all http URLs to https.
             return $matches[1] . 'https://' . $matches[3];
         },
         $content
