@@ -3,7 +3,7 @@
 Plugin Name: Force HTTPS
 Plugin URI: https://www.littlebizzy.com/plugins/force-https
 Description: HTTPS enforcement for WordPress
-Version: 2.1.0
+Version: 3.0.0
 Author: LittleBizzy
 Author URI: https://www.littlebizzy.com
 Requires PHP: 7.0
@@ -36,7 +36,7 @@ add_filter( 'pre_option_siteurl', 'force_https_filter_home' );
 
 // force https redirect on frontend, admin, and login
 function force_https_redirect() {
-    if ( ! is_ssl() && empty( $_SERVER['HTTPS'] ) && ! defined( 'WP_CLI' ) && ! headers_sent() ) {
+    if ( ! is_ssl() && ! defined( 'WP_CLI' ) && ! headers_sent() ) {
         wp_safe_redirect( set_url_scheme( home_url( $_SERVER['REQUEST_URI'] ), 'https' ), 301 );
         exit;
     }
