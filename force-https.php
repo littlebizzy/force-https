@@ -94,7 +94,7 @@ function force_https_process_content( $content ) {
 }
 
 // enforce https for custom menus
-add_filter( 'nav_menu_link_attributes', 'force_https_fix_menu_links', 20 );
+add_filter( 'nav_menu_link_attributes', 'force_https_fix_menu_links', 999 );
 function force_https_fix_menu_links( $atts ) {
     if ( isset( $atts['href'] ) ) {
         $atts['href'] = set_url_scheme( $atts['href'], 'https' );
@@ -103,7 +103,7 @@ function force_https_fix_menu_links( $atts ) {
 }
 
 // enforce https for wp resource hints
-add_filter( 'wp_resource_hints', 'force_https_fix_resource_hints', 20 );
+add_filter( 'wp_resource_hints', 'force_https_fix_resource_hints', 999 );
 function force_https_fix_resource_hints( $urls ) {
     if ( ! is_array( $urls ) ) {
         return $urls;
@@ -119,19 +119,25 @@ function force_https_fix_resource_hints( $urls ) {
 }
 
 // enforce https on image srcsets
-add_filter( 'wp_calculate_image_srcset', 'force_https_fix_image_srcsets', 20 );
+add_filter( 'wp_calculate_image_srcset', 'force_https_fix_image_srcsets', 999 );
 function force_https_fix_image_srcsets( $sources ) {
     foreach ( $sources as &$source ) {
-        $source['url'] = set_url_scheme( $source['url'], 'https' );
+        if ( isset( $source['url'] ) ) {
+            $source['url'] = set_url_scheme( $source['url'], 'https' );
+        }
     }
     return $sources;
 }
 
 // ensure all urls in the upload directory use https
-add_filter( 'upload_dir', 'force_https_fix_upload_dir', 20 );
+add_filter( 'upload_dir', 'force_https_fix_upload_dir', 999 );
 function force_https_fix_upload_dir( $uploads ) {
-    $uploads['url'] = set_url_scheme( $uploads['url'], 'https' );
-    $uploads['baseurl'] = set_url_scheme( $uploads['baseurl'], 'https' );
+    if ( isset( $uploads['url'] ) ) {
+        $uploads['url'] = set_url_scheme( $uploads['url'], 'https' );
+    }
+    if ( isset( $uploads['baseurl'] ) ) {
+        $uploads['baseurl'] = set_url_scheme( $uploads['baseurl'], 'https' );
+    }
     return $uploads;
 }
 
