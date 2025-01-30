@@ -27,14 +27,33 @@ add_filter( 'gu_override_dot_org', function( $overrides ) {
     return $overrides;
 }, 999 );
 
+// ensure siteurl and home options are always https
+function force_https_fix_options() {
+    // only update database if constants are not set
+    if ( ! defined( 'WP_HOME' ) ) {
+        update_option( 'home', set_url_scheme( get_option( 'home' ), 'https' ) );
+    }
+
+    if ( ! defined( 'WP_SITEURL' ) ) {
+        update_option( 'siteurl', set_url_scheme( get_option( 'siteurl' ), 'https' ) );
+    }
+}
+add_action( 'init', 'force_https_fix_options', 1 );
+
+// enforce https dynamically via filters (does not modify database)
+function force_https_filter_home( $value ) {
+    return set_url_scheme( $value, 'https' );
+}
+add_filter( 'pre_option_home', 'force_https_filter_home' );
+add_filter( 'pre_option_siteurl', 'force_https_filter_home' );
+
 // force https redirect on frontend, admin, and login  
-function force_https_redirect() {  
-    // skip if already ssl, running wp-cli, or headers already sent  
-    if ( ! is_ssl() && ( ! defined( 'WP_CLI' ) || ! WP_CLI ) && ! headers_sent() ) {  
-        wp_safe_redirect( set_url_scheme( home_url( $_SERVER['REQUEST_URI'] ), 'https' ), 301 );  
-        exit;  
-    }  
-}  
+function force_https_redirect() {
+    if ( ! is_ssl() && empty( $_SERVER['HTTPS'] ) && ! defined( 'WP_CLI' ) && ! headers_sent() ) {
+        wp_safe_redirect( set_url_scheme( home_url( $_SERVER['REQUEST_URI'] ), 'https' ), 301 );
+        exit;
+    }
+}
 
 // apply https redirect to all key areas  
 foreach ( array( 'init', 'admin_init', 'login_init' ) as $hook ) {  
