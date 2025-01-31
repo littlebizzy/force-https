@@ -52,14 +52,21 @@ foreach ( [ 'init', 'admin_init', 'login_init' ] as $hook ) {
     add_action( $hook, 'force_https_redirect', 10 );
 }
 
-// enforce https on all urls by replacing http with https
+// enforce https on valid urls and replace http in text content
 function force_https_securize_url( $value ) {
-    // return original if not string
+
+    // return original if not a string
     if ( ! is_string( $value ) ) {
         return $value;
     }
-    // force https on valid urls, replace in text/html
-    return ( strpos( $value, 'http://' ) === 0 ) ? set_url_scheme( $value, 'https' ) : str_replace( 'http://', 'https://', $value );
+
+    // enforce https for valid urls
+    if ( strpos( $value, 'http://' ) === 0 ) {
+        return set_url_scheme( $value, 'https' );
+    }
+
+    // replace http with https in text or html content
+    return str_replace( 'http://', 'https://', $value );
 }
 
 // apply https to all relevant wordpress filters  
