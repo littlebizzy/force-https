@@ -126,11 +126,19 @@ function force_https_fix_resource_hints( $urls ) {
 // enforce https on image srcsets
 add_filter( 'wp_calculate_image_srcset', 'force_https_fix_image_srcsets', 999 );
 function force_https_fix_image_srcsets( $sources ) {
+
+    // exit if sources is not an array
+    if ( ! is_array( $sources ) ) {
+        return $sources;
+    }
+
+    // loop through each image source and enforce https
     foreach ( $sources as &$source ) {
         if ( isset( $source['url'] ) ) {
             $source['url'] = set_url_scheme( $source['url'], 'https' );
         }
     }
+
     return $sources;
 }
 
