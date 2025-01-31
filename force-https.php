@@ -70,28 +70,30 @@ function force_https_securize_url( $value ) {
 }
 
 // apply https to all relevant wordpress filters  
-add_filter( 'home_url', 'force_https_securize_url', 999 );
-add_filter( 'site_url', 'force_https_securize_url', 999 );
-add_filter( 'network_site_url', 'force_https_securize_url', 999 );
-add_filter( 'network_home_url', 'force_https_securize_url', 999 );
-add_filter( 'post_link', 'force_https_securize_url', 999 );
-add_filter( 'page_link', 'force_https_securize_url', 999 );
-add_filter( 'term_link', 'force_https_securize_url', 999 );
-add_filter( 'template_directory_uri', 'force_https_securize_url', 999 );
-add_filter( 'stylesheet_directory_uri', 'force_https_securize_url', 999 );
-add_filter( 'script_loader_src', 'force_https_securize_url', 999 );
-add_filter( 'style_loader_src', 'force_https_securize_url', 999 );
-add_filter( 'wp_get_attachment_url', 'force_https_securize_url', 999 );
+add_filter( 'admin_url', 'force_https_securize_url', 999 );
+add_filter( 'do_shortcode_tag', 'force_https_securize_url', 999 );
+add_filter( 'embed_oembed_html', 'force_https_securize_url', 999 );
 add_filter( 'get_avatar_url', 'force_https_securize_url', 999 );
-add_filter( 'rest_url', 'force_https_securize_url', 999 );
-add_filter( 'wp_redirect', 'force_https_securize_url', 999 );
+add_filter( 'get_custom_logo', 'force_https_securize_url', 999 );
+add_filter( 'home_url', 'force_https_securize_url', 999 );
+add_filter( 'includes_url', 'force_https_securize_url', 999 );
 add_filter( 'login_redirect', 'force_https_securize_url', 999 );
 add_filter( 'logout_redirect', 'force_https_securize_url', 999 );
-add_filter( 'embed_oembed_html', 'force_https_securize_url', 999 );
-add_filter( 'do_shortcode_tag', 'force_https_securize_url', 999 );
+add_filter( 'network_home_url', 'force_https_securize_url', 999 );
+add_filter( 'network_site_url', 'force_https_securize_url', 999 );
+add_filter( 'page_link', 'force_https_securize_url', 999 );
+add_filter( 'post_link', 'force_https_securize_url', 999 );
+add_filter( 'rest_url', 'force_https_securize_url', 999 );
+add_filter( 'script_loader_src', 'force_https_securize_url', 999 );
+add_filter( 'site_url', 'force_https_securize_url', 999 );
+add_filter( 'stylesheet_directory_uri', 'force_https_securize_url', 999 );
+add_filter( 'style_loader_src', 'force_https_securize_url', 999 );
+add_filter( 'template_directory_uri', 'force_https_securize_url', 999 );
+add_filter( 'term_link', 'force_https_securize_url', 999 );
 add_filter( 'widget_text', 'force_https_securize_url', 999 );
 add_filter( 'widget_text_content', 'force_https_securize_url', 999 );
-add_filter( 'get_custom_logo', 'force_https_securize_url', 999 );
+add_filter( 'wp_get_attachment_url', 'force_https_securize_url', 999 );
+add_filter( 'wp_redirect', 'force_https_securize_url', 999 );
 
 // force https on all elements and attributes with urls
 add_filter( 'the_content', 'force_https_process_content', 20 );
