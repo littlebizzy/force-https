@@ -34,16 +34,21 @@ function force_https_filter_home( $value ) {
 add_filter( 'pre_option_home', 'force_https_filter_home' );
 add_filter( 'pre_option_siteurl', 'force_https_filter_home' );
 
-// force https redirect on frontend, admin, and login
+// enforce https by redirecting non-ssl requests on frontend, admin, and login pages
 function force_https_redirect() {
-    if ( ! is_ssl() && ! defined( 'WP_CLI' ) && ! headers_sent() ) {
-        wp_redirect( set_url_scheme( home_url( $_SERVER['REQUEST_URI'] ), 'https' ), 301 );
-        exit;
+    
+    // exit if already using https, headers are sent, or running via cli
+    if ( is_ssl() || headers_sent() || defined( 'WP_CLI' ) ) {
+        return;
     }
+
+    // redirect to https version of the requested url with a permanent redirect
+    wp_redirect( set_url_scheme( home_url( $_SERVER['REQUEST_URI'] ), 'https' ), 301 );
+    exit;
 }
 
-// apply https redirect to all key areas
-foreach ( array( 'init', 'admin_init', 'login_init' ) as $hook ) {
+// apply https redirect during initialization, admin, and login
+foreach ( [ 'init', 'admin_init', 'login_init' ] as $hook ) {
     add_action( $hook, 'force_https_redirect', 10 );
 }
 
