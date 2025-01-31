@@ -61,12 +61,15 @@ function force_https_securize_url( $value ) {
     }
 
     // enforce https for valid urls
-    if ( strpos( $value, 'http://' ) === 0 ) {
-        return set_url_scheme( $value, 'https' );
+    $secure_value = set_url_scheme( $value, 'https' );
+
+    // return if url scheme was changed (valid URL handled)
+    if ( $secure_value !== $value ) {
+        return $secure_value;
     }
 
-    // replace http with https in text or html content
-    return str_replace( 'http://', 'https://', $value );
+    // replace http with https in text or html content only if needed
+    return ( strpos( $value, 'http://' ) !== false ) ? str_replace( 'http://', 'https://', $value ) : $value;
 }
 
 // apply https to all relevant wordpress filters  
