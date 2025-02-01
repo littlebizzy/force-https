@@ -98,6 +98,25 @@ add_filter( 'widget_text_content', 'force_https_securize_url', 999 );
 add_filter( 'wp_get_attachment_url', 'force_https_securize_url', 999 );
 add_filter( 'wp_redirect', 'force_https_securize_url', 999 );
 
+// enforce https on filtered HTML output
+function force_https_filter_output( $content ) {
+
+    // return original if not a string
+    if ( ! is_string( $content ) || strpos( $content, 'http://' ) === false ) {
+        return $content;
+    }
+
+    // replace http with https
+    return str_replace( 'http://', 'https://', $content );
+}
+
+// apply to simple HTML filters that need URL enforcement
+add_filter( 'post_thumbnail_html', 'force_https_filter_output', 999 );
+add_filter( 'render_block', 'force_https_filter_output', 999 );
+add_filter( 'rest_pre_echo_response', 'force_https_filter_output', 999 );
+add_filter( 'walker_nav_menu_start_el', 'force_https_filter_output', 999 );
+add_filter( 'woocommerce_email_footer_text', 'force_https_filter_output', 999 );
+
 // force https on all elements and attributes with urls
 add_filter( 'the_content', 'force_https_process_content', 20 );
 function force_https_process_content( $content ) {
