@@ -63,33 +63,24 @@ function force_https_securize_url( $value ) {
     return set_url_scheme( $value, 'https' );
 }
 
-// apply https to all relevant wordpress filters  
+// apply https to urls used across wordpress and woocommerce
 add_filter( 'admin_url', 'force_https_securize_url', 10 );
-add_filter( 'ajax_url', 'force_https_securize_url', 10 );
-add_filter( 'attachment_link', 'force_https_securize_url', 10 );
 add_filter( 'author_feed_link', 'force_https_securize_url', 10 );
-add_filter( 'author_link', 'force_https_securize_url', 10 );
 add_filter( 'category_feed_link', 'force_https_securize_url', 10 );
 add_filter( 'category_link', 'force_https_securize_url', 10 );
-add_filter( 'comment_link', 'force_https_securize_url', 10 );
 add_filter( 'content_url', 'force_https_securize_url', 10 );
-add_filter( 'day_link', 'force_https_securize_url', 10 );
-add_filter( 'do_shortcode_tag', 'force_https_securize_url', 10 );
 add_filter( 'embed_oembed_html', 'force_https_securize_url', 10 );
-add_filter( 'feed_link', 'force_https_securize_url', 10 );
 add_filter( 'get_avatar_url', 'force_https_securize_url', 10 );
 add_filter( 'get_custom_logo', 'force_https_securize_url', 10 );
 add_filter( 'home_url', 'force_https_securize_url', 10 );
 add_filter( 'includes_url', 'force_https_securize_url', 10 );
 add_filter( 'login_redirect', 'force_https_securize_url', 10 );
 add_filter( 'logout_redirect', 'force_https_securize_url', 10 );
-add_filter( 'month_link', 'force_https_securize_url', 10 );
 add_filter( 'network_home_url', 'force_https_securize_url', 10 );
 add_filter( 'network_site_url', 'force_https_securize_url', 10 );
 add_filter( 'page_link', 'force_https_securize_url', 10 );
 add_filter( 'plugins_url', 'force_https_securize_url', 10 );
 add_filter( 'post_link', 'force_https_securize_url', 10 );
-add_filter( 'pre_option_permalink_structure', 'force_https_securize_url', 10 );
 add_filter( 'rest_url', 'force_https_securize_url', 10 );
 add_filter( 'script_loader_src', 'force_https_securize_url', 10 );
 add_filter( 'site_url', 'force_https_securize_url', 10 );
@@ -100,26 +91,21 @@ add_filter( 'template_directory_uri', 'force_https_securize_url', 10 );
 add_filter( 'term_link', 'force_https_securize_url', 10 );
 add_filter( 'theme_file_uri', 'force_https_securize_url', 10 );
 add_filter( 'woocommerce_account_endpoint_url', 'force_https_securize_url', 10 );
-add_filter( 'woocommerce_get_cart_url', 'force_https_securize_url', 10 );
-add_filter( 'woocommerce_get_checkout_url', 'force_https_securize_url', 10 );
-add_filter( 'woocommerce_get_terms_and_conditions_page', 'force_https_securize_url', 10 );
-add_filter( 'wp_get_attachment_metadata', 'force_https_securize_url', 10 );
 add_filter( 'wp_get_attachment_url', 'force_https_securize_url', 10 );
 add_filter( 'wp_upload_dir', 'force_https_securize_url', 10 );
-add_filter( 'year_link', 'force_https_securize_url', 10 );
 
-// replace http with https in text or html content
+// enforce https on html content that may contain urls
 function force_https_filter_output( $content ) {
-    // return unchanged if not a string or http not found
+    // return unchanged if not a string or does not contain http
     if ( ! is_string( $content ) || strpos( $content, 'http://' ) === false ) {
         return $content;
     }
 
-    // replace all instances of http with https
+    // replace http with https in text or html output
     return str_replace( 'http://', 'https://', $content );
 }
 
-// apply to simple html filters that need url enforcement
+// apply https enforcement to html content in various wordpress areas
 add_filter( 'comment_text', 'force_https_filter_output', 20 );
 add_filter( 'post_thumbnail_html', 'force_https_filter_output', 10 );
 add_filter( 'render_block', 'force_https_filter_output', 20 );
