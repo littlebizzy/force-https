@@ -77,6 +77,7 @@ add_filter( 'get_custom_logo', 'force_https_securize_url', 10 );
 add_filter( 'includes_url', 'force_https_securize_url', 10 );
 add_filter( 'login_redirect', 'force_https_securize_url', 10 );
 add_filter( 'logout_redirect', 'force_https_securize_url', 10 );
+add_filter( 'nav_menu_link_attributes', 'force_https_securize_url', 10 );
 add_filter( 'network_home_url', 'force_https_securize_url', 10 );
 add_filter( 'network_site_url', 'force_https_securize_url', 10 );
 add_filter( 'page_link', 'force_https_securize_url', 10 );
@@ -124,15 +125,6 @@ function force_https_process_content( $content ) {
         },
         $content
     );
-}
-
-// enforce https for custom menus
-add_filter( 'nav_menu_link_attributes', 'force_https_fix_menu_links', 999 );
-function force_https_fix_menu_links( $atts ) {
-    if ( isset( $atts['href'] ) ) {
-        $atts['href'] = set_url_scheme( $atts['href'], 'https' );
-    }
-    return $atts;
 }
 
 // enforce https for wp resource hints
