@@ -74,6 +74,7 @@ add_filter( 'content_url', 'force_https_securize_url', 10 );
 add_filter( 'embed_oembed_html', 'force_https_securize_url', 10 );
 add_filter( 'get_avatar_url', 'force_https_securize_url', 10 );
 add_filter( 'get_custom_logo', 'force_https_securize_url', 10 );
+add_filter( 'get_the_permalink', 'force_https_securize_url', 10 );
 add_filter( 'includes_url', 'force_https_securize_url', 10 );
 add_filter( 'login_redirect', 'force_https_securize_url', 10 );
 add_filter( 'logout_redirect', 'force_https_securize_url', 10 );
@@ -86,6 +87,7 @@ add_filter( 'post_link', 'force_https_securize_url', 10 );
 add_filter( 'rest_url', 'force_https_securize_url', 10 );
 add_filter( 'tag_link', 'force_https_securize_url', 10 );
 add_filter( 'term_link', 'force_https_securize_url', 10 );
+add_filter( 'wc_get_endpoint_url', 'force_https_securize_url', 10 );
 add_filter( 'woocommerce_account_endpoint_url', 'force_https_securize_url', 10 );
 add_filter( 'wp_get_attachment_url', 'force_https_securize_url', 10 );
 
@@ -128,7 +130,7 @@ function force_https_process_content( $content ) {
 }
 
 // enforce https for wp resource hints
-add_filter( 'wp_resource_hints', 'force_https_fix_resource_hints', 999 );
+add_filter( 'wp_resource_hints', 'force_https_fix_resource_hints', 20 );
 function force_https_fix_resource_hints( $urls ) {
     if ( ! is_array( $urls ) ) {
         return $urls;
