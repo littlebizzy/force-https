@@ -3,7 +3,7 @@
 Plugin Name: Force HTTPS
 Plugin URI: https://www.littlebizzy.com/plugins/force-https
 Description: HTTPS enforcement for WordPress
-Version: 3.0.0
+Version: 2.1.0
 Author: LittleBizzy
 Author URI: https://www.littlebizzy.com
 Requires PHP: 7.0
@@ -123,7 +123,7 @@ add_filter( 'wp_safe_redirect', 'force_https_filter_output', 999 );
 add_filter( 'the_content', 'force_https_process_content', 20 );
 function force_https_process_content( $content ) {
     return preg_replace_callback(
-        '#(<(?:a|area|audio|blockquote|button|canvas|del|embed|form|iframe|img|input|ins|link|meta|object|picture|q|script|source|style|svg|track|video)[^>]+\s(?:action|background|cite|classid|codebase|content|data-[^\s=]+|formaction|href|longdesc|manifest|ping|poster|src|srcdoc|srcset|style|usemap|xlink:href)=["\'])(http://|//)([^"\']+)#i',
+        '#(<(?:a|img|script|iframe|link|source|form)[^>]+\s(?:href|src)=["\'])(http://|//)([^"\']+)#i',
         function( $matches ) {
             return $matches[1] . 'https://' . $matches[3];
         },
@@ -131,12 +131,28 @@ function force_https_process_content( $content ) {
     );
 }
 
-// enforce https for wp resource hints
+// force https inside inline script and style content
+add_filter( 'the_content', 'force_https_fix_scripts_styles', 20 );
+function force_https_fix_scripts_styles( $content ) {
+    return preg_replace_callback(
+        '#(<script.*?>|<style.*?>)(.*?)</(script|style)>#is',
+        function( $matches ) {
+            return $matches[1] . str_replace('http://', 'https://', $matches[2]) . '</' . $matches[3] . '>';
+        },
+        $content
+    );
+}
+
+// enforce https on wp resource hints to prevent mixed content issues
 add_filter( 'wp_resource_hints', 'force_https_fix_resource_hints', 20 );
 function force_https_fix_resource_hints( $urls ) {
+
+    // return unchanged if not an array
     if ( ! is_array( $urls ) ) {
         return $urls;
     }
+
+    // enforce https on each resource hint url
     foreach ( $urls as &$url ) {
         if ( is_string( $url ) ) {
             $url = set_url_scheme( $url, 'https' );
@@ -144,19 +160,20 @@ function force_https_fix_resource_hints( $urls ) {
             $url['href'] = set_url_scheme( $url['href'], 'https' );
         }
     }
+
     return $urls;
 }
 
-// enforce https on image srcsets
+// enforce https on image srcsets to prevent mixed content issues
 add_filter( 'wp_calculate_image_srcset', 'force_https_fix_image_srcsets', 999 );
 function force_https_fix_image_srcsets( $sources ) {
 
-    // exit if sources is not an array
+    // return unchanged if sources is not an array
     if ( ! is_array( $sources ) ) {
         return $sources;
     }
 
-    // loop through each image source and enforce https
+    // loop through each source and enforce https on urls
     foreach ( $sources as &$source ) {
         if ( isset( $source['url'] ) ) {
             $source['url'] = set_url_scheme( $source['url'], 'https' );
@@ -166,15 +183,20 @@ function force_https_fix_image_srcsets( $sources ) {
     return $sources;
 }
 
-// ensure all urls in the upload directory use https
+// enforce https on urls in the upload directory to avoid insecure media links
 add_filter( 'upload_dir', 'force_https_fix_upload_dir', 999 );
 function force_https_fix_upload_dir( $uploads ) {
+
+    // enforce https on the main upload url
     if ( isset( $uploads['url'] ) ) {
         $uploads['url'] = set_url_scheme( $uploads['url'], 'https' );
     }
+
+    // enforce https on the base upload url
     if ( isset( $uploads['baseurl'] ) ) {
         $uploads['baseurl'] = set_url_scheme( $uploads['baseurl'], 'https' );
     }
+
     return $uploads;
 }
 
