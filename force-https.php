@@ -32,7 +32,7 @@ add_filter( 'gu_override_dot_org', function( $overrides ) {
 function force_https_filter_home( $value ) {
     return set_url_scheme( $value, 'https' );
 }
-
+// no priority needed since pre_option filters override values immediately
 add_filter( 'pre_option_home', 'force_https_filter_home' );
 add_filter( 'pre_option_siteurl', 'force_https_filter_home' );
 
@@ -90,6 +90,7 @@ add_filter( 'term_link', 'force_https_securize_url', 10 );
 add_filter( 'wc_get_endpoint_url', 'force_https_securize_url', 10 );
 add_filter( 'woocommerce_account_endpoint_url', 'force_https_securize_url', 10 );
 add_filter( 'wp_get_attachment_url', 'force_https_securize_url', 10 );
+add_filter( 'wp_logout_url', 'force_https_securize_url', 10 );
 
 // enforce https on html content that may contain urls
 function force_https_filter_output( $content ) {
@@ -116,6 +117,7 @@ add_filter( 'woocommerce_rest_prepare_customer', 'force_https_filter_output', 99
 add_filter( 'woocommerce_rest_prepare_order', 'force_https_filter_output', 999 );
 add_filter( 'woocommerce_rest_prepare_product', 'force_https_filter_output', 999 );
 add_filter( 'wp_redirect', 'force_https_filter_output', 999 );
+add_filter( 'wp_safe_redirect', 'force_https_filter_output', 999 );
 
 // force https on all elements and attributes with urls
 add_filter( 'the_content', 'force_https_process_content', 20 );
