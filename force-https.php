@@ -39,8 +39,13 @@ add_filter( 'pre_option_siteurl', 'force_https_filter_home' );
 // enforce https by redirecting non-ssl requests on frontend, admin, and login pages
 function force_https_redirect() {
     
-    // exit if already using https, headers are sent, or running via cli or ajax, or no request uri exists
-    if ( is_ssl() || headers_sent() || defined( 'WP_CLI' ) || ( defined('DOING_AJAX') && DOING_AJAX ) || ! isset( $_SERVER['REQUEST_URI'] ) ) {
+    // exit if already using https, headers are sent, running via cli, cron, or ajax, or no request uri exists
+    if ( is_ssl() || headers_sent() || defined( 'WP_CLI' ) || defined( 'DOING_CRON' ) || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) || ! isset( $_SERVER['REQUEST_URI'] ) ) {
+        return;
+    }
+
+    // fallback check for https in server if is_ssl fails
+    if ( ! empty( $_SERVER['HTTPS'] ) && strtolower( $_SERVER['HTTPS'] ) !== 'off' ) {
         return;
     }
 
@@ -125,9 +130,9 @@ add_filter( 'widget_text_content', 'force_https_filter_output', 20 );
 add_filter( 'the_content', 'force_https_process_content', 20 );
 function force_https_process_content( $content ) {
     return preg_replace_callback(
-        '#(<(?:a|img|script|iframe|link|source|form)[^>]+\s(?:href|src)=["\'])(http://)([^"\']+)#i',
+        '#(<(?:a|img|script|iframe|link|source|form)[^>]+\s(?:href|src)=["\'])http://([^"\']+)#i',
         function( $matches ) {
-            return $matches[1] . 'https://' . $matches[3];
+            return $matches[1] . 'https://' . $matches[2];
         },
         $content
     );
@@ -148,18 +153,17 @@ function force_https_fix_scripts_styles( $content ) {
 // enforce https on wp resource hints to prevent mixed content issues
 add_filter( 'wp_resource_hints', 'force_https_fix_resource_hints', 20 );
 function force_https_fix_resource_hints( $urls ) {
-
     // return unchanged if not an array
     if ( ! is_array( $urls ) ) {
         return $urls;
     }
 
     // enforce https on each resource hint url
-    foreach ( $urls as &$url ) {
+    foreach ( $urls as $key => $url ) {
         if ( is_string( $url ) ) {
-            $url = set_url_scheme( $url, 'https' );
+            $urls[$key] = set_url_scheme( $url, 'https' );
         } elseif ( is_array( $url ) && isset( $url['href'] ) ) {
-            $url['href'] = set_url_scheme( $url['href'], 'https' );
+            $urls[$key]['href'] = set_url_scheme( $url['href'], 'https' );
         }
     }
 
@@ -169,16 +173,16 @@ function force_https_fix_resource_hints( $urls ) {
 // enforce https on image srcsets to prevent mixed content issues
 add_filter( 'wp_calculate_image_srcset', 'force_https_fix_image_srcsets', 999 );
 function force_https_fix_image_srcsets( $sources ) {
-
     // return unchanged if sources is not an array
     if ( ! is_array( $sources ) ) {
         return $sources;
     }
 
     // loop through each source and enforce https on urls
-    foreach ( $sources as &$source ) {
+    foreach ( $sources as $key => $source ) {
+        // check if url is set and enforce https
         if ( isset( $source['url'] ) ) {
-            $source['url'] = set_url_scheme( $source['url'], 'https' );
+            $sources[$key]['url'] = set_url_scheme( $source['url'], 'https' );
         }
     }
 
