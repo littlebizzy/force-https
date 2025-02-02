@@ -39,8 +39,8 @@ add_filter( 'pre_option_siteurl', 'force_https_filter_home' );
 // enforce https by redirecting non-ssl requests on frontend, admin, and login pages
 function force_https_redirect() {
     
-    // exit if already using https, headers are sent, or running via cli
-    if ( is_ssl() || headers_sent() || defined( 'WP_CLI' ) ) {
+    // exit if already using https, headers are sent, or running via cli or ajax, or no request uri exists
+    if ( is_ssl() || headers_sent() || defined( 'WP_CLI' ) || ( defined('DOING_AJAX') && DOING_AJAX ) || ! isset( $_SERVER['REQUEST_URI'] ) ) {
         return;
     }
 
@@ -50,9 +50,9 @@ function force_https_redirect() {
 }
 
 // apply https redirect during initialization, admin, and login
-foreach ( [ 'init', 'admin_init', 'login_init' ] as $hook ) {
-    add_action( $hook, 'force_https_redirect', 10 );
-}
+add_action( 'init', 'force_https_redirect', 10 );
+add_action( 'admin_init', 'force_https_redirect', 10 );
+add_action( 'login_init', 'force_https_redirect', 10 );
 
 // enforce https for valid urls only
 function force_https_securize_url( $value ) {
@@ -125,7 +125,7 @@ add_filter( 'widget_text_content', 'force_https_filter_output', 20 );
 add_filter( 'the_content', 'force_https_process_content', 20 );
 function force_https_process_content( $content ) {
     return preg_replace_callback(
-        '#(<(?:a|img|script|iframe|link|source|form)[^>]+\s(?:href|src)=["\'])(http://|//)([^"\']+)#i',
+        '#(<(?:a|img|script|iframe|link|source|form)[^>]+\s(?:href|src)=["\'])(http://)([^"\']+)#i',
         function( $matches ) {
             return $matches[1] . 'https://' . $matches[3];
         },
