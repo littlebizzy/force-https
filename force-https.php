@@ -82,17 +82,11 @@ add_filter( 'page_link', 'force_https_securize_url', 10 );
 add_filter( 'plugins_url', 'force_https_securize_url', 10 );
 add_filter( 'post_link', 'force_https_securize_url', 10 );
 add_filter( 'rest_url', 'force_https_securize_url', 10 );
-add_filter( 'script_loader_src', 'force_https_securize_url', 10 );
 add_filter( 'site_url', 'force_https_securize_url', 10 );
-add_filter( 'stylesheet_directory_uri', 'force_https_securize_url', 10 );
-add_filter( 'style_loader_src', 'force_https_securize_url', 10 );
 add_filter( 'tag_link', 'force_https_securize_url', 10 );
-add_filter( 'template_directory_uri', 'force_https_securize_url', 10 );
 add_filter( 'term_link', 'force_https_securize_url', 10 );
-add_filter( 'theme_file_uri', 'force_https_securize_url', 10 );
 add_filter( 'woocommerce_account_endpoint_url', 'force_https_securize_url', 10 );
 add_filter( 'wp_get_attachment_url', 'force_https_securize_url', 10 );
-add_filter( 'wp_upload_dir', 'force_https_securize_url', 10 );
 
 // enforce https on html content that may contain urls
 function force_https_filter_output( $content ) {
