@@ -27,10 +27,12 @@ add_filter( 'gu_override_dot_org', function( $overrides ) {
     return $overrides;
 }, 999 );
 
-// enforce https dynamically via filters (does not modify database)
+// enforce https at the database level before wordpress processes these values
+// home_url and site_url should not be in force_https_securize_url because it would run on every call unnecessarily
 function force_https_filter_home( $value ) {
     return set_url_scheme( $value, 'https' );
 }
+
 add_filter( 'pre_option_home', 'force_https_filter_home' );
 add_filter( 'pre_option_siteurl', 'force_https_filter_home' );
 
@@ -72,7 +74,6 @@ add_filter( 'content_url', 'force_https_securize_url', 10 );
 add_filter( 'embed_oembed_html', 'force_https_securize_url', 10 );
 add_filter( 'get_avatar_url', 'force_https_securize_url', 10 );
 add_filter( 'get_custom_logo', 'force_https_securize_url', 10 );
-add_filter( 'home_url', 'force_https_securize_url', 10 );
 add_filter( 'includes_url', 'force_https_securize_url', 10 );
 add_filter( 'login_redirect', 'force_https_securize_url', 10 );
 add_filter( 'logout_redirect', 'force_https_securize_url', 10 );
@@ -82,7 +83,6 @@ add_filter( 'page_link', 'force_https_securize_url', 10 );
 add_filter( 'plugins_url', 'force_https_securize_url', 10 );
 add_filter( 'post_link', 'force_https_securize_url', 10 );
 add_filter( 'rest_url', 'force_https_securize_url', 10 );
-add_filter( 'site_url', 'force_https_securize_url', 10 );
 add_filter( 'tag_link', 'force_https_securize_url', 10 );
 add_filter( 'term_link', 'force_https_securize_url', 10 );
 add_filter( 'woocommerce_account_endpoint_url', 'force_https_securize_url', 10 );
