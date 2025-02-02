@@ -65,7 +65,7 @@ function force_https_securize_url( $value ) {
     return set_url_scheme( $value, 'https' );
 }
 
-// apply https to urls used across wordpress and woocommerce
+// apply https to urls used across wordpress
 add_filter( 'admin_url', 'force_https_securize_url', 10 );
 add_filter( 'author_feed_link', 'force_https_securize_url', 10 );
 add_filter( 'category_feed_link', 'force_https_securize_url', 10 );
@@ -87,10 +87,19 @@ add_filter( 'post_link', 'force_https_securize_url', 10 );
 add_filter( 'rest_url', 'force_https_securize_url', 10 );
 add_filter( 'tag_link', 'force_https_securize_url', 10 );
 add_filter( 'term_link', 'force_https_securize_url', 10 );
-add_filter( 'wc_get_endpoint_url', 'force_https_securize_url', 10 );
-add_filter( 'woocommerce_account_endpoint_url', 'force_https_securize_url', 10 );
 add_filter( 'wp_get_attachment_url', 'force_https_securize_url', 10 );
 add_filter( 'wp_logout_url', 'force_https_securize_url', 10 );
+
+// apply https to woocommerce urls if woocommerce is active
+if ( class_exists( 'WooCommerce' ) ) {
+    add_filter( 'wc_get_endpoint_url', 'force_https_securize_url', 10 );
+    add_filter( 'woocommerce_account_endpoint_url', 'force_https_securize_url', 10 );
+    add_filter( 'woocommerce_email_footer_text', 'force_https_filter_output', 999 );
+    add_filter( 'woocommerce_rest_prepare_coupon', 'force_https_filter_output', 999 );
+    add_filter( 'woocommerce_rest_prepare_customer', 'force_https_filter_output', 999 );
+    add_filter( 'woocommerce_rest_prepare_order', 'force_https_filter_output', 999 );
+    add_filter( 'woocommerce_rest_prepare_product', 'force_https_filter_output', 999 );
+}
 
 // enforce https on html content that may contain urls
 function force_https_filter_output( $content ) {
@@ -103,7 +112,7 @@ function force_https_filter_output( $content ) {
     return str_replace( 'http://', 'https://', $content );
 }
 
-// apply https enforcement to html content in various wordpress areas
+// apply https enforcement to html content
 add_filter( 'comment_text', 'force_https_filter_output', 20 );
 add_filter( 'post_thumbnail_html', 'force_https_filter_output', 10 );
 add_filter( 'render_block', 'force_https_filter_output', 20 );
@@ -111,11 +120,6 @@ add_filter( 'rest_pre_echo_response', 'force_https_filter_output', 999 );
 add_filter( 'walker_nav_menu_start_el', 'force_https_filter_output', 10 );
 add_filter( 'widget_text', 'force_https_filter_output', 20 );
 add_filter( 'widget_text_content', 'force_https_filter_output', 20 );
-add_filter( 'woocommerce_email_footer_text', 'force_https_filter_output', 999 );
-add_filter( 'woocommerce_rest_prepare_coupon', 'force_https_filter_output', 999 );
-add_filter( 'woocommerce_rest_prepare_customer', 'force_https_filter_output', 999 );
-add_filter( 'woocommerce_rest_prepare_order', 'force_https_filter_output', 999 );
-add_filter( 'woocommerce_rest_prepare_product', 'force_https_filter_output', 999 );
 add_filter( 'wp_redirect', 'force_https_filter_output', 999 );
 add_filter( 'wp_safe_redirect', 'force_https_filter_output', 999 );
 
