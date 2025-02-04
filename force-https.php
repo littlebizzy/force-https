@@ -126,17 +126,17 @@ add_filter( 'walker_nav_menu_start_el', 'force_https_filter_output', 10 );
 add_filter( 'widget_text', 'force_https_filter_output', 20 );
 add_filter( 'widget_text_content', 'force_https_filter_output', 20 );
 
-// enforce https on elements and inline content  
+// enforce https on elements and inline content
 add_filter( 'the_content', 'force_https_process_content', 20 );
 
 function force_https_process_content( $content ) {
-    // match elements with src, href, action, content, cite, or background attributes  
+    // match elements with src, href, action, content, or formaction attributes
     static $element_pattern = '#(?i)(<(?:a|img|iframe|video|audio|source|form|link|embed|object|track|script|meta|input|button)\b[^>]*\s*(?:href|src|action|content|formaction)=["\'])http://([^"\']+)#';
 
-    // match script and style content  
+    // match script and style content
     static $script_style_pattern = '#(<(?i:script|style)\b[^>]*>)(.*?)</(?i:script|style)>#s';
 
-    // replace http with https in elements  
+    // replace http with https in elements
     $content = preg_replace_callback(
         $element_pattern,
         function ( $matches ) {
@@ -145,15 +145,16 @@ function force_https_process_content( $content ) {
         $content
     );
 
-    // replace http and escaped http in script and style blocks  
+    // replace http and escaped http in script and style blocks
     return preg_replace_callback(
         $script_style_pattern,
         function ( $matches ) {
+            preg_match('/<\s*(script|style)/i', $matches[1], $tag_match);
             return $matches[1] . str_replace(
-                ['http://', 'http:\\/\\/'],
-                ['https://', 'https:\\/\\/'],
+                ['http://', 'http:\/\/'],
+                ['https://', 'https:\/\/'],
                 $matches[2]
-            ) . '</' . ($matches[1][1] === 's' ? 'script' : 'style') . '>';
+            ) . '</' . $tag_match[1] . '>';
         },
         $content
     );
