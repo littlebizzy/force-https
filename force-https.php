@@ -108,8 +108,8 @@ if ( class_exists( 'WooCommerce' ) ) {
 
 // enforce https on html content that may contain urls
 function force_https_filter_output( $content ) {
-    // return unchanged if not a string or does not contain http
-    if ( ! is_string( $content ) || strpos( $content, 'http://' ) === false ) {
+    // return unchanged if not a string
+    if ( ! is_string( $content ) ) {
         return $content;
     }
 
