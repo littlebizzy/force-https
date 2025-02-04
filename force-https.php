@@ -45,7 +45,7 @@ function force_https_redirect() {
     }
 
     // fallback check for https in server if is_ssl fails
-    if ( ! empty( $_SERVER['HTTPS'] ) && strtolower( $_SERVER['HTTPS'] ) !== 'off' ) {
+    if ( ! empty( $_SERVER['HTTPS'] ) ) {
         return;
     }
 
@@ -158,7 +158,7 @@ function force_https_fix_resource_hints( $urls ) {
         return $urls;
     }
 
-    // enforce https on each resource hint url
+    // loop through each url and enforce https where needed
     foreach ( $urls as $key => $url ) {
         if ( is_string( $url ) ) {
             $urls[$key] = set_url_scheme( $url, 'https' );
