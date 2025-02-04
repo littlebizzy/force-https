@@ -126,11 +126,11 @@ add_filter( 'walker_nav_menu_start_el', 'force_https_filter_output', 10 );
 add_filter( 'widget_text', 'force_https_filter_output', 20 );
 add_filter( 'widget_text_content', 'force_https_filter_output', 20 );
 
-// force https on all elements and attributes with urls
+// force https on essential elements with urls
 add_filter( 'the_content', 'force_https_process_content', 20 );
 function force_https_process_content( $content ) {
     return preg_replace_callback(
-        '#(<(?:a|img|script|iframe|link|source|form)[^>]+\s(?:href|src)=["\'])http://([^"\']+)#i',
+        '#(<(?:a|img|iframe|video|audio|source|form|link)\b[^>]*\s*(?:href|src|action)=["\'])http://([^"\']+)#i',
         function( $matches ) {
             return $matches[1] . 'https://' . $matches[2];
         },
@@ -142,9 +142,9 @@ function force_https_process_content( $content ) {
 add_filter( 'the_content', 'force_https_fix_scripts_styles', 20 );
 function force_https_fix_scripts_styles( $content ) {
     return preg_replace_callback(
-        '#(<script.*?>|<style.*?>)(.*?)</(script|style)>#is',
+        '#(<script\b[^>]*>|<style\b[^>]*>)(.*?)</(script|style)>#is',
         function( $matches ) {
-            return $matches[1] . str_replace('http://', 'https://', $matches[2]) . '</' . $matches[3] . '>';
+            return $matches[1] . str_replace(['http://', 'http:\\/\\/'], ['https://', 'https:\\/\\/'], $matches[2]) . '</' . $matches[3] . '>';
         },
         $content
     );
