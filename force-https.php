@@ -126,25 +126,34 @@ add_filter( 'walker_nav_menu_start_el', 'force_https_filter_output', 10 );
 add_filter( 'widget_text', 'force_https_filter_output', 20 );
 add_filter( 'widget_text_content', 'force_https_filter_output', 20 );
 
-// force https on essential elements with urls
+// enforce https on elements and inline content  
 add_filter( 'the_content', 'force_https_process_content', 20 );
+
 function force_https_process_content( $content ) {
-    return preg_replace_callback(
-        '#(<(?:a|img|iframe|video|audio|source|form|link)\b[^>]*\s*(?:href|src|action)=["\'])http://([^"\']+)#i',
-        function( $matches ) {
+    // match elements with src, href, action, content, cite, or background attributes  
+    static $element_pattern = '#(?i)(<(?:a|img|iframe|video|audio|source|form|link|embed|object|track|script|meta|input|button)\b[^>]*\s*(?:href|src|action|content|formaction)=["\'])http://([^"\']+)#';
+
+    // match script and style content  
+    static $script_style_pattern = '#(<(?i:script|style)\b[^>]*>)(.*?)</(?i:script|style)>#s';
+
+    // replace http with https in elements  
+    $content = preg_replace_callback(
+        $element_pattern,
+        function ( $matches ) {
             return $matches[1] . 'https://' . $matches[2];
         },
         $content
     );
-}
 
-// force https inside inline script and style content
-add_filter( 'the_content', 'force_https_fix_scripts_styles', 20 );
-function force_https_fix_scripts_styles( $content ) {
+    // replace http and escaped http in script and style blocks  
     return preg_replace_callback(
-        '#(<script\b[^>]*>|<style\b[^>]*>)(.*?)</(script|style)>#is',
-        function( $matches ) {
-            return $matches[1] . str_replace(['http://', 'http:\\/\\/'], ['https://', 'https:\\/\\/'], $matches[2]) . '</' . $matches[3] . '>';
+        $script_style_pattern,
+        function ( $matches ) {
+            return $matches[1] . str_replace(
+                ['http://', 'http:\\/\\/'],
+                ['https://', 'https:\\/\\/'],
+                $matches[2]
+            ) . '</' . ($matches[1][1] === 's' ? 'script' : 'style') . '>';
         },
         $content
     );
