@@ -27,29 +27,32 @@ add_filter( 'gu_override_dot_org', function( $overrides ) {
     return $overrides;
 }, 999 );
 
-// enforce https at the database level before wordpress processes these values
+// enforce https at the database level only if wordpress is incorrectly detecting http
 // home_url and site_url should not be in force_https_securize_url because it would run on every call unnecessarily
 function force_https_filter_home( $value ) {
+    if ( is_ssl() ) {
+        return $value;
+    }
     return set_url_scheme( $value, 'https' );
 }
+
 // no priority needed since pre_option filters override values immediately
 add_filter( 'pre_option_home', 'force_https_filter_home' );
 add_filter( 'pre_option_siteurl', 'force_https_filter_home' );
 
 // enforce https by redirecting non-ssl requests on frontend, admin, and login pages
 function force_https_redirect() {
-    
-    // exit if already using https, headers are sent, running via cli, cron, or ajax, or no request uri exists
-    if ( is_ssl() || headers_sent() || defined( 'WP_CLI' ) || defined( 'DOING_CRON' ) || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) || ! isset( $_SERVER['REQUEST_URI'] ) ) {
+    // exit if already using https
+    if ( is_ssl() ) {
         return;
     }
 
-    // fallback check for https in server if is_ssl fails
-    if ( ! empty( $_SERVER['HTTPS'] ) ) {
+    // exit if headers are sent, running via cli, cron, ajax, or if no request uri exists
+    if ( headers_sent() || defined( 'WP_CLI' ) || defined( 'DOING_CRON' ) || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) || ! isset( $_SERVER['REQUEST_URI'] ) ) {
         return;
     }
 
-    // redirect to https version of the requested url with a permanent redirect
+    // redirect to https version of the requested url
     wp_redirect( set_url_scheme( home_url( $_SERVER['REQUEST_URI'] ), 'https' ), 301 );
     exit;
 }
