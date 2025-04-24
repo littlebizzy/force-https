@@ -3,7 +3,7 @@
 Plugin Name: Force HTTPS
 Plugin URI: https://www.littlebizzy.com/plugins/force-https
 Description: HTTPS enforcement for WordPress
-Version: 3.0.0
+Version: 3.0.1
 Author: LittleBizzy
 Author URI: https://www.littlebizzy.com
 Requires PHP: 7.0
@@ -30,9 +30,18 @@ add_filter( 'gu_override_dot_org', function( $overrides ) {
 // enforce https at the database level only if wordpress is incorrectly detecting http
 // home_url and site_url should not be in force_https_securize_url because it would run on every call unnecessarily
 function force_https_filter_home( $value ) {
+
+    // bypass if running via cli or cron to prevent issues with commands or internal loopback requests
+    if ( defined( 'WP_CLI' ) || defined( 'DOING_CRON' ) ) {
+        return $value;
+    }
+
+    // bypass if already using ssl
     if ( is_ssl() ) {
         return $value;
     }
+
+    // force https scheme
     return set_url_scheme( $value, 'https' );
 }
 
