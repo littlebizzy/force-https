@@ -4,6 +4,9 @@ HTTPS enforcement for WordPress
 
 ## Changelog
 
+## 3.0.1
+- improved WP-CLI and WP-Cron compatibility with home/siteurl filtering logic
+- 
 ## 3.0.0
 - added `Tested up to` header
 - added `Update URI` header
