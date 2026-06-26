@@ -4,6 +4,10 @@ HTTPS enforcement for WordPress
 
 ## Changelog
 
+## 3.0.5
+- fixed oEmbed and custom logo HTTPS filtering by using the HTML output callback for HTML-returning hooks
+- improved REST response HTTPS filtering for nested string values inside arrays
+
 ## 3.0.4
 - registered WooCommerce filters on `plugins_loaded` so HTTPS support is not missed due to plugin load order
 
