@@ -7,7 +7,6 @@ HTTPS enforcement for WordPress
 ## 3.0.3
 - fixed nav menu link HTTPS filtering with a dedicated attributes callback
 - removed leftover development reference from plugin file
-- fixed changelog typo
 
 ## 3.0.2
 - replaced HTTPS redirect with `wp_safe_redirect`
