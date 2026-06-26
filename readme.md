@@ -4,6 +4,9 @@ HTTPS enforcement for WordPress
 
 ## Changelog
 
+## 3.0.10
+- added REST response object HTTPS filtering before final REST output
+
 ## 3.0.9
 - hardened resource hint, image srcset, and upload directory HTTPS filtering with stricter URL checks
 
