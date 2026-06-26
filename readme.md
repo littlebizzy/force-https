@@ -16,16 +16,13 @@ HTTPS enforcement for WordPress
 - improved WP-CLI and WP-Cron compatibility with home/siteurl filtering logic
 
 ## 3.0.0
-- added `Tested up to` header
-- added `Update URI` header
-- added `Text Domain` header
-- improved HTTPS redirection that skips WP-CLI, WP-Cron, and AJAX
-- now leveraging `pre_option_home` and `pre_option_siteurl` to override WordPress sequence early
-- several more `add_filter` being enforced
-- refined regex in `the_content` to correctly process `<script>` and `<style>` blocks
-- refined and expanded regex for HTML elements
-- support for several WooCommerce `add_filter` if detected
-- significant code structure, syntax, and efficiency improvements
+- added `Tested up to`, `Update URI`, and `Text Domain` plugin headers
+- improved HTTPS redirects to skip WP-CLI, WP-Cron, and AJAX requests
+- added early home/siteurl HTTPS filtering with `pre_option_home` and `pre_option_siteurl`
+- expanded HTTPS enforcement across WordPress URL, content, media, resource hint, and upload directory filters
+- improved content parsing for HTML elements, including `<script>` and `<style>` blocks
+- added WooCommerce URL/content filter support when WooCommerce is active
+- cleaned up plugin structure, syntax, and compatibility
 
 ### 2.0.3
 - added `Requires PHP` plugin header
