@@ -4,6 +4,9 @@ HTTPS enforcement for WordPress
 
 ## Changelog
 
+## 3.0.9
+- hardened resource hint, image srcset, and upload directory HTTPS filtering with stricter URL checks
+
 ## 3.0.8
 - added HTTPS filtering for author, archive, attachment, custom post type, feed, search, shortlink, and logout URLs
 - fixed stale WordPress and WooCommerce filter registrations by using current hook names
