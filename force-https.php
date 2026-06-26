@@ -3,7 +3,7 @@
 Plugin Name: Force HTTPS
 Plugin URI: https://www.littlebizzy.com/plugins/force-https
 Description: HTTPS enforcement for WordPress
-Version: 3.0.8
+Version: 3.0.9
 Author: LittleBizzy
 Author URI: https://www.littlebizzy.com
 Requires PHP: 7.0
@@ -241,9 +241,9 @@ function force_https_fix_resource_hints( $urls ) {
     // loop through each url and enforce https where needed
     foreach ( $urls as $key => $url ) {
         if ( is_string( $url ) ) {
-            $urls[$key] = set_url_scheme( $url, 'https' );
-        } elseif ( is_array( $url ) && isset( $url['href'] ) ) {
-            $urls[$key]['href'] = set_url_scheme( $url['href'], 'https' );
+            $urls[$key] = force_https_securize_url( $url );
+        } elseif ( is_array( $url ) && isset( $url['href'] ) && is_string( $url['href'] ) ) {
+            $urls[$key]['href'] = force_https_securize_url( $url['href'] );
         }
     }
 
@@ -261,8 +261,8 @@ function force_https_fix_image_srcsets( $sources ) {
     // loop through each source and enforce https on urls
     foreach ( $sources as $key => $source ) {
         // check if url is set and enforce https
-        if ( isset( $source['url'] ) ) {
-            $sources[$key]['url'] = set_url_scheme( $source['url'], 'https' );
+        if ( isset( $source['url'] ) && is_string( $source['url'] ) ) {
+            $sources[$key]['url'] = force_https_securize_url( $source['url'] );
         }
     }
 
@@ -274,13 +274,13 @@ add_filter( 'upload_dir', 'force_https_fix_upload_dir', 999 );
 function force_https_fix_upload_dir( $uploads ) {
 
     // enforce https on the main upload url
-    if ( isset( $uploads['url'] ) ) {
-        $uploads['url'] = set_url_scheme( $uploads['url'], 'https' );
+    if ( isset( $uploads['url'] ) && is_string( $uploads['url'] ) ) {
+        $uploads['url'] = force_https_securize_url( $uploads['url'] );
     }
 
     // enforce https on the base upload url
-    if ( isset( $uploads['baseurl'] ) ) {
-        $uploads['baseurl'] = set_url_scheme( $uploads['baseurl'], 'https' );
+    if ( isset( $uploads['baseurl'] ) && is_string( $uploads['baseurl'] ) ) {
+        $uploads['baseurl'] = force_https_securize_url( $uploads['baseurl'] );
     }
 
     return $uploads;
