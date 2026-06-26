@@ -4,6 +4,9 @@ HTTPS enforcement for WordPress
 
 ## Changelog
 
+## 3.0.8
+- added HTTPS filtering for author, archive, attachment, custom post type, feed, search, and shortlink URLs
+
 ## 3.0.7
 - added HTTPS filtering for enqueued script and stylesheet asset URLs
 - added HTTPS filtering for theme root, theme directory, and theme file URLs
