@@ -4,6 +4,9 @@ HTTPS enforcement for WordPress
 
 ## Changelog
 
+## 3.0.7
+- added HTTPS filtering for enqueued script, style, and theme asset URLs
+
 ## 3.0.6
 - removed redundant WooCommerce REST prepare filters now covered by global REST response HTTPS filtering
 
