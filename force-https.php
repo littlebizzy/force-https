@@ -3,7 +3,7 @@
 Plugin Name: Force HTTPS
 Plugin URI: https://www.littlebizzy.com/plugins/force-https
 Description: HTTPS enforcement for WordPress
-Version: 3.0.4
+Version: 3.0.5
 Author: LittleBizzy
 Author URI: https://www.littlebizzy.com
 Requires PHP: 7.0
@@ -106,9 +106,9 @@ add_filter( 'author_feed_link', 'force_https_securize_url', 10 );
 add_filter( 'category_feed_link', 'force_https_securize_url', 10 );
 add_filter( 'category_link', 'force_https_securize_url', 10 );
 add_filter( 'content_url', 'force_https_securize_url', 10 );
-add_filter( 'embed_oembed_html', 'force_https_securize_url', 10 );
+add_filter( 'embed_oembed_html', 'force_https_filter_output', 10 );
 add_filter( 'get_avatar_url', 'force_https_securize_url', 10 );
-add_filter( 'get_custom_logo', 'force_https_securize_url', 10 );
+add_filter( 'get_custom_logo', 'force_https_filter_output', 10 );
 add_filter( 'get_the_permalink', 'force_https_securize_url', 10 );
 add_filter( 'includes_url', 'force_https_securize_url', 10 );
 add_filter( 'login_redirect', 'force_https_securize_url', 10 );
@@ -143,6 +143,23 @@ function force_https_register_woocommerce_filters() {
     add_filter( 'woocommerce_rest_prepare_product', 'force_https_filter_output', 999 );
 }
 
+// enforce https on strings and nested arrays
+function force_https_filter_value( $value ) {
+    // replace http with https in strings
+    if ( is_string( $value ) ) {
+        return str_replace( 'http://', 'https://', $value );
+    }
+
+    // recursively process arrays
+    if ( is_array( $value ) ) {
+        foreach ( $value as $key => $item ) {
+            $value[$key] = force_https_filter_value( $item );
+        }
+    }
+
+    return $value;
+}
+
 // enforce https on html content that may contain urls
 function force_https_filter_output( $content ) {
     // return unchanged if not a string
@@ -151,14 +168,19 @@ function force_https_filter_output( $content ) {
     }
 
     // replace http with https in text or html output
-    return str_replace( 'http://', 'https://', $content );
+    return force_https_filter_value( $content );
+}
+
+// enforce https on rest response values
+function force_https_filter_rest_response( $response ) {
+    return force_https_filter_value( $response );
 }
 
 // apply https enforcement to html content
 add_filter( 'comment_text', 'force_https_filter_output', 20 );
 add_filter( 'post_thumbnail_html', 'force_https_filter_output', 10 );
 add_filter( 'render_block', 'force_https_filter_output', 20 );
-add_filter( 'rest_pre_echo_response', 'force_https_filter_output', 999 );
+add_filter( 'rest_pre_echo_response', 'force_https_filter_rest_response', 999 );
 add_filter( 'walker_nav_menu_start_el', 'force_https_filter_output', 10 );
 add_filter( 'widget_text', 'force_https_filter_output', 20 );
 add_filter( 'widget_text_content', 'force_https_filter_output', 20 );
