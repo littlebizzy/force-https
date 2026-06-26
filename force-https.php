@@ -3,7 +3,7 @@
 Plugin Name: Force HTTPS
 Plugin URI: https://www.littlebizzy.com/plugins/force-https
 Description: HTTPS enforcement for WordPress
-Version: 3.0.7
+Version: 3.0.8
 Author: LittleBizzy
 Author URI: https://www.littlebizzy.com
 Requires PHP: 7.0
@@ -102,25 +102,35 @@ function force_https_fix_nav_menu_link_attributes( $atts ) {
 
 // apply https to urls used across wordpress
 add_filter( 'admin_url', 'force_https_securize_url', 10 );
+add_filter( 'attachment_link', 'force_https_securize_url', 10 );
 add_filter( 'author_feed_link', 'force_https_securize_url', 10 );
+add_filter( 'author_link', 'force_https_securize_url', 10 );
 add_filter( 'category_feed_link', 'force_https_securize_url', 10 );
 add_filter( 'category_link', 'force_https_securize_url', 10 );
 add_filter( 'content_url', 'force_https_securize_url', 10 );
+add_filter( 'day_link', 'force_https_securize_url', 10 );
 add_filter( 'embed_oembed_html', 'force_https_filter_output', 10 );
+add_filter( 'feed_link', 'force_https_securize_url', 10 );
 add_filter( 'get_avatar_url', 'force_https_securize_url', 10 );
 add_filter( 'get_custom_logo', 'force_https_filter_output', 10 );
+add_filter( 'get_shortlink', 'force_https_securize_url', 10 );
 add_filter( 'get_the_permalink', 'force_https_securize_url', 10 );
 add_filter( 'includes_url', 'force_https_securize_url', 10 );
 add_filter( 'login_redirect', 'force_https_securize_url', 10 );
 add_filter( 'logout_redirect', 'force_https_securize_url', 10 );
+add_filter( 'month_link', 'force_https_securize_url', 10 );
 add_filter( 'nav_menu_link_attributes', 'force_https_fix_nav_menu_link_attributes', 10 );
 add_filter( 'network_home_url', 'force_https_securize_url', 10 );
 add_filter( 'network_site_url', 'force_https_securize_url', 10 );
 add_filter( 'page_link', 'force_https_securize_url', 10 );
 add_filter( 'plugins_url', 'force_https_securize_url', 10 );
+add_filter( 'post_comments_feed_link', 'force_https_securize_url', 10 );
 add_filter( 'post_link', 'force_https_securize_url', 10 );
+add_filter( 'post_type_archive_link', 'force_https_securize_url', 10 );
+add_filter( 'post_type_link', 'force_https_securize_url', 10 );
 add_filter( 'rest_url', 'force_https_securize_url', 10 );
 add_filter( 'script_loader_src', 'force_https_securize_url', 10 );
+add_filter( 'search_link', 'force_https_securize_url', 10 );
 add_filter( 'style_loader_src', 'force_https_securize_url', 10 );
 add_filter( 'stylesheet_directory_uri', 'force_https_securize_url', 10 );
 add_filter( 'tag_link', 'force_https_securize_url', 10 );
@@ -130,6 +140,7 @@ add_filter( 'theme_file_uri', 'force_https_securize_url', 10 );
 add_filter( 'theme_root_uri', 'force_https_securize_url', 10 );
 add_filter( 'wp_get_attachment_url', 'force_https_securize_url', 10 );
 add_filter( 'wp_logout_url', 'force_https_securize_url', 10 );
+add_filter( 'year_link', 'force_https_securize_url', 10 );
 
 // register woocommerce filters after plugins are loaded
 add_action( 'plugins_loaded', 'force_https_register_woocommerce_filters' );
