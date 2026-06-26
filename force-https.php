@@ -3,7 +3,7 @@
 Plugin Name: Force HTTPS
 Plugin URI: https://www.littlebizzy.com/plugins/force-https
 Description: HTTPS enforcement for WordPress
-Version: 3.0.2
+Version: 3.0.3
 Author: LittleBizzy
 Author URI: https://www.littlebizzy.com
 Requires PHP: 7.0
@@ -85,6 +85,21 @@ function force_https_securize_url( $value ) {
     return set_url_scheme( $value, 'https' );
 }
 
+// enforce https on nav menu links
+function force_https_fix_nav_menu_link_attributes( $atts ) {
+    // return unchanged if attributes are not an array
+    if ( ! is_array( $atts ) ) {
+        return $atts;
+    }
+
+    // enforce https on href attribute only
+    if ( isset( $atts['href'] ) ) {
+        $atts['href'] = force_https_securize_url( $atts['href'] );
+    }
+
+    return $atts;
+}
+
 // apply https to urls used across wordpress
 add_filter( 'admin_url', 'force_https_securize_url', 10 );
 add_filter( 'author_feed_link', 'force_https_securize_url', 10 );
@@ -98,7 +113,7 @@ add_filter( 'get_the_permalink', 'force_https_securize_url', 10 );
 add_filter( 'includes_url', 'force_https_securize_url', 10 );
 add_filter( 'login_redirect', 'force_https_securize_url', 10 );
 add_filter( 'logout_redirect', 'force_https_securize_url', 10 );
-add_filter( 'nav_menu_link_attributes', 'force_https_securize_url', 10 );
+add_filter( 'nav_menu_link_attributes', 'force_https_fix_nav_menu_link_attributes', 10 );
 add_filter( 'network_home_url', 'force_https_securize_url', 10 );
 add_filter( 'network_site_url', 'force_https_securize_url', 10 );
 add_filter( 'page_link', 'force_https_securize_url', 10 );
@@ -230,5 +245,3 @@ function force_https_fix_upload_dir( $uploads ) {
 
     return $uploads;
 }
-
-// Ref: ChatGPT
