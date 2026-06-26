@@ -4,6 +4,9 @@ HTTPS enforcement for WordPress
 
 ## Changelog
 
+## 3.0.4
+- registered WooCommerce filters on `plugins_loaded` so HTTPS support is not missed due to plugin load order
+
 ## 3.0.3
 - fixed nav menu link HTTPS filtering by using a dedicated callback for the attributes array passed by `nav_menu_link_attributes`
 
