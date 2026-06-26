@@ -4,6 +4,11 @@ HTTPS enforcement for WordPress
 
 ## Changelog
 
+## 3.0.3
+- fixed nav menu link HTTPS filtering with a dedicated attributes callback
+- removed leftover development reference from plugin file
+- fixed changelog typo
+
 ## 3.0.2
 - replaced HTTPS redirect with `wp_safe_redirect`
 - sanitized request URI before building HTTPS redirect URL
@@ -20,7 +25,7 @@ HTTPS enforcement for WordPress
 - now leveraging `pre_option_home` and `pre_option_siteurl` to override WordPress sequence early
 - several more `add_filter` being enforced
 - refined regex in `the_content` to correctly process `<script>` and `<style>` blocks
-- refinded and expanded regex for HTML elements
+- refined and expanded regex for HTML elements
 - support for several WooCommerce `add_filter` if detected
 - significant code structure, syntax, and efficiency improvements
 
@@ -97,7 +102,6 @@ HTTPS enforcement for WordPress
 * (philosophy = "green padlock" more important than a resource 404 error)
 * added warning for Multisite installations
 * updated recommended plugins
-* updated metadata
 
 ### 1.0.5
 * better support for `DISABLE_NAG_NOTICES`
