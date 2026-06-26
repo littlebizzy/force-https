@@ -61,8 +61,11 @@ function force_https_redirect() {
         return;
     }
 
+    // sanitize request uri before building redirect url
+    $request_uri = sanitize_url( wp_unslash( $_SERVER['REQUEST_URI'] ) );
+
     // redirect to https version of the requested url
-    wp_safe_redirect( set_url_scheme( home_url( $_SERVER['REQUEST_URI'] ), 'https' ), 301 );
+    wp_safe_redirect( set_url_scheme( home_url( $request_uri ), 'https' ), 301 );
     exit;
 }
 
