@@ -5,15 +5,15 @@ HTTPS enforcement for WordPress
 ## Changelog
 
 ## 3.0.3
-- fixed nav menu link HTTPS filtering with a dedicated attributes callback
+- fixed nav menu link HTTPS filtering by using a dedicated callback for the attributes array passed by `nav_menu_link_attributes`
 
 ## 3.0.2
-- replaced HTTPS redirect with `wp_safe_redirect`
-- sanitized request URI before building HTTPS redirect URL
+- hardened HTTPS redirects by replacing `wp_redirect` with `wp_safe_redirect`
+- sanitized the request URI before building the HTTPS redirect URL
 - updated `Tested up to` header for WordPress 7.0
 
 ## 3.0.1
-- improved WP-CLI and WP-Cron compatibility with home/siteurl filtering logic
+- improved WP-CLI and WP-Cron compatibility by bypassing home/siteurl HTTPS filtering during command-line and scheduled tasks
 
 ## 3.0.0
 - added `Tested up to`, `Update URI`, and `Text Domain` plugin headers
