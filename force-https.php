@@ -3,7 +3,7 @@
 Plugin Name: Force HTTPS
 Plugin URI: https://www.littlebizzy.com/plugins/force-https
 Description: HTTPS enforcement for WordPress
-Version: 3.0.9
+Version: 3.0.10
 Author: LittleBizzy
 Author URI: https://www.littlebizzy.com
 Requires PHP: 7.0
@@ -182,6 +182,19 @@ function force_https_filter_output( $content ) {
     return force_https_filter_value( $content );
 }
 
+// enforce https on rest response object data before final output
+function force_https_filter_rest_response_object( $response, $server, $request ) {
+    // return unchanged if response is not a wordpress http response object
+    if ( ! $response instanceof WP_HTTP_Response ) {
+        return $response;
+    }
+
+    // enforce https on response data only
+    $response->set_data( force_https_filter_value( $response->get_data() ) );
+
+    return $response;
+}
+
 // enforce https on rest response values
 function force_https_filter_rest_response( $response ) {
     return force_https_filter_value( $response );
@@ -191,6 +204,7 @@ function force_https_filter_rest_response( $response ) {
 add_filter( 'comment_text', 'force_https_filter_output', 20 );
 add_filter( 'post_thumbnail_html', 'force_https_filter_output', 10 );
 add_filter( 'render_block', 'force_https_filter_output', 20 );
+add_filter( 'rest_post_dispatch', 'force_https_filter_rest_response_object', 999, 3 );
 add_filter( 'rest_pre_echo_response', 'force_https_filter_rest_response', 999 );
 add_filter( 'walker_nav_menu_start_el', 'force_https_filter_output', 10 );
 add_filter( 'widget_text', 'force_https_filter_output', 20 );
