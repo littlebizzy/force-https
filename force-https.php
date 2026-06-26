@@ -114,10 +114,10 @@ add_filter( 'feed_link', 'force_https_securize_url', 10 );
 add_filter( 'get_avatar_url', 'force_https_securize_url', 10 );
 add_filter( 'get_custom_logo', 'force_https_filter_output', 10 );
 add_filter( 'get_shortlink', 'force_https_securize_url', 10 );
-add_filter( 'get_the_permalink', 'force_https_securize_url', 10 );
 add_filter( 'includes_url', 'force_https_securize_url', 10 );
 add_filter( 'login_redirect', 'force_https_securize_url', 10 );
 add_filter( 'logout_redirect', 'force_https_securize_url', 10 );
+add_filter( 'logout_url', 'force_https_securize_url', 10 );
 add_filter( 'month_link', 'force_https_securize_url', 10 );
 add_filter( 'nav_menu_link_attributes', 'force_https_fix_nav_menu_link_attributes', 10 );
 add_filter( 'network_home_url', 'force_https_securize_url', 10 );
@@ -139,7 +139,6 @@ add_filter( 'term_link', 'force_https_securize_url', 10 );
 add_filter( 'theme_file_uri', 'force_https_securize_url', 10 );
 add_filter( 'theme_root_uri', 'force_https_securize_url', 10 );
 add_filter( 'wp_get_attachment_url', 'force_https_securize_url', 10 );
-add_filter( 'wp_logout_url', 'force_https_securize_url', 10 );
 add_filter( 'year_link', 'force_https_securize_url', 10 );
 
 // register woocommerce filters after plugins are loaded
@@ -151,8 +150,7 @@ function force_https_register_woocommerce_filters() {
     }
 
     // apply https to woocommerce urls and content
-    add_filter( 'wc_get_endpoint_url', 'force_https_securize_url', 10 );
-    add_filter( 'woocommerce_account_endpoint_url', 'force_https_securize_url', 10 );
+    add_filter( 'woocommerce_get_endpoint_url', 'force_https_securize_url', 10 );
     add_filter( 'woocommerce_email_footer_text', 'force_https_filter_output', 999 );
 }
 
