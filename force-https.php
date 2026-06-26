@@ -3,7 +3,7 @@
 Plugin Name: Force HTTPS
 Plugin URI: https://www.littlebizzy.com/plugins/force-https
 Description: HTTPS enforcement for WordPress
-Version: 3.0.3
+Version: 3.0.4
 Author: LittleBizzy
 Author URI: https://www.littlebizzy.com
 Requires PHP: 7.0
@@ -125,8 +125,15 @@ add_filter( 'term_link', 'force_https_securize_url', 10 );
 add_filter( 'wp_get_attachment_url', 'force_https_securize_url', 10 );
 add_filter( 'wp_logout_url', 'force_https_securize_url', 10 );
 
-// apply https to woocommerce urls if woocommerce is active
-if ( class_exists( 'WooCommerce' ) ) {
+// register woocommerce filters after plugins are loaded
+add_action( 'plugins_loaded', 'force_https_register_woocommerce_filters' );
+function force_https_register_woocommerce_filters() {
+    // return if woocommerce is not active
+    if ( ! class_exists( 'WooCommerce' ) ) {
+        return;
+    }
+
+    // apply https to woocommerce urls and content
     add_filter( 'wc_get_endpoint_url', 'force_https_securize_url', 10 );
     add_filter( 'woocommerce_account_endpoint_url', 'force_https_securize_url', 10 );
     add_filter( 'woocommerce_email_footer_text', 'force_https_filter_output', 999 );
