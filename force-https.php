@@ -3,11 +3,11 @@
 Plugin Name: Force HTTPS
 Plugin URI: https://www.littlebizzy.com/plugins/force-https
 Description: HTTPS enforcement for WordPress
-Version: 3.0.1
+Version: 3.0.2
 Author: LittleBizzy
 Author URI: https://www.littlebizzy.com
 Requires PHP: 7.0
-Tested up to: 6.7
+Tested up to: 7.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Update URI: false
@@ -62,7 +62,7 @@ function force_https_redirect() {
     }
 
     // redirect to https version of the requested url
-    wp_redirect( set_url_scheme( home_url( $_SERVER['REQUEST_URI'] ), 'https' ), 301 );
+    wp_safe_redirect( set_url_scheme( home_url( $_SERVER['REQUEST_URI'] ), 'https' ), 301 );
     exit;
 }
 
