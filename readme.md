@@ -4,6 +4,11 @@ HTTPS enforcement for WordPress
 
 ## Changelog
 
+## 3.0.2
+- replaced HTTPS redirect with `wp_safe_redirect`
+- sanitized request URI before building HTTPS redirect URL
+- updated `Tested up to` header for WordPress 7.0
+
 ## 3.0.1
 - improved WP-CLI and WP-Cron compatibility with home/siteurl filtering logic
 
