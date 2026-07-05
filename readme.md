@@ -24,7 +24,7 @@ Force HTTPS also does not add HSTS headers. HSTS is best managed at the server o
 
 ## Changelog
 
-### 4.1.1
+### 4.2.0
 - expanded rendered content HTTPS handling for `srcset`, `poster`, `data-src`, and `data-srcset` attributes
 - improved rendered content attribute handling so multiple `http://` URLs inside supported attribute values are upgraded
 
