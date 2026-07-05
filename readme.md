@@ -24,6 +24,10 @@ Force HTTPS also does not add HSTS headers. HSTS is best managed at the server o
 
 ## Changelog
 
+### 4.1.1
+- expanded rendered content HTTPS handling for `srcset`, `poster`, `data-src`, and `data-srcset` attributes
+- improved rendered content attribute handling so multiple `http://` URLs inside supported attribute values are upgraded
+
 ### 4.1.0
 - added HTTPS filtering for direct `home_url` and `site_url` output
 - added late HTTPS filtering for WordPress redirect destinations via `wp_redirect`
