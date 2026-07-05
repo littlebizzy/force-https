@@ -3,7 +3,7 @@
 Plugin Name: Force HTTPS
 Plugin URI: https://www.littlebizzy.com/plugins/force-https
 Description: HTTPS enforcement for WordPress
-Version: 3.0.10
+Version: 4.0.0
 Author: LittleBizzy
 Author URI: https://www.littlebizzy.com
 Requires PHP: 7.0
@@ -27,27 +27,70 @@ add_filter( 'gu_override_dot_org', function( $overrides ) {
     return $overrides;
 }, 999 );
 
-// enforce https at the database level only if wordpress is incorrectly detecting http
-// home_url and site_url should not be in force_https_securize_url because it would run on every call unnecessarily
-function force_https_filter_home( $value ) {
-
-    // bypass if running via cli or cron to prevent issues with commands or internal loopback requests
-    if ( defined( 'WP_CLI' ) || defined( 'DOING_CRON' ) ) {
-        return $value;
-    }
-
-    // bypass if already using ssl
-    if ( is_ssl() ) {
-        return $value;
-    }
-
-    // force https scheme
-    return set_url_scheme( $value, 'https' );
+// check whether core url option filtering should be bypassed
+function force_https_bypass_core_url_option_filtering() {
+    return defined( 'WP_CLI' ) || defined( 'DOING_CRON' );
 }
 
-// no priority needed since pre_option filters override values immediately
-add_filter( 'pre_option_home', 'force_https_filter_home' );
-add_filter( 'pre_option_siteurl', 'force_https_filter_home' );
+// enforce https on WP_HOME before wordpress queries the home option
+function force_https_pre_option_home( $pre_option ) {
+    // bypass if running via cli or cron to prevent issues with commands or internal loopback requests
+    if ( force_https_bypass_core_url_option_filtering() ) {
+        return $pre_option;
+    }
+
+    // respect any earlier short-circuited value while forcing https
+    if ( is_string( $pre_option ) && '' !== $pre_option ) {
+        return force_https_securize_url( $pre_option );
+    }
+
+    // safely force the hardcoded constant when available, such as on SlickStack servers
+    if ( defined( 'WP_HOME' ) && is_string( WP_HOME ) && '' !== WP_HOME ) {
+        return force_https_securize_url( WP_HOME );
+    }
+
+    // let wordpress query the normal option value when no safe early value exists
+    return $pre_option;
+}
+
+// enforce https on WP_SITEURL before wordpress queries the siteurl option
+function force_https_pre_option_siteurl( $pre_option ) {
+    // bypass if running via cli or cron to prevent issues with commands or internal loopback requests
+    if ( force_https_bypass_core_url_option_filtering() ) {
+        return $pre_option;
+    }
+
+    // respect any earlier short-circuited value while forcing https
+    if ( is_string( $pre_option ) && '' !== $pre_option ) {
+        return force_https_securize_url( $pre_option );
+    }
+
+    // safely force the hardcoded constant when available, such as on SlickStack servers
+    if ( defined( 'WP_SITEURL' ) && is_string( WP_SITEURL ) && '' !== WP_SITEURL ) {
+        return force_https_securize_url( WP_SITEURL );
+    }
+
+    // let wordpress query the normal option value when no safe early value exists
+    return $pre_option;
+}
+
+// enforce https on database-backed home and siteurl option values after normal retrieval
+function force_https_filter_core_url_option( $value ) {
+    // bypass if running via cli or cron to prevent issues with commands or internal loopback requests
+    if ( force_https_bypass_core_url_option_filtering() ) {
+        return $value;
+    }
+
+    return force_https_securize_url( $value );
+}
+
+// pre_option filters are used only when a safe constant or earlier short-circuited value exists
+add_filter( 'pre_option_home', 'force_https_pre_option_home', 10, 1 );
+add_filter( 'pre_option_siteurl', 'force_https_pre_option_siteurl', 10, 1 );
+
+// option filters cover normal database-backed installs without constants
+add_filter( 'option_home', 'force_https_filter_core_url_option', 999 );
+add_filter( 'option_siteurl', 'force_https_filter_core_url_option', 999 );
 
 // enforce https by redirecting non-ssl requests on frontend, admin, and login pages
 function force_https_redirect() {
