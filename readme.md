@@ -24,6 +24,9 @@ Force HTTPS also does not add HSTS headers. HSTS is best managed at the server o
 
 ## Changelog
 
+### 4.0.1
+- enabled WordPress admin SSL enforcement at runtime with `force_ssl_admin( true )` without defining or redefining constants
+
 ### 4.0.0
 - improved core `home` and `siteurl` HTTPS handling for both SlickStack and non-SlickStack servers
 - added safe `WP_HOME` and `WP_SITEURL` support in early `pre_option_home` and `pre_option_siteurl` filters without assuming those constants exist
