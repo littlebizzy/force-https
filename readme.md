@@ -2,6 +2,16 @@
 
 HTTPS enforcement for WordPress
 
+## What it does
+
+Force HTTPS redirects normal non-SSL web requests to the HTTPS version of the requested WordPress URL while avoiding WP-CLI, WP-Cron, AJAX requests, already-sent headers, and missing request URI edge cases.
+
+Force HTTPS also makes WordPress-generated URLs use HTTPS across core URL helpers, permalinks, feeds, admin/login/logout URLs, media URLs, enqueued scripts and styles, theme URLs, upload directory URLs, image srcsets, resource hints, rendered content, widgets, comments, navigation output, oEmbed/custom logo HTML, REST response data, and supported WooCommerce URL/content filters.
+
+For core `home` and `siteurl` values, Force HTTPS supports both SlickStack and non-SlickStack servers. When `WP_HOME` or `WP_SITEURL` are safely hardcoded in `wp-config.php`, the plugin uses early `pre_option_home` and `pre_option_siteurl` filtering so WordPress can assume HTTPS before normal option retrieval. When those constants are not defined, the plugin lets WordPress retrieve the database-backed values normally, then upgrades them through `option_home` and `option_siteurl` filters at runtime.
+
+This approach does not write to the database. It only normalizes the runtime values WordPress uses during normal web requests, while continuing to bypass WP-CLI and WP-Cron to avoid interfering with command-line tasks or internal scheduled jobs.
+
 ## What it doesn't do
 
 Force HTTPS does not try to detect HTTPS by trusting proxy, CDN, or load balancer request headers such as `X-Forwarded-Proto`, `X-Forwarded-SSL`, or Cloudflare-specific headers.
@@ -13,6 +23,13 @@ If a site runs behind Cloudflare, another CDN, a load balancer, or a reverse pro
 Force HTTPS also does not add HSTS headers. HSTS is best managed at the server or CDN level because it can affect the entire domain and subdomains beyond WordPress.
 
 ## Changelog
+
+## 4.0.0
+- improved core `home` and `siteurl` HTTPS handling for both SlickStack and non-SlickStack servers
+- added safe `WP_HOME` and `WP_SITEURL` support in early `pre_option_home` and `pre_option_siteurl` filters without assuming those constants exist
+- added `option_home` and `option_siteurl` fallback filters for database-backed installs without hardcoded constants
+- kept WP-CLI and WP-Cron bypasses for core URL option filtering
+- documented what the plugin does and how its runtime HTTPS option handling works
 
 ## 3.0.10
 - added REST response object HTTPS filtering via `rest_post_dispatch` while keeping final REST output filtering as a safety net
