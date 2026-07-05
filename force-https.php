@@ -3,7 +3,7 @@
 Plugin Name: Force HTTPS
 Plugin URI: https://www.littlebizzy.com/plugins/force-https
 Description: HTTPS enforcement for WordPress
-Version: 4.1.0
+Version: 4.1.1
 Author: LittleBizzy
 Author URI: https://www.littlebizzy.com
 Requires PHP: 7.0
@@ -291,17 +291,17 @@ add_filter( 'widget_text_content', 'force_https_filter_output', 20 );
 add_filter( 'the_content', 'force_https_process_content', 20 );
 
 function force_https_process_content( $content ) {
-    // match elements with src, href, action, content, or formaction attributes
-    static $element_pattern = '#(?i)(<(?:a|img|iframe|video|audio|source|form|link|embed|object|track|script|meta|input|button)\b[^>]*\s*(?:href|src|action|content|formaction)=["\'])http://([^"\']+)#';
+    // match elements with common url, media, and lazy-load attributes
+    static $element_pattern = '#(?i)(<(?:a|img|iframe|video|audio|source|form|link|embed|object|track|script|meta|input|button)\b[^>]*\s(?:href|src|srcset|poster|action|content|formaction|data-src|data-srcset)=["\'])([^"\']*)#';
 
     // match script and style content
     static $script_style_pattern = '#(<(?i:script|style)\b[^>]*>)(.*?)</(?i:script|style)>#s';
 
-    // replace http with https in elements
+    // replace http values in supported elements
     $content = preg_replace_callback(
         $element_pattern,
         function ( $matches ) {
-            return $matches[1] . 'https://' . $matches[2];
+            return $matches[1] . str_replace( 'http://', 'https://', $matches[2] );
         },
         $content
     );
