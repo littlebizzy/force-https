@@ -24,49 +24,48 @@ Force HTTPS also does not add HSTS headers. HSTS is best managed at the server o
 
 ## Changelog
 
-## 4.0.0
+### 4.0.0
 - improved core `home` and `siteurl` HTTPS handling for both SlickStack and non-SlickStack servers
 - added safe `WP_HOME` and `WP_SITEURL` support in early `pre_option_home` and `pre_option_siteurl` filters without assuming those constants exist
 - added `option_home` and `option_siteurl` fallback filters for database-backed installs without hardcoded constants
 - kept WP-CLI and WP-Cron bypasses for core URL option filtering
-- documented what the plugin does and how its runtime HTTPS option handling works
 
-## 3.0.10
+### 3.0.10
 - added REST response object HTTPS filtering via `rest_post_dispatch` while keeping final REST output filtering as a safety net
 
-## 3.0.9
+### 3.0.9
 - hardened resource hint, image srcset, and upload directory HTTPS filtering with stricter URL checks
 
-## 3.0.8
+### 3.0.8
 - added HTTPS filtering for author, archive, attachment, custom post type, feed, search, shortlink, and logout URLs
 - fixed stale WordPress and WooCommerce filter registrations by using current hook names
 
-## 3.0.7
+### 3.0.7
 - added HTTPS filtering for enqueued script and stylesheet asset URLs
 - added HTTPS filtering for theme root, theme directory, and theme file URLs
 
-## 3.0.6
+### 3.0.6
 - removed redundant WooCommerce REST prepare filters now covered by global REST response HTTPS filtering
 
-## 3.0.5
+### 3.0.5
 - fixed oEmbed and custom logo HTTPS filtering by using the HTML output callback for HTML-returning hooks
 - improved REST response HTTPS filtering for nested string values inside arrays
 
-## 3.0.4
+### 3.0.4
 - registered WooCommerce filters on `plugins_loaded` so HTTPS support is not missed due to plugin load order
 
-## 3.0.3
+### 3.0.3
 - fixed nav menu link HTTPS filtering by using a dedicated callback for the attributes array passed by `nav_menu_link_attributes`
 
-## 3.0.2
+### 3.0.2
 - hardened HTTPS redirects by replacing `wp_redirect` with `wp_safe_redirect`
 - sanitized the request URI before building the HTTPS redirect URL
 - updated `Tested up to` header for WordPress 7.0
 
-## 3.0.1
+### 3.0.1
 - improved WP-CLI and WP-Cron compatibility by bypassing home/siteurl HTTPS filtering during command-line and scheduled tasks
 
-## 3.0.0
+### 3.0.0
 - added `Tested up to`, `Update URI`, and `Text Domain` plugin headers
 - improved HTTPS redirects to skip WP-CLI, WP-Cron, and AJAX requests
 - added early home/siteurl HTTPS filtering with `pre_option_home` and `pre_option_siteurl`
