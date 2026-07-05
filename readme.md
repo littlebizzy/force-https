@@ -2,6 +2,16 @@
 
 HTTPS enforcement for WordPress
 
+## What it doesn't do
+
+Force HTTPS does not try to detect HTTPS by trusting proxy, CDN, or load balancer request headers such as `X-Forwarded-Proto`, `X-Forwarded-SSL`, or Cloudflare-specific headers.
+
+Those headers can be useful on correctly configured reverse-proxy setups, but they are only safe when the server or proxy layer strips untrusted incoming values and overwrites them from a trusted source. A WordPress plugin cannot reliably know whether those headers came from a trusted proxy or were spoofed by a direct request to the origin server, so this plugin intentionally avoids using them as a source of truth.
+
+If a site runs behind Cloudflare, another CDN, a load balancer, or a reverse proxy, HTTPS detection should be handled in the server, hosting, CDN, or `wp-config.php` configuration where the trust boundary can be controlled. This plugin focuses on enforcing HTTPS across WordPress-generated URLs, redirects, content, assets, REST output, and supported plugin URL filters after WordPress and the server environment report the request state.
+
+Force HTTPS also does not add HSTS headers. HSTS is best managed at the server or CDN level because it can affect the entire domain and subdomains beyond WordPress.
+
 ## Changelog
 
 ## 3.0.10
