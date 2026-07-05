@@ -27,6 +27,7 @@ Force HTTPS also does not add HSTS headers. HSTS is best managed at the server o
 ### 4.0.0
 - improved core `home` and `siteurl` HTTPS handling for both SlickStack and non-SlickStack servers
 - added safe `WP_HOME` and `WP_SITEURL` support in early `pre_option_home` and `pre_option_siteurl` filters without assuming those constants exist
+- tightened early core URL option validation so constants and existing pre-option values only short-circuit when they resolve to `https://` URLs
 - added `option_home` and `option_siteurl` fallback filters for database-backed installs without hardcoded constants
 - kept WP-CLI and WP-Cron bypasses for core URL option filtering
 
