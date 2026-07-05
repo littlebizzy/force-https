@@ -3,7 +3,7 @@
 Plugin Name: Force HTTPS
 Plugin URI: https://www.littlebizzy.com/plugins/force-https
 Description: HTTPS enforcement for WordPress
-Version: 4.0.1
+Version: 4.1.0
 Author: LittleBizzy
 Author URI: https://www.littlebizzy.com
 Requires PHP: 7.0
@@ -188,6 +188,7 @@ add_filter( 'feed_link', 'force_https_securize_url', 10 );
 add_filter( 'get_avatar_url', 'force_https_securize_url', 10 );
 add_filter( 'get_custom_logo', 'force_https_filter_output', 10 );
 add_filter( 'get_shortlink', 'force_https_securize_url', 10 );
+add_filter( 'home_url', 'force_https_securize_url', 10 );
 add_filter( 'includes_url', 'force_https_securize_url', 10 );
 add_filter( 'login_redirect', 'force_https_securize_url', 10 );
 add_filter( 'logout_redirect', 'force_https_securize_url', 10 );
@@ -205,6 +206,7 @@ add_filter( 'post_type_link', 'force_https_securize_url', 10 );
 add_filter( 'rest_url', 'force_https_securize_url', 10 );
 add_filter( 'script_loader_src', 'force_https_securize_url', 10 );
 add_filter( 'search_link', 'force_https_securize_url', 10 );
+add_filter( 'site_url', 'force_https_securize_url', 10 );
 add_filter( 'style_loader_src', 'force_https_securize_url', 10 );
 add_filter( 'stylesheet_directory_uri', 'force_https_securize_url', 10 );
 add_filter( 'tag_link', 'force_https_securize_url', 10 );
@@ -213,6 +215,7 @@ add_filter( 'term_link', 'force_https_securize_url', 10 );
 add_filter( 'theme_file_uri', 'force_https_securize_url', 10 );
 add_filter( 'theme_root_uri', 'force_https_securize_url', 10 );
 add_filter( 'wp_get_attachment_url', 'force_https_securize_url', 10 );
+add_filter( 'wp_redirect', 'force_https_securize_url', 999 );
 add_filter( 'year_link', 'force_https_securize_url', 10 );
 
 // register woocommerce filters after plugins are loaded
