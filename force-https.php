@@ -32,6 +32,24 @@ function force_https_bypass_core_url_option_filtering() {
     return defined( 'WP_CLI' ) || defined( 'DOING_CRON' );
 }
 
+// normalize an early core url option value only when it resolves to https
+function force_https_normalize_core_url_pre_option_value( $value ) {
+    // reject empty, missing, or non-string values so wordpress can continue normal option retrieval
+    if ( ! is_string( $value ) || '' === $value ) {
+        return false;
+    }
+
+    // upgrade http values before validating the final scheme
+    $value = force_https_securize_url( $value );
+
+    // only allow early short-circuiting with a confirmed https url
+    if ( stripos( $value, 'https://' ) !== 0 ) {
+        return false;
+    }
+
+    return $value;
+}
+
 // enforce https on WP_HOME before wordpress queries the home option
 function force_https_pre_option_home( $pre_option ) {
     // bypass if running via cli or cron to prevent issues with commands or internal loopback requests
@@ -39,14 +57,18 @@ function force_https_pre_option_home( $pre_option ) {
         return $pre_option;
     }
 
-    // respect any earlier short-circuited value while forcing https
-    if ( is_string( $pre_option ) && '' !== $pre_option ) {
-        return force_https_securize_url( $pre_option );
+    // respect any earlier short-circuited value only if it resolves to https
+    if ( false !== $pre_option ) {
+        return force_https_normalize_core_url_pre_option_value( $pre_option );
     }
 
     // safely force the hardcoded constant when available, such as on SlickStack servers
-    if ( defined( 'WP_HOME' ) && is_string( WP_HOME ) && '' !== WP_HOME ) {
-        return force_https_securize_url( WP_HOME );
+    if ( defined( 'WP_HOME' ) ) {
+        $home = force_https_normalize_core_url_pre_option_value( WP_HOME );
+
+        if ( false !== $home ) {
+            return $home;
+        }
     }
 
     // let wordpress query the normal option value when no safe early value exists
@@ -60,14 +82,18 @@ function force_https_pre_option_siteurl( $pre_option ) {
         return $pre_option;
     }
 
-    // respect any earlier short-circuited value while forcing https
-    if ( is_string( $pre_option ) && '' !== $pre_option ) {
-        return force_https_securize_url( $pre_option );
+    // respect any earlier short-circuited value only if it resolves to https
+    if ( false !== $pre_option ) {
+        return force_https_normalize_core_url_pre_option_value( $pre_option );
     }
 
     // safely force the hardcoded constant when available, such as on SlickStack servers
-    if ( defined( 'WP_SITEURL' ) && is_string( WP_SITEURL ) && '' !== WP_SITEURL ) {
-        return force_https_securize_url( WP_SITEURL );
+    if ( defined( 'WP_SITEURL' ) ) {
+        $siteurl = force_https_normalize_core_url_pre_option_value( WP_SITEURL );
+
+        if ( false !== $siteurl ) {
+            return $siteurl;
+        }
     }
 
     // let wordpress query the normal option value when no safe early value exists
