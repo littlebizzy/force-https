@@ -2,25 +2,19 @@
 
 HTTPS enforcement for WordPress
 
-## What it does
+## Description
 
-Force HTTPS redirects normal non-SSL web requests to the HTTPS version of the requested WordPress URL while avoiding WP-CLI, WP-Cron, AJAX requests, already-sent headers, and missing request URI edge cases.
+Force HTTPS enforces secure HTTPS URLs throughout WordPress after HTTPS has been configured on the server.
 
-Force HTTPS also makes WordPress-generated URLs use HTTPS across core URL helpers, permalinks, feeds, admin/login/logout URLs, media URLs, enqueued scripts and styles, theme URLs, upload directory URLs, image srcsets, resource hints, rendered content, widgets, comments, navigation output, oEmbed/custom logo HTML, REST response data, and supported WooCommerce URL/content filters.
+The plugin redirects normal non-SSL web requests to the HTTPS version of the requested WordPress URL and enables SSL handling for the WordPress admin area. Redirects are skipped for WP-CLI, WP-Cron, AJAX requests, already-sent headers, and requests without a usable request URI.
 
-For core `home` and `siteurl` values, Force HTTPS supports both SlickStack and non-SlickStack servers. When `WP_HOME` or `WP_SITEURL` are hardcoded in `wp-config.php`, the plugin uses early `pre_option_home` and `pre_option_siteurl` filtering only when those values resolve to `https://`, including `http://` values that can be safely upgraded. When those constants are not defined or do not resolve to HTTPS, the plugin lets WordPress retrieve the database-backed values normally, then upgrades them through `option_home` and `option_siteurl` filters at runtime.
+Force HTTPS also upgrades WordPress-generated URLs and rendered output across core URL helpers, permalinks, feeds, admin, login and logout URLs, media, uploads, image srcsets, resource hints, enqueued scripts and styles, theme URLs, content, widgets, comments, navigation, oEmbed and custom logo HTML, REST response data, and supported WooCommerce URL and content filters. This helps prevent old HTTP URLs and mixed-content warnings after moving a site to HTTPS.
 
-This approach does not write to the database. It only normalizes the runtime values WordPress uses during normal web requests, while continuing to bypass WP-CLI and WP-Cron to avoid interfering with command-line tasks or internal scheduled jobs.
+For core `home` and `siteurl` values, the plugin supports both SlickStack and non-SlickStack servers. When `WP_HOME` or `WP_SITEURL` are defined in `wp-config.php`, early `pre_option_home` and `pre_option_siteurl` filtering is used only when those values already resolve to HTTPS or can be safely upgraded from HTTP. Otherwise, WordPress retrieves the normal database-backed values before `option_home` and `option_siteurl` filters upgrade them at runtime. No database records are changed, and WP-CLI and WP-Cron are bypassed to avoid interfering with command-line tasks or internal scheduled jobs.
 
-## What it doesn't do
+The plugin does not install an SSL certificate, modify web server configuration, or detect HTTPS by trusting proxy, CDN, or load balancer request headers such as `X-Forwarded-Proto`, `X-Forwarded-SSL`, or Cloudflare-specific headers. Those headers are only safe when a trusted server or proxy strips incoming values and overwrites them, which a WordPress plugin cannot verify. Sites behind Cloudflare, another CDN, a load balancer, or a reverse proxy should configure HTTPS detection at the server, hosting, CDN, or `wp-config.php` level.
 
-Force HTTPS does not try to detect HTTPS by trusting proxy, CDN, or load balancer request headers such as `X-Forwarded-Proto`, `X-Forwarded-SSL`, or Cloudflare-specific headers.
-
-Those headers can be useful on correctly configured reverse-proxy setups, but they are only safe when the server or proxy layer strips untrusted incoming values and overwrites them from a trusted source. A WordPress plugin cannot reliably know whether those headers came from a trusted proxy or were spoofed by a direct request to the origin server, so this plugin intentionally avoids using them as a source of truth.
-
-If a site runs behind Cloudflare, another CDN, a load balancer, or a reverse proxy, HTTPS detection should be handled in the server, hosting, CDN, or `wp-config.php` configuration where the trust boundary can be controlled. This plugin focuses on enforcing HTTPS across WordPress-generated URLs, redirects, content, assets, REST output, and supported plugin URL filters after WordPress and the server environment report the request state.
-
-Force HTTPS also does not add HSTS headers. HSTS is best managed at the server or CDN level because it can affect the entire domain and subdomains beyond WordPress.
+Force HTTPS does not add HSTS headers. HSTS is best managed at the server or CDN level because it can affect the entire domain and its subdomains beyond WordPress.
 
 ## Changelog
 
